@@ -1,0 +1,9 @@
+.modal-login{
+    max-height: 100%;
+    width: 25%;
+}
+
+.profile-image-login {
+    width: 100px;
+    height: 100px !important;
+}
