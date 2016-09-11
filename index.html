@@ -1,7 +1,97 @@
-<html>
-<body>
-<p>Hola mundo!</p>
-<p>Hola planeta!</p>
-<p>Hola Tierra!</p>
-</body>
-</html>
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/Site.css"  media="screen,projection"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <header>
+            <nav class="light-blue lighten-1">
+                <div class="nav-wrapper">
+                <a href="index.html" class="brand-logo">Adoa 2</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <!-- Dropdown Trigger -->
+                    <li><a class="waves-effect waves-light modal-trigger" href="#modalLogin">Iniciar Sesion<i class="material-icons right">power_settings_new</i></a></li>
+                    <li><a class="dropdown-button" href="#!">Registrarse<i class="material-icons right">subject</i></a></li>
+                    <li><a class="dropdown-button" href="#!">Manual de Usuario<i class="material-icons right">live_help</i></a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#!">Iniciar Sesion<i class="material-icons right">power_settings_new</i></a></li>
+                    <li><a class="dropdown-button" href="#!">Registrarse<i class="material-icons right">subject</i></a></li>
+                    <li><a class="dropdown-button" href="#!">Manual de Usuario<i class="material-icons right">live_help</i></a></li>
+                </ul>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container">
+  
+            </div>
+        </main>
+        
+        
+        
+        <!-- Modal Structure -->
+        <div id="modalLogin" class="modal modal-login">
+            <div class="modal-content">
+                <div class="col s12">
+                    <form class="login-form">
+                        <div class="row">
+                        <div class="input-field col s12 center">
+                            <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                            <p class="center">Iniciar sesion</p>
+                        </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="usuario" type="text" class="validate">
+                                <label for="ususario">Usuario</label>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock_outline</i>
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Constrase&ntildea</label>
+                            </div>
+                        </div>
+                        <div class="row">          
+                        <div class="input-field col s12 m12 l12  login-text">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Recordarme</label>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="input-field col s12">
+                            <a href="LogOn.html" class="btn waves-effect waves-light col s12">Ingresar</a>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="input-field col s6 m6 l6">
+                            <p class="margin medium-small"><a href="page-register.html">Registrarse</a></p>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                            <p class="margin right-align medium-small"><a href="page-forgot-password.html">Olvido la contrase&ntildea ?</a></p>
+                        </div>          
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>  
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/Site.js"></script>
+    </body>
+  </html>
