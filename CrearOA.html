@@ -5,6 +5,7 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/materialNote.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="css/Site.css"  media="screen,projection"/>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -125,20 +126,40 @@
                                         <div class="determinate" style="width: 40%"></div>
                                     </div>
 									<div>
-														<form>
-															<div class="row">
-																	<div class="input-field col s12">
-																		<textarea id="txtIntro"></textarea>
-																	</div>
-															</div>
-														</form>
-													
+										<h3>
+                                            Introduccion  
+                                        </h3>				
+                                        <div class="row">
+                                                <div class="input-field col s12">
+                                                    <div class="editor" id="introduccion-oa">
+                                                    </div>
+                                                </div>
+                                        </div>
+														
                                     <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab3','tab3')"><i class="material-icons">send</i></a>
 									</div>
                                 </div>
                                 <div id="contentTab3" class="col s12">
                                     <div class="progress">
                                         <div class="determinate" style="width: 60%"></div>
+                                    </div>
+                                    <h3>
+                                        Ideas Principales  
+                                    </h3>				
+                                    <div class="row">
+                                            <div class="input-field col s12">
+                                                <div class="editor" id="ideasprincipales">
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <h3>
+                                        Desarrollo
+                                    </h3>				
+                                    <div class="row">
+                                            <div class="input-field col s12">
+                                                <div class="editor" id="desarrollo">
+                                                </div>
+                                            </div>
                                     </div>
                                     <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab4','tab4')"><i class="material-icons">send</i></a>
                                 </div>
@@ -164,6 +185,8 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/materialNote.min.js"></script>
+      <script type="text/javascript" src="js/ckMaterializeOverrides.js"></script>
       <script type="text/javascript" src="js/Site.js"></script>
     </body>
   </html>
