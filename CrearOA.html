@@ -8,6 +8,15 @@
       <link type="text/css" rel="stylesheet" href="css/Site.css"  media="screen,projection"/>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  <script src='js/tinymce/tinymce.min.js'></script> <!--editor-->
+	  <script>
+				 tinymce.init({
+					selector: '#txtIntro',
+					plugins : 'advlist autolink link image lists charmap print preview media',
+					toolbar : "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect | media image",
+					language: 'es_MX'
+				  });
+			</script>
     </head>
 
     <body>
@@ -115,7 +124,17 @@
                                    <div class="progress">
                                         <div class="determinate" style="width: 40%"></div>
                                     </div>
+									<div>
+														<form>
+															<div class="row">
+																	<div class="input-field col s12">
+																		<textarea id="txtIntro"></textarea>
+																	</div>
+															</div>
+														</form>
+													
                                     <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab3','tab3')"><i class="material-icons">send</i></a>
+									</div>
                                 </div>
                                 <div id="contentTab3" class="col s12">
                                     <div class="progress">
