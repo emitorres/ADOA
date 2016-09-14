@@ -16,12 +16,17 @@ body {
 main {
     flex: 1 0 auto;
 }
+
 .modal-login{
-    max-height: 100%;
-    width: 25%;
+    max-height: 75%;
+    width: 400px;
 }
 
 .profile-image-login {
     width: 100px;
     height: 100px !important;
+}
+
+.btn {
+    background-color: #ff5a92;
 }
