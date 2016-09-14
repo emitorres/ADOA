@@ -27,3 +27,7 @@ function cambiarTab(tabContentId,tabId){
     $("#"+tabId).removeClass("disabled");
     $('ul.tabs').tabs('select_tab', tabContentId);
 }
+
+function cerrarModal(id){
+    $('#'+id).closeModal();
+}
