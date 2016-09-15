@@ -36,3 +36,8 @@ main {
     color: #ee6e73;
     text-transform: uppercase;
 }
+
+/*Texto del slide con borde negro */
+.sliderText{
+text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
