@@ -11,6 +11,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background: #e0e0e0;
 }
 
 main {
@@ -27,6 +28,11 @@ main {
     height: 100px !important;
 }
 
-.btn {
+.btn, .btn:hover, .btn-large:hover {
     background-color: #ff5a92;
+}
+
+.panel-stat .stat-title {
+    color: #ee6e73;
+    text-transform: uppercase;
 }
