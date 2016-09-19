@@ -5763,7 +5763,7 @@ small {
   height: 7px;
   width: 14px;
   border-radius: 0 0 14px 14px;
-  background-color: #323232;
+  background-color: #faf; /*Color tooltip del editor*/
   z-index: -1;
   -webkit-transform-origin: 50% 10%;
   -moz-transform-origin: 50% 10%;
@@ -5816,7 +5816,7 @@ small {
 
 .btn-floating {
   display: inline-block;
-  color: #fff;
+  color: #faf;
   position: relative;
   overflow: hidden;
   z-index: 1;

@@ -40,3 +40,21 @@ main {
 .sliderText{
 text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
+
+/*Editor de texto*/
+.note-editor .btn, .note-editor .btn-large, .popover .btn, .popover, .btn-large, .note-editor .note-toolbar, .note-editor .note-resizebar{
+	background-color: #D0F2EF;
+}
+
+/*Botones editor de texto*/
+.btn, .btn-large{
+	color: #1224E3;
+}
+
+/*Bordes del editor de texto*/
+.note-editor{
+	border-bottom-color:#D0F2EF;
+	border-left-color:#D0F2EF;
+	border-right-color:#D0F2EF;
+}
+
