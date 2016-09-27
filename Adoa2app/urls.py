@@ -1,10 +1,12 @@
 from django.conf.urls import url
 
 from . import views
-from .views import index2
+from .views import Index
+from .views import LogOn
+from .views import CrearOA
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^index/$', index2.as_view()),
-    
+    url(r'^Index/$', Index.as_view()),
+    url(r'^LogOn/$', LogOn.as_view()),
+    url(r'^CrearOA/$', CrearOA.as_view()),
 ]
