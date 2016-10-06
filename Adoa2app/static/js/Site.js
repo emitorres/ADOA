@@ -4,6 +4,7 @@ $(".button-collapse").sideNav();
 $('select').material_select();
 $('.modal-trigger').leanModal();
 $('.slider').slider({full_width: true});
+cargarListaPatrones()
 
 var toolbar = [
             ['style', ['style', 'bold', 'italic', 'underline', 'strikethrough', 'clear']],
@@ -89,8 +90,6 @@ function cargarListaPatrones(){
         }
     });
 }
-
-
 
 
 
