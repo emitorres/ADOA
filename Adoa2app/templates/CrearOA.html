@@ -19,6 +19,7 @@
                                     </ul>
                                 </div>
                                 <br>
+                                <input type="hidden" name="oaid" id="oaid" value="">
                                 <div id="contentTab1" class="col s12">
                                      <div class="row">
                                         <div class="progress">
@@ -26,29 +27,30 @@
                                         </div>
                                     </div>
                                     <div class="row col s6">
-                                        <form class="col s12">
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                            <input placeholder="Titulo" id="titulo" type="text" class="validate">
+                                        <form id="oa-paso1" class="col s12">
+                                        {% csrf_token %}
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                <input placeholder="Titulo" id="oatitulo" name="oatitulo" type="text" class="validate">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                            <textarea id="descripcion" class="materialize-textarea"></textarea>
-                                            <label for="Descripcion">Descripcion</label>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                <textarea id="oadescripcion" name="oadescripcion" class="materialize-textarea"></textarea>
+                                                <label for="Descripcion">Descripcion</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <select>
-                                                <option value="" disabled selected>Seleccione el Patron</option>
-                                                <option value="1">Patron 1</option>
-                                                <option value="2">Patron 2</option>
-                                                <option value="3">Patron 3</option>
-                                                </select>
-                                                <label>Patron Pedagogico</label>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <select id="oapatron" name="oapatron">
+                                                    <option value="" disabled selected>Seleccione el Patron</option>
+                                                    </select>
+                                                    <label>Patron Pedagogico</label>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="row col s12">
+                                                <button class="btn waves-effect waves-light red left" type="submit" name="action">Guardar Informacion</button>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="row col s12">
@@ -62,16 +64,21 @@
                                         </div>
                                     </div>
 									<div>
-										<h3>
-                                            Introduccion  
-                                        </h3>				
-                                        <div class="row">
-                                                <div class="input-field col s12">
-                                                    <div class="editor" id="introduccion-oa">
+    									<form id="oa-paso2" class="col s12">
+                                            {% csrf_token %}
+    										<h3>
+                                                Introduccion  
+                                            </h3>				
+                                            <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <div class="editor" id="introduccion-oa">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                        </div>
-														
+                                            </div>
+                                            <div class="row col s12">
+                                                <button class="btn waves-effect waves-light red left" type="submit" name="action">Guardar Introduccion</button>
+                                            </div>
+										</form>
                                     <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab3','tab3')"><i class="material-icons">send</i></a>
 									</div>
                                 </div>
