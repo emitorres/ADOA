@@ -49,12 +49,12 @@
                                                 </div>
                                             </div>
                                             <div class="row col s12">
-                                                <button class="btn waves-effect waves-light red left" type="submit" name="action">Guardar Informacion</button>
+                                                <button id="btnGuardarPaso1" class="btn waves-effect waves-light red left" type="submit" name="action"><i class="material-icons left">cloud</i>Guardar</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="row col s12">
-                                        <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab2','tab2')"><i class="material-icons">send</i></a>
+                                        <a id="btnTab1" class="btn-floating btn-large waves-effect waves-light red right disabled" onclick="cambiarTab('contentTab2','tab2')"><i class="material-icons">send</i></a>
                                     </div>
                                 </div>
                                 <div id="contentTab2" class="col s12">
@@ -76,10 +76,10 @@
                                                     </div>
                                             </div>
                                             <div class="row col s12">
-                                                <button class="btn waves-effect waves-light red left" type="submit" name="action">Guardar Introduccion</button>
+                                                <button id="btnGuardarPaso2" class="btn waves-effect waves-light red left" type="submit" name="action"><i class="material-icons left"></i>Guardar</button>
                                             </div>
 										</form>
-                                    <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab3','tab3')"><i class="material-icons">send</i></a>
+                                    <a id="btnTab2" class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab3','tab3')"><i class="material-icons">send</i></a>
 									</div>
                                 </div>
                                 <div id="contentTab3" class="col s12">
@@ -88,25 +88,10 @@
                                             <div class="determinate" style="width: 60%"></div>
                                         </div>
                                     </div>
-                                    <h3>
-                                        Ideas Principales  
-                                    </h3>				
-                                    <div class="row">
-                                            <div class="input-field col s12">
-                                                <div class="editor" id="ideasprincipales">
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <h3>
-                                        Desarrollo
-                                    </h3>				
-                                    <div class="row">
-                                            <div class="input-field col s12">
-                                                <div class="editor" id="desarrollo">
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab4','tab4')"><i class="material-icons">send</i></a>
+                                    <form id="oa-paso3" class="col s12">
+                                    </form>
+  
+                                    <a id="btnTab3" class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab4','tab4')"><i class="material-icons">send</i></a>
                                 </div>
                                 <div id="contentTab4" class="col s12">
                                     <div class="row">
@@ -114,7 +99,7 @@
                                             <div class="determinate" style="width: 80%"></div>
                                         </div>
                                     </div>
-                                    <a class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab5','tab5')"><i class="material-icons">send</i></a>
+                                    <a id="btnTab4" class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab5','tab5')"><i class="material-icons">send</i></a>
                                 </div>
                                 <div id="contentTab5" class="col s12">
                                     <div class="row">
@@ -122,7 +107,7 @@
                                             <div class="determinate" style="width: 100%"></div>
                                         </div>
                                     </div>
-                                    <a class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
+                                    <a id="btnTab5" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
                                 </div>
                             </div>
                         </div>

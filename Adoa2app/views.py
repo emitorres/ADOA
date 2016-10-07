@@ -86,3 +86,24 @@ def traerPatrones(request):
             content_type="application/json"
         )
         
+def traerSeccionesPatron(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        patronId = request.POST['patron']
+        patron = PatronPedagogico.objects.get(pk=patronId)
+        secciones = patron.seccionnombre_set.all()
+        
+        seccionesJson = serializers.serialize('json', secciones)
+
+        return HttpResponse(
+            seccionesJson,
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        

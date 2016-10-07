@@ -5,7 +5,8 @@ from .views import LogOn
 from .views import CrearOA
 from .views import paso1
 from .views import paso2
-from Adoa2app.views import traerPatrones
+from .views import traerPatrones
+from .views import traerSeccionesPatron
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
@@ -14,4 +15,5 @@ urlpatterns = [
     url(r'^CrearOA/paso1/$', paso1),
     url(r'^CrearOA/paso2/$', paso2),
     url(r'^CrearOA/traerPatrones/$', traerPatrones),
+    url(r'^CrearOA/traerSeccionesPatron/$', traerSeccionesPatron),
 ]
