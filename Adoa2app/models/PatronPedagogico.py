@@ -9,14 +9,14 @@ class PatronPedagogico(models.Model):
         ('5', 'Identificacion'),
     )
     nombre = models.CharField(max_length=100)
-    actividadSugerida = models.CharField(max_length=2, choices=ACTIVIDADES)
+    ActividadSugerida = models.CharField(max_length=2, choices=ACTIVIDADES)
     
     class Meta:
         db_table = "PatronPedagogico"
     
 class SeccionNombre(models.Model):
     nombre = models.CharField(max_length=100)
-    patronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE)
+    PatronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "SeccionNombre"

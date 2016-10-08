@@ -18,7 +18,7 @@ $('#oa-paso1').on('submit', function(event){
     var oaPatron = $("#oapatron").val();
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "paso1/", // the endpoint
+        url : "Paso1/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -43,11 +43,10 @@ $('#oa-paso2').on('submit', function(event){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso2" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "paso2/", // the endpoint
+        url : "Paso2/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            $("#oaid").val(data.oaid);
             Materialize.toast('Guardado con exito!!', 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
@@ -70,11 +69,10 @@ $('#oa-paso3').on('submit', function(event){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "paso3/", // the endpoint
+        url : "Paso3/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            $("#oaid").val(data.oaid);
             Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
@@ -86,7 +84,7 @@ $('#oa-paso3').on('submit', function(event){
 function cargarListaPatrones(){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "traerPatrones/", // the endpoint
+        url : "TraerPatrones/", // the endpoint
         type : "POST", // http method
         data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -109,7 +107,7 @@ function cambiarTab(tabContentId,tabId){
 function cargarSeccionesPatron(patronId){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "traerSeccionesPatron/", // the endpoint
+        url : "TraerSeccionesPatron/", // the endpoint
         type : "POST", // http method
         data : { patron : patronId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

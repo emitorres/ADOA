@@ -10,7 +10,7 @@ class VerdaderoFalso(Actividad):
 class VerdaderoFalsoItem(models.Model):
     afirmacion = models.CharField(max_length=200)
     respuesta = models.BooleanField()
-    asociacion = models.ForeignKey(VerdaderoFalso, on_delete=models.CASCADE)
+    VerdaderoFalso = models.ForeignKey(VerdaderoFalso, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "VerdaderoFalsoItem"

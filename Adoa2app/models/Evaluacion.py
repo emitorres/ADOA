@@ -11,7 +11,7 @@ class EvaluacionItem(models.Model):
     respuestaCorrecta = models.CharField(max_length=200)
     respuestaIncorrecta1 = models.CharField(max_length=200)
     respuestaIncorrecta2 = models.CharField(max_length=200)
-    evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
+    Evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "EvaluacionItem"

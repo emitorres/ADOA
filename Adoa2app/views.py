@@ -18,7 +18,7 @@ class CrearOA(TemplateView):
     template_name = 'CrearOA.html'
 
     
-def paso1(request):
+def Paso1(request):
     if request.method == 'POST':
         response_data = {}
         oaid = int(request.POST['oaid'])
@@ -27,7 +27,7 @@ def paso1(request):
             oadescripcion = request.POST['descripcion']
             patron = request.POST['patron']
             oapatron = PatronPedagogico.objects.get(pk=patron)
-            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, patronPedagogico = oapatron)
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron)
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Creado!'
         else:
@@ -35,7 +35,7 @@ def paso1(request):
             oa.titulo = request.POST['titulo']
             oa.descripcion = request.POST['descripcion']
             patron = request.POST['patron']
-            oa.patronPedagogico = PatronPedagogico.objects.get(pk=patron)
+            oa.PatronPedagogico = PatronPedagogico.objects.get(pk=patron)
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Editado!'
             
@@ -51,7 +51,7 @@ def paso1(request):
             content_type="application/json"
         )
         
-def paso2(request):
+def Paso2(request):
     if request.method == 'POST':
         
         response_data = {}
@@ -76,7 +76,7 @@ def paso2(request):
             content_type="application/json"
         )
 
-def paso3(request):
+def Paso3(request):
     if request.method == 'POST':
         
         response_data = {}
@@ -89,7 +89,7 @@ def paso3(request):
             seccionNombre = SeccionNombre.objects.get(pk=seccion['id'])
             seccionContenido = SeccionContenido(contenido = seccion['contenido'])
             seccionContenido.ObjetoAprendizaje = oa
-            seccionContenido.seccion = seccionNombre
+            seccionContenido.SeccionNombre = seccionNombre
             seccionContenido.save()
 
         response_data['result'] = 'Secciones Guardadas!'
@@ -103,7 +103,7 @@ def paso3(request):
             content_type="application/json"
         )
 
-def traerPatrones(request):
+def TraerPatrones(request):
     if request.method == 'POST':
         
         response_data = {}
@@ -124,7 +124,7 @@ def traerPatrones(request):
             content_type="application/json"
         )
         
-def traerSeccionesPatron(request):
+def TraerSeccionesPatron(request):
     if request.method == 'POST':
         
         response_data = {}

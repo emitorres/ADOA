@@ -10,7 +10,7 @@ class Asociacion(Actividad):
 class AsociacionItem(models.Model):
     campo1 = models.CharField(max_length=200)
     campo2 = models.CharField(max_length=200)
-    asociacion = models.ForeignKey(Asociacion, on_delete=models.CASCADE)
+    Asociacion = models.ForeignKey(Asociacion, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "AsociacionItem"

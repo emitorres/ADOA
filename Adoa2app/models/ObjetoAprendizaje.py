@@ -7,8 +7,8 @@ class ObjetoAprendizaje(models.Model):
     titulo = models.CharField(max_length=300)
     descripcion = models.CharField(max_length=300)
     introduccion = models.CharField(max_length=2000)
-    patronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE,null=True)
-    evaluacion = models.OneToOneField(
+    PatronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE,null=True)
+    Evaluacion = models.OneToOneField(
         Evaluacion,
         on_delete=models.CASCADE,
         null=True
@@ -20,7 +20,7 @@ class ObjetoAprendizaje(models.Model):
 class SeccionContenido(models.Model):
     contenido = models.CharField(max_length=2000)
     ObjetoAprendizaje = models.ForeignKey(ObjetoAprendizaje, on_delete=models.CASCADE)
-    seccion = models.ForeignKey(SeccionNombre, on_delete=models.CASCADE)
+    SeccionNombre = models.ForeignKey(SeccionNombre, on_delete=models.CASCADE)
     
     class Meta:
         db_table = "SeccionContenido"
