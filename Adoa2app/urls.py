@@ -5,6 +5,7 @@ from .views import LogOn
 from .views import CrearOA
 from .views import paso1
 from .views import paso2
+from .views import paso3
 from .views import traerPatrones
 from .views import traerSeccionesPatron
 
@@ -14,6 +15,7 @@ urlpatterns = [
     url(r'^CrearOA/$', CrearOA.as_view()),
     url(r'^CrearOA/paso1/$', paso1),
     url(r'^CrearOA/paso2/$', paso2),
+    url(r'^CrearOA/paso3/$', paso3),
     url(r'^CrearOA/traerPatrones/$', traerPatrones),
     url(r'^CrearOA/traerSeccionesPatron/$', traerSeccionesPatron),
 ]

@@ -19,7 +19,7 @@
                                     </ul>
                                 </div>
                                 <br>
-                                <input type="hidden" name="oaid" id="oaid" value="">
+                                <input type="hidden" name="oaid" id="oaid" value="0">
                                 <div id="contentTab1" class="col s12">
                                      <div class="row">
                                         <div class="progress">
@@ -89,6 +89,12 @@
                                         </div>
                                     </div>
                                     <form id="oa-paso3" class="col s12">
+                                        {% csrf_token %}
+                                        <div id="oa-secciones">
+                                        </div>
+                                        <div class="row col s12">
+                                            <button id="btnGuardarPaso3" class="btn waves-effect waves-light red left" type="submit" name="action"><i class="material-icons left"></i>Guardar</button>
+                                        </div>
                                     </form>
   
                                     <a id="btnTab3" class="btn-floating btn-large waves-effect waves-light red right" onclick="cambiarTab('contentTab4','tab4')"><i class="material-icons">send</i></a>

@@ -12,6 +12,7 @@ cargarListaPatrones();
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
+    var oaId = $("#oaid").val();
     var oaTitulo = $("#oatitulo").val();
     var oaDescripcion = $("#oadescripcion").val();
     var oaPatron = $("#oapatron").val();
@@ -19,16 +20,16 @@ $('#oa-paso1').on('submit', function(event){
     $.ajax({
         url : "paso1/", // the endpoint
         type : "POST", // http method
-        data : { titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#oaid").val(data.oaid);
             $("#btnTab1").removeClass('disabled');
             $("#btnGuardarPaso1").removeClass('red');
             $("#btnGuardarPaso1").addClass('green');
-            $("#btnGuardarPaso1").html('Guardado');
+            $("#btnGuardarPaso1").html('Editar');
             cargarSeccionesPatron(oaPatron);
             
-            Materialize.toast('Objeto guardado con exito!!', 3000, 'rounded')
+            Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al guardar el objeto', 3000, 'rounded')
@@ -47,7 +48,34 @@ $('#oa-paso2').on('submit', function(event){
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#oaid").val(data.oaid);
-            Materialize.toast('Objeto guardado con exito!!', 3000, 'rounded')
+            Materialize.toast('Guardado con exito!!', 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+        }
+    });
+});
+
+$('#oa-paso3').on('submit', function(event){
+    event.preventDefault();
+    var secciones = [];
+    $(".editor.seccion").each(function() {
+        var idSeccion = $(this).data("id");
+        var contenidoSeccion = $("#seccion"+idSeccion).code();
+        secciones.push({ 
+            "id" : idSeccion,
+            "contenido"  : contenidoSeccion
+        });
+    });
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "paso3/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            $("#oaid").val(data.oaid);
+            Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
@@ -85,12 +113,12 @@ function cargarSeccionesPatron(patronId){
         type : "POST", // http method
         data : { patron : patronId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            $("#oa-secciones").html('');
             data.forEach(function(seccion) {
-                $("#oa-paso3").html();
-                $("#oa-paso3").append("<h3>"+seccion.fields.nombre+"</h3>"+
+                $("#oa-secciones").append("<h3>"+seccion.fields.nombre+"</h3>"+
                 "<div class='row'>"+
                     "<div class='input-field col s12'>"+
-                        "<div class='editor seccion' id='seccion"+seccion.pk+"'>"+
+                        "<div class='editor seccion' data-id='"+seccion.pk+"' id='seccion"+seccion.pk+"'>"+
                         "</div>"+
                     "</div>"+
                 "</div>");
@@ -101,7 +129,6 @@ function cargarSeccionesPatron(patronId){
                 minHeight: 100,
                 defaultBackColor: '#fff'
             });
-            Materialize.toast('Secciones con exito!!', 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar las secciones', 3000, 'rounded')

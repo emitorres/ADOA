@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.views.generic.base import TemplateView
-from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje
+from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,\
+    SeccionContenido
 import json
-from Adoa2app.models.PatronPedagogico import PatronPedagogico
+from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
 
 class Index(TemplateView):
@@ -20,14 +21,24 @@ class CrearOA(TemplateView):
 def paso1(request):
     if request.method == 'POST':
         response_data = {}
-        oatitulo = request.POST['titulo']
-        oadescripcion = request.POST['descripcion']
-        patron = request.POST['patron']
-        oapatron = PatronPedagogico.objects.get(pk=patron)
-        oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, patronPedagogico = oapatron)
-        oa.save()
-
-        response_data['result'] = 'Objeto creado!'
+        oaid = int(request.POST['oaid'])
+        if oaid==0:
+            oatitulo = request.POST['titulo']
+            oadescripcion = request.POST['descripcion']
+            patron = request.POST['patron']
+            oapatron = PatronPedagogico.objects.get(pk=patron)
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, patronPedagogico = oapatron)
+            oa.save()
+            response_data['result'] = 'Objeto de Aprendizaje Creado!'
+        else:
+            oa = ObjetoAprendizaje.objects.get(pk=oaid)
+            oa.titulo = request.POST['titulo']
+            oa.descripcion = request.POST['descripcion']
+            patron = request.POST['patron']
+            oa.patronPedagogico = PatronPedagogico.objects.get(pk=patron)
+            oa.save()
+            response_data['result'] = 'Objeto de Aprendizaje Editado!'
+            
         response_data['oaid'] = oa.id
 
         return HttpResponse(
@@ -55,6 +66,33 @@ def paso2(request):
         response_data['result'] = 'Objeto creado 2!'
         response_data['oaid'] = oa.id
 
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def paso3(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        secciones = json.loads(request.POST.get('secciones'))
+        for seccion in secciones:
+            seccionNombre = SeccionNombre.objects.get(pk=seccion['id'])
+            seccionContenido = SeccionContenido(contenido = seccion['contenido'])
+            seccionContenido.ObjetoAprendizaje = oa
+            seccionContenido.seccion = seccionNombre
+            seccionContenido.save()
+
+        response_data['result'] = 'Secciones Guardadas!'
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
