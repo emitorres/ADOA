@@ -6,6 +6,9 @@ from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,\
 import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
+from Adoa2app.models import VerdaderoFalso
+from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
+from django.http.response import JsonResponse
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -141,6 +144,78 @@ def TraerSeccionesPatron(request):
         )
     else:
         return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def CrearVerdaderoFalso(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        verdaderoFalso = VerdaderoFalso(ObjetoAprendizaje = oa)
+        verdaderoFalso.save()
+        
+        response_data['verdaderoFalsoId'] = verdaderoFalso.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarVerdaderoFalso(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        verdaderoFalso = VerdaderoFalso.objects.get(pk=actividadId)
+        verdaderoFalso.verdaderofalsoitem_set.all().delete()
+        enunciado = request.POST['enunciado']
+        
+        terminos = json.loads(request.POST.get('terminos'))
+        for termino in terminos:
+            verdaderoFalsoItem = VerdaderoFalsoItem(afirmacion = termino['afirmacion'],respuesta = termino['respuesta'])
+            verdaderoFalsoItem.VerdaderoFalso = verdaderoFalso
+            verdaderoFalsoItem.save()
+        
+        verdaderoFalso.enunciado = enunciado
+        verdaderoFalso.save()
+
+        response_data['result'] = 'Verdadero o Falso Editado!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def TraerTerminosVerdaderoFalso(request):
+    if request.method == 'POST':
+        
+        
+        actividadId = request.POST['actividadId']
+        verdaderoFalso = VerdaderoFalso.objects.get(pk=actividadId)
+        
+        terminos = verdaderoFalso.verdaderofalsoitem_set.all()
+        
+        terminosJson = serializers.serialize('json', terminos)
+
+        return JsonResponse(
+            {'enunciado':verdaderoFalso.enunciado,'terminos': terminosJson},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )

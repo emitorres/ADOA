@@ -70,3 +70,10 @@ text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #
 .tabs .tab a:hover {
     color: #f9c9cb;
 }
+
+.secondary-content {
+    float: right;
+    color: #f44336;
+    padding-left: 20px;
+    padding-right: 20px;
+}
