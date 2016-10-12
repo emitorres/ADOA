@@ -8,7 +8,7 @@ class Identificacion(Actividad):
         db_table = "Identificacion"
     
 class IdentificacionItem(models.Model):
-    texto = models.CharField(max_length=200)
+    concepto = models.CharField(max_length=200)
     respuesta = models.BooleanField()
     Identificacion = models.ForeignKey(Identificacion, on_delete=models.CASCADE)
     

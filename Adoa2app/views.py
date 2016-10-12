@@ -6,9 +6,10 @@ from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,\
 import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
-from Adoa2app.models import VerdaderoFalso
+from Adoa2app.models import VerdaderoFalso, Identificacion
 from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
 from django.http.response import JsonResponse
+from Adoa2app.models.Identificacion import IdentificacionItem
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -181,7 +182,7 @@ def GuardarVerdaderoFalso(request):
         
         terminos = json.loads(request.POST.get('terminos'))
         for termino in terminos:
-            verdaderoFalsoItem = VerdaderoFalsoItem(afirmacion = termino['afirmacion'],respuesta = termino['respuesta'])
+            verdaderoFalsoItem = VerdaderoFalsoItem(afirmacion = termino['afirmacion'],respuesta = bool(int(termino['respuesta'])))
             verdaderoFalsoItem.VerdaderoFalso = verdaderoFalso
             verdaderoFalsoItem.save()
         
@@ -219,4 +220,77 @@ def TraerTerminosVerdaderoFalso(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+        
+def CrearIdentificacion(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        identificacion = Identificacion(ObjetoAprendizaje = oa)
+        identificacion.save()
+        
+        response_data['identificacionId'] = identificacion.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarIdentificacion(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        identificacion = Identificacion.objects.get(pk=actividadId)
+        identificacion.identificacionitem_set.all().delete()
+        enunciado = request.POST['enunciado']
+        
+        terminos = json.loads(request.POST.get('terminos'))
+        for termino in terminos:
+            identificacionItem = IdentificacionItem(concepto = termino['concepto'],respuesta = bool(int(termino['respuesta'])))
+            identificacionItem.Identificacion = identificacion
+            identificacionItem.save()
+        
+        identificacion.enunciado = enunciado
+        identificacion.save()
+
+        response_data['result'] = 'Identificacion Editado!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def TraerTerminosIdentificacion(request):
+    if request.method == 'POST':
+        
+        
+        actividadId = request.POST['actividadId']
+        identificacion = Identificacion.objects.get(pk=actividadId)
+        
+        terminos = identificacion.identificacionitem_set.all()
+        
+        terminosJson = serializers.serialize('json', terminos)
+
+        return JsonResponse(
+            {'enunciado':identificacion.enunciado,'terminos': terminosJson},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
         

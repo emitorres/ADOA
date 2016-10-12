@@ -30,7 +30,8 @@
                                             {% csrf_token %}
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input placeholder="Titulo" id="oatitulo" name="oatitulo" type="text" class="validate">
+                                                    <input id="oatitulo" name="oatitulo" type="text" class="validate">
+                                                    <label for="oatitulo" class="">Titulo</label>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -149,8 +150,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" id="btnGuardarActividad" onclick="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancerlar</a>
+                    <a id="btnGuardarActividad" onclick="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
+                    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancerlar</a>
                 </div>
             </div>
         </div>

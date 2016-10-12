@@ -11,6 +11,9 @@ from .views import TraerSeccionesPatron
 from .views import CrearVerdaderoFalso
 from .views import GuardarVerdaderoFalso
 from .views import TraerTerminosVerdaderoFalso
+from .views import CrearIdentificacion
+from .views import GuardarIdentificacion
+from .views import TraerTerminosIdentificacion
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
@@ -24,4 +27,7 @@ urlpatterns = [
     url(r'^CrearOA/CrearVerdaderoFalso/$', CrearVerdaderoFalso),
     url(r'^CrearOA/GuardarVerdaderoFalso/$', GuardarVerdaderoFalso),
     url(r'^CrearOA/TraerTerminosVerdaderoFalso/$', TraerTerminosVerdaderoFalso),
+    url(r'^CrearOA/CrearIdentificacion/$', CrearIdentificacion),
+    url(r'^CrearOA/GuardarIdentificacion/$', GuardarIdentificacion),
+    url(r'^CrearOA/TraerTerminosIdentificacion/$', TraerTerminosIdentificacion),
 ]
