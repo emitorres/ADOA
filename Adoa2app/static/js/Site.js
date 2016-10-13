@@ -26,3 +26,43 @@ $('.editor').materialnote({
 function cerrarModal(id){
     $('#'+id).closeModal();
 }
+
+function inicializarEditorPorId(id){
+    var toolbar = [
+            ['style', ['clear']],
+            ['fonts', []],
+            ['color', []],
+            ['undo', []],
+            ['ckMedia', []],
+            ['misc', ['link', 'picture','codeview']],
+            ['para', []],
+            ['height', []],
+        ];
+
+    $('#'+id).materialnote({
+        toolbar: toolbar,
+        height: 100,
+        minHeight: 100,
+        defaultBackColor: '#fff'
+    });
+}
+
+function inicializarEditorPorClase(clase){
+    var toolbar = [
+            ['style', ['clear']],
+            ['fonts', []],
+            ['color', []],
+            ['undo', []],
+            ['ckMedia', []],
+            ['misc', ['link', 'picture','codeview']],
+            ['para', []],
+            ['height', []],
+        ];
+
+    $(clase).materialnote({
+        toolbar: toolbar,
+        height: 100,
+        minHeight: 100,
+        defaultBackColor: '#fff'
+    });
+}

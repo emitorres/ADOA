@@ -14,6 +14,12 @@ from .views import TraerTerminosVerdaderoFalso
 from .views import CrearIdentificacion
 from .views import GuardarIdentificacion
 from .views import TraerTerminosIdentificacion
+from .views import CrearOrdenamiento
+from .views import GuardarOrdenamiento
+from .views import TraerTerminosOrdenamiento
+from .views import CrearAsociacion
+from .views import GuardarAsociacion
+from .views import TraerTerminosAsociacion
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
@@ -30,4 +36,10 @@ urlpatterns = [
     url(r'^CrearOA/CrearIdentificacion/$', CrearIdentificacion),
     url(r'^CrearOA/GuardarIdentificacion/$', GuardarIdentificacion),
     url(r'^CrearOA/TraerTerminosIdentificacion/$', TraerTerminosIdentificacion),
+    url(r'^CrearOA/CrearOrdenamiento/$', CrearOrdenamiento),
+    url(r'^CrearOA/GuardarOrdenamiento/$', GuardarOrdenamiento),
+    url(r'^CrearOA/TraerTerminosOrdenamiento/$', TraerTerminosOrdenamiento),
+    url(r'^CrearOA/CrearAsociacion/$', CrearAsociacion),
+    url(r'^CrearOA/GuardarAsociacion/$', GuardarAsociacion),
+    url(r'^CrearOA/TraerTerminosAsociacion/$', TraerTerminosAsociacion),
 ]

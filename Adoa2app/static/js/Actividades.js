@@ -57,7 +57,7 @@ function modalEditarVerdaderoFalso(idActividad){
     $('#modalEditarActividadContenido').append(
         "<div class='input-field col s12'>"+
             "<textarea id='verdaderoFalsoEnunciado' name='verdaderoFalsoEnunciado' class='materialize-textarea'></textarea>"+
-            "<label class='active' for='verdaderoFalsoEnunciado'>Enuncuado</label>"+
+            "<label class='active' for='verdaderoFalsoEnunciado'>Enunciado</label>"+
         "</div>"+
         "<div id='actividadContenido'></div>"+
         "<div class='row col s12'>"+
@@ -288,6 +288,277 @@ function guardarIdentificacion(idActividad){
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
         url : "GuardarIdentificacion/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            Materialize.toast(data.result, 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+        }
+    });
+}
+
+function crearOrdenamiento(){
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "CrearOrdenamiento/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            var idActividad = data.ordenamientoId;
+            $("#actividades").show();
+            $("#listaactividades").append(
+            "<li id='actividad"+idActividad+"' class='collection-item'><div>Ordenamiento"+
+            "<a onclick='eliminarOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "</div></li>"
+            );
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+        }
+    });
+}
+
+function modalEditarOrdenamiento(idActividad){
+    $('#modalEditarActividadContenido').html('');
+    $('#modalEditarActividadContenido').append(
+        "<div class='input-field col s12'>"+
+            "<textarea id='ordenamientoEnunciado' name='ordenamientoEnunciado' class='materialize-textarea'></textarea>"+
+            "<label class='active' for='ordenamientoEnunciado'>Enunciado</label>"+
+        "</div>"+
+        "<div id='actividadContenido'></div>"+
+        "<div class='row col s12'>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
+        "</div>"
+    );
+    $("#btnGuardarActividad").attr("onclick","guardarOrdenamiento("+idActividad+")");
+    
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "TraerTerminosOrdenamiento/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            if(data.enunciado !==''){
+                $("#ordenamientoEnunciado").val(data.enunciado);
+            }
+            if(data.terminos != '[]'){
+                var terminos = JSON.parse(data.terminos);
+                terminos.forEach(function(termino) {
+                    $("#actividadContenido").append(
+                    "<div class='row termino'>"+
+                        "<div class='input-field col s7'>"+
+                            "<textarea name='texto' class='materialize-textarea texto'>"+termino.fields.texto+"</textarea>"+
+                            "<label class='active' for='Texto'>Texto</label>"+
+                        "</div>"+
+                        "<div class='input-field col s3'>"+
+                            "<select id='selectorden-"+termino.pk+"' class='orden' name='orden'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<div class='row col s2'>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                        "</div>"+
+                    "</div>"
+                    );
+                    $("#selectorden-"+termino.pk).val(termino.fields.orden);
+
+                });
+            }
+            $('select').material_select();
+            $('#modalEditarActividad').openModal();
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+        }
+    });
+}
+
+function agregarTerminoOrdenamiento(){
+    $('#actividadContenido').append(
+        "<div class='row termino'>"+
+            "<div class='input-field col s7'>"+
+                "<textarea name='texto' class='materialize-textarea texto'></textarea>"+
+                "<label for='Texto'>Texto</label>"+
+            "</div>"+
+            "<div class='input-field col s3'>"+
+                            "<select id='selectorden' class='orden' name='orden'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+            "<div class='row col s2'>"+
+                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+            "</div>"+
+        "</div>"
+    );
+    $('select').material_select();
+}
+
+function guardarOrdenamiento(idActividad){
+    var terminos = [];
+    var enunciado = $("#ordenamientoEnunciado").val();
+    $(".row.termino").each(function() {
+        var texto = $(this).find( "textarea" ).val();
+        var orden = $(this).find( "select" ).val();
+        terminos.push({ 
+            "texto" : texto,
+            "orden"  : orden
+        });
+    });
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "GuardarOrdenamiento/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            Materialize.toast(data.result, 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+        }
+    });
+}
+
+function crearAsociacion(){
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "CrearAsociacion/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            var idActividad = data.asociacionId;
+            $("#actividades").show();
+            $("#listaactividades").append(
+            "<li id='actividad"+idActividad+"' class='collection-item'><div>Asociacion"+
+            "<a onclick='eliminarAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "</div></li>"
+            );
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+        }
+    });
+}
+
+function modalEditarAsociacion(idActividad){
+    $('#modalEditarActividadContenido').html('');
+    $('#modalEditarActividadContenido').append(
+        "<div class='input-field col s12'>"+
+            "<textarea id='asociacionEnunciado' name='asociacionEnunciado' class='materialize-textarea'></textarea>"+
+            "<label class='active' for='asociacionEnunciado'>Enunciado</label>"+
+        "</div>"+
+        "<div id='actividadContenido'></div>"+
+        "<div class='row col s12'>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
+        "</div>"
+    );
+    $("#btnGuardarActividad").attr("onclick","guardarAsociacion("+idActividad+")");
+    
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "TraerTerminosAsociacion/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            if(data.enunciado !==''){
+                $("#asociacionEnunciado").val(data.enunciado);
+            }
+            if(data.terminos != '[]'){
+                var terminos = JSON.parse(data.terminos);
+                terminos.forEach(function(termino) {
+                    $("#actividadContenido").append(
+                    "<div class='row termino'>"+
+                        "<div class='input-field col s5'>"+
+                            "<div class='editor campo1' id='campo1-"+termino.pk+"'>"+
+                            "</div>"+
+                        "</div>"+
+                        "<div class='input-field col s5'>"+
+                            "<div class='editor campo2' id='campo2-"+termino.pk+"'>"+
+                            "</div>"+
+                        "</div>"+
+                        "<div class='row col s2'>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                        "</div>"+
+                    "</div>"
+                    );
+                    inicializarEditorPorId("campo1-"+termino.pk);
+                    inicializarEditorPorId("campo2-"+termino.pk);
+                    $("#campo1-"+termino.pk).code(termino.fields.campo1);
+                    $("#campo2-"+termino.pk).code(termino.fields.campo2);
+                });
+            }
+            $('#modalEditarActividad').openModal();
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+        }
+    });
+}
+
+function agregarTerminoAsociacion(){
+    $('#actividadContenido').append(
+        "<div class='row termino'>"+
+            "<div class='input-field col s5'>"+
+                "<div class='editor campo1'>"+
+                "</div>"+
+            "</div>"+
+            "<div class='input-field col s5'>"+
+                "<div class='editor campo2'>"+
+                "</div>"+
+            "</div>"+
+            "<div class='row col s2'>"+
+                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+            "</div>"+
+        "</div>"
+    );
+    
+    inicializarEditorPorClase(".editor.campo1");
+    inicializarEditorPorClase(".editor.campo2");
+}
+
+function guardarAsociacion(idActividad){
+    var terminos = [];
+    var enunciado = $("#asociacionEnunciado").val();
+    $(".row.termino").each(function() {
+        var campo1 = $(this).find( ".editor.campo1" ).code();
+        var campo2 = $(this).find( ".editor.campo2" ).code();
+        terminos.push({ 
+            "campo1" : campo1,
+            "campo2"  : campo2
+        });
+    });
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "GuardarAsociacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

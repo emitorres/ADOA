@@ -6,10 +6,13 @@ from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,\
 import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
-from Adoa2app.models import VerdaderoFalso, Identificacion
+from Adoa2app.models import VerdaderoFalso, Identificacion, Ordenamiento,\
+    Asociacion
 from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
 from django.http.response import JsonResponse
 from Adoa2app.models.Identificacion import IdentificacionItem
+from Adoa2app.models.Ordenamiento import OrdenamientoItem
+from Adoa2app.models.Asociacion import AsociacionItem
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -285,6 +288,150 @@ def TraerTerminosIdentificacion(request):
 
         return JsonResponse(
             {'enunciado':identificacion.enunciado,'terminos': terminosJson},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def CrearOrdenamiento(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        ordenamiento = Ordenamiento(ObjetoAprendizaje = oa)
+        ordenamiento.save()
+        
+        response_data['ordenamientoId'] = ordenamiento.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarOrdenamiento(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        ordenamiento = Ordenamiento.objects.get(pk=actividadId)
+        ordenamiento.ordenamientoitem_set.all().delete()
+        enunciado = request.POST['enunciado']
+        
+        terminos = json.loads(request.POST.get('terminos'))
+        for termino in terminos:
+            ordenamientoItem = OrdenamientoItem(texto = termino['texto'],orden = termino['orden'])
+            ordenamientoItem.Ordenamiento = ordenamiento
+            ordenamientoItem.save()
+        
+        ordenamiento.enunciado = enunciado
+        ordenamiento.save()
+
+        response_data['result'] = 'Ordenamiento Editado!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def TraerTerminosOrdenamiento(request):
+    if request.method == 'POST':
+        
+        
+        actividadId = request.POST['actividadId']
+        ordenamiento = Ordenamiento.objects.get(pk=actividadId)
+        
+        terminos = ordenamiento.ordenamientoitem_set.all()
+        
+        terminosJson = serializers.serialize('json', terminos)
+
+        return JsonResponse(
+            {'enunciado':ordenamiento.enunciado,'terminos': terminosJson},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def CrearAsociacion(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        asociacion = Asociacion(ObjetoAprendizaje = oa)
+        asociacion.save()
+        
+        response_data['asociacionId'] = asociacion.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarAsociacion(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        asociacion = Asociacion.objects.get(pk=actividadId)
+        asociacion.asociacionitem_set.all().delete()
+        enunciado = request.POST['enunciado']
+        
+        terminos = json.loads(request.POST.get('terminos'))
+        for termino in terminos:
+            asociacionItem = AsociacionItem(campo1 = termino['campo1'],campo2 = termino['campo2'])
+            asociacionItem.Asociacion = asociacion
+            asociacionItem.save()
+        
+        asociacion.enunciado = enunciado
+        asociacion.save()
+
+        response_data['result'] = 'Asociacion Editado!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def TraerTerminosAsociacion(request):
+    if request.method == 'POST':
+        
+        
+        actividadId = request.POST['actividadId']
+        asociacion = Asociacion.objects.get(pk=actividadId)
+        
+        terminos = asociacion.asociacionitem_set.all()
+        
+        terminosJson = serializers.serialize('json', terminos)
+
+        return JsonResponse(
+            {'enunciado':asociacion.enunciado,'terminos': terminosJson},
             content_type="application/json"
         )
     else:
