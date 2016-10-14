@@ -3,6 +3,8 @@ from . import views
 from .views import Index
 from .views import LogOn
 from .views import CrearOA
+from .views import Objetos
+from .views import TraerObjetos
 from .views import Paso1
 from .views import Paso2
 from .views import Paso3
@@ -20,11 +22,17 @@ from .views import TraerTerminosOrdenamiento
 from .views import CrearAsociacion
 from .views import GuardarAsociacion
 from .views import TraerTerminosAsociacion
+from .views import CrearVideo
+from .views import GuardarVideo
+from .views import TraerTerminosVideo
+from .views import EliminarActividad
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
     url(r'^LogOn/$', LogOn.as_view()),
     url(r'^CrearOA/$', CrearOA.as_view()),
+    url(r'^Objetos/$', Objetos.as_view()),
+    url(r'^Objetos/TraerObjetos/$', TraerObjetos),
     url(r'^CrearOA/Paso1/$', Paso1),
     url(r'^CrearOA/Paso2/$', Paso2),
     url(r'^CrearOA/Paso3/$', Paso3),
@@ -42,4 +50,8 @@ urlpatterns = [
     url(r'^CrearOA/CrearAsociacion/$', CrearAsociacion),
     url(r'^CrearOA/GuardarAsociacion/$', GuardarAsociacion),
     url(r'^CrearOA/TraerTerminosAsociacion/$', TraerTerminosAsociacion),
+    url(r'^CrearOA/CrearVideo/$', CrearVideo),
+    url(r'^CrearOA/GuardarVideo/$', GuardarVideo),
+    url(r'^CrearOA/TraerTerminosVideo/$', TraerTerminosVideo),
+    url(r'^CrearOA/EliminarActividad/$', EliminarActividad),
 ]

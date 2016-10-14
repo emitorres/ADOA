@@ -28,6 +28,7 @@ $('#oa-paso1').on('submit', function(event){
             $("#btnGuardarPaso1").addClass('green');
             $("#btnGuardarPaso1").html('Editar');
             cargarSeccionesPatron(oaPatron);
+            $(".tab").removeClass("disabled");
             
             Materialize.toast(data.result, 3000, 'rounded')
         },

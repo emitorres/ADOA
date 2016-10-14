@@ -7,7 +7,7 @@ import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
 from Adoa2app.models import VerdaderoFalso, Identificacion, Ordenamiento,\
-    Asociacion
+    Asociacion, Video, Actividad
 from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
 from django.http.response import JsonResponse
 from Adoa2app.models.Identificacion import IdentificacionItem
@@ -23,6 +23,10 @@ class LogOn(TemplateView):
 class CrearOA(TemplateView):
     model = ObjetoAprendizaje
     template_name = 'CrearOA.html'
+
+class Objetos(TemplateView):
+    model = ObjetoAprendizaje
+    template_name = 'Objetos.html'
 
     
 def Paso1(request):
@@ -440,4 +444,109 @@ def TraerTerminosAsociacion(request):
             content_type="application/json"
         )
         
+def CrearVideo(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        oaid = request.POST['oaid']
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        
+        video = Video(ObjetoAprendizaje = oa)
+        video.save()
+        
+        response_data['videoId'] = video.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarVideo(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        video = Video.objects.get(pk=actividadId)
+        
+        descripcion = request.POST['descripcion']
+        link = request.POST['link']
+        
+        video.descripcion = descripcion
+        video.link = link
+        video.save()
+
+        response_data['result'] = 'Video Editado!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def TraerTerminosVideo(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        actividadId = request.POST['actividadId']
+        video = Video.objects.get(pk=actividadId)
+
+
+        return JsonResponse(
+            {'descripcion':video.descripcion,'link': video.link},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def EliminarActividad(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        actividadId = request.POST['actividadId']
+        actividad = Actividad.objects.get(pk=actividadId)
+        actividad.delete()
+
+        response_data['result'] = 'Actividad Eliminada!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def TraerObjetos(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        objetos = ObjetoAprendizaje.objects.all()
+        objetosJson = serializers.serialize('json', objetos)
+        
+        response_data['result'] = 'Objetos!'
+        response_data['objetos'] = objetosJson
+
+        return HttpResponse(
+            objetosJson,
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
         

@@ -71,9 +71,27 @@ text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #
     color: #f9c9cb;
 }
 
-.secondary-content {
+.btn-actividad {
     float: right;
-    color: #f44336;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.lean-overlay {
+    position: fixed;
+    z-index:999 !important;
+    top: -100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    background: #000;
+    display: none;
+
+    will-change: opacity;
+}
+
+.note-image-dialog{
+    z-index: 2000 !important;
 }

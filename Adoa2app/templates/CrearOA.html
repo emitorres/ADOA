@@ -135,6 +135,9 @@
                                             <div class="determinate" style="width: 100%"></div>
                                         </div>
                                     </div>
+                                    <div class="row" id="evaluacion">
+                                      <a id="btnAgregarPregunta" onclick="agregarPreguntaEvaluacion()" class="btn waves-effect waves-light red left">Agregar Pregunta</a>
+                                    </div>
                                     <a id="btnTab5" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
                                 </div>
                             </div>
@@ -151,7 +154,18 @@
                 </div>
                 <div class="modal-footer">
                     <a id="btnGuardarActividad" onclick="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
-                    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancerlar</a>
+                    <a class="modal-action modal-close waves-effect btn-flat ">Cancerlar</a>
+                </div>
+            </div>
+            <div id="modalEditarPregunta" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Editar Pregunta</h4>
+                    <div class="row" id="modalEditarPreguntaContenido">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="btnGuardarPregunta" onclick="" class="modal-action modal-close waves-effect waves-green btn-flat ">Guardar</a>
+                    <a class="modal-action modal-close waves-effect btn-flat ">Cancerlar</a>
                 </div>
             </div>
         </div>

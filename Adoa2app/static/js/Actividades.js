@@ -40,9 +40,9 @@ function crearVerdaderoFalso(){
             $("#actividades").show();
             $("#listaactividades").append(
             "<li id='actividad"+idActividad+"' class='collection-item'><div>Verdadero o Falso"+
-            "<a onclick='eliminarVerdaderoFalso("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
-            "<a onclick='verVerdaderoFalso("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
             "</div></li>"
             );
         },
@@ -177,9 +177,9 @@ function crearIdentificacion(){
             $("#actividades").show();
             $("#listaactividades").append(
             "<li id='actividad"+idActividad+"' class='collection-item'><div>Identificacion"+
-            "<a onclick='eliminarIdentificacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
-            "<a onclick='verIdentificacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
             "</div></li>"
             );
         },
@@ -311,9 +311,9 @@ function crearOrdenamiento(){
             $("#actividades").show();
             $("#listaactividades").append(
             "<li id='actividad"+idActividad+"' class='collection-item'><div>Ordenamiento"+
-            "<a onclick='eliminarOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
-            "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
             "</div></li>"
             );
         },
@@ -456,9 +456,9 @@ function crearAsociacion(){
             $("#actividades").show();
             $("#listaactividades").append(
             "<li id='actividad"+idActividad+"' class='collection-item'><div>Asociacion"+
-            "<a onclick='eliminarAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>mode_edit</i></a>"+
-            "<a onclick='verAsociacion("+idActividad+")' href='#!' class='secondary-content'><i class='material-icons'>visibility</i></a>"+
+            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
             "</div></li>"
             );
         },
@@ -562,6 +562,102 @@ function guardarAsociacion(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            Materialize.toast(data.result, 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+        }
+    });
+}
+
+function crearVideo(){
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "CrearVideo/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            var idActividad = data.videoId;
+            $("#actividades").show();
+            $("#listaactividades").append(
+            "<li id='actividad"+idActividad+"' class='collection-item'><div>Video"+
+            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
+            "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
+            "<a onclick='verVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+            "</div></li>"
+            );
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+        }
+    });
+}
+
+function modalEditarVideo(idActividad){
+    $('#modalEditarActividadContenido').html('');
+    $('#modalEditarActividadContenido').append(
+        "<div class='input-field col s12'>"+
+            "<textarea id='videoDescripcion' name='videoDescripcion' class='materialize-textarea'></textarea>"+
+            "<label class='active' for='videoDescripcion'>Descripcion</label>"+
+        "</div>"+
+        "<div class='input-field col s7'>"+
+          "<input id='videoUrl' class='videoUrl' type='text'>"+
+          "<label for='videoUrl' class=''>Url</label>"+
+        "</div>"
+    );
+    $("#btnGuardarActividad").attr("onclick","guardarVideo("+idActividad+")");
+    
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "TraerTerminosVideo/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            if(data.descripcion !==''){
+                $("#videoDescripcion").val(data.descripcion);
+            }
+            if(data.link !==''){
+                $("#videoUrl").val(data.link);
+            }
+            $('#modalEditarActividad').openModal();
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+        }
+    });
+}
+
+function guardarVideo(idActividad){
+    var terminos = [];
+    var descripcion = $("#videoDescripcion").val();
+    var link = $("#videoUrl").val();
+
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "GuardarVideo/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad,descripcion : descripcion, link : link, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            Materialize.toast(data.result, 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+        }
+    });
+}
+
+function eliminarActividad(idActividad){
+
+    var oaId = $("#oaid").val();
+    var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "EliminarActividad/", // the endpoint
+        type : "POST", // http method
+        data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            $("#actividad"+idActividad).remove();
             Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
