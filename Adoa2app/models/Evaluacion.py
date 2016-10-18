@@ -7,11 +7,11 @@ class Evaluacion(models.Model):
         db_table = "Evaluacion"
     
 class EvaluacionItem(models.Model):
-    enunciado = models.CharField(max_length=200)
+    pregunta = models.CharField(max_length=200)
     respuestaCorrecta = models.CharField(max_length=200)
     respuestaIncorrecta1 = models.CharField(max_length=200)
     respuestaIncorrecta2 = models.CharField(max_length=200)
-    Evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE)
+    Evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE,null=True)
     
     class Meta:
         db_table = "EvaluacionItem"

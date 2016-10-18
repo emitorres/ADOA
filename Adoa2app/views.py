@@ -7,12 +7,13 @@ import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 from django.core import serializers
 from Adoa2app.models import VerdaderoFalso, Identificacion, Ordenamiento,\
-    Asociacion, Video, Actividad
+    Asociacion, Video, Actividad, Evaluacion
 from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
 from django.http.response import JsonResponse
 from Adoa2app.models.Identificacion import IdentificacionItem
 from Adoa2app.models.Ordenamiento import OrdenamientoItem
 from Adoa2app.models.Asociacion import AsociacionItem
+from Adoa2app.models.Evaluacion import EvaluacionItem
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -38,7 +39,9 @@ def Paso1(request):
             oadescripcion = request.POST['descripcion']
             patron = request.POST['patron']
             oapatron = PatronPedagogico.objects.get(pk=patron)
-            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron)
+            evaluacion = Evaluacion()
+            evaluacion.save()
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Evaluacion = evaluacion)
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Creado!'
         else:
@@ -50,6 +53,7 @@ def Paso1(request):
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Editado!'
             
+        response_data['evaluacionid'] = oa.Evaluacion.id
         response_data['oaid'] = oa.id
 
         return HttpResponse(
@@ -549,4 +553,104 @@ def TraerObjetos(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+        
+def CrearPregunta(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        evaluacionId = request.POST['evaluacionId']
+        evaluacion = Evaluacion.objects.get(pk=evaluacionId)
+        
+        pregunta = request.POST['pregunta']
+        respuestacorrecta = request.POST['respuestacorrecta']
+        respuestaincorrecta1 = request.POST['respuestaincorrecta1']
+        respuestaincorrecta2 = request.POST['respuestaincorrecta2']
+        
+        evaluacionItem = EvaluacionItem(pregunta = pregunta, respuestaCorrecta = respuestacorrecta, respuestaIncorrecta1 = respuestaincorrecta1, respuestaIncorrecta2 = respuestaincorrecta2, Evaluacion = evaluacion)
+        evaluacionItem.save()
+
+        response_data['result'] = 'Pregunta Creada!'
+        response_data['idPregunta'] = evaluacionItem.id
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def GuardarPregunta(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        preguntaId = request.POST['preguntaId']
+        evaluacionItem = EvaluacionItem.objects.get(pk=preguntaId)
+        
+        pregunta = request.POST['pregunta']
+        respuestacorrecta = request.POST['respuestacorrecta']
+        respuestaincorrecta1 = request.POST['respuestaincorrecta1']
+        respuestaincorrecta2 = request.POST['respuestaincorrecta2']
+        
+        evaluacionItem.pregunta = pregunta
+        evaluacionItem.respuestaCorrecta = respuestacorrecta
+        evaluacionItem.respuestaIncorrecta1 = respuestaincorrecta1
+        evaluacionItem.respuestaIncorrecta2 = respuestaincorrecta2
+        evaluacionItem.save()
+
+        response_data['result'] = 'Pregunta Editada!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def TraerPregunta(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        preguntaId = request.POST['preguntaId']
+        evaluacionItem = EvaluacionItem.objects.get(pk=preguntaId)
+
+
+        response_data['result'] = 'Pregunta Creada!'
+        response_data['pregunta'] = evaluacionItem.pregunta
+        response_data['respuestacorrecta'] = evaluacionItem.respuestaCorrecta
+        response_data['respuestaincorrecta1'] = evaluacionItem.respuestaIncorrecta1
+        response_data['respuestaincorrecta2'] = evaluacionItem.respuestaIncorrecta2
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def EliminarPregunta(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        preguntaId = request.POST['preguntaId']
+        pregunta = EvaluacionItem.objects.get(pk=preguntaId)
+        pregunta.delete()
+
+        response_data['result'] = 'Pregunta Eliminada!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+    
         

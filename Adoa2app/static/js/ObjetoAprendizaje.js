@@ -23,6 +23,7 @@ $('#oa-paso1').on('submit', function(event){
         data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#oaid").val(data.oaid);
+            $("#evaluacionid").val(data.evaluacionid);
             $("#btnTab1").removeClass('disabled');
             $("#btnGuardarPaso1").removeClass('red');
             $("#btnGuardarPaso1").addClass('green');
@@ -38,8 +39,7 @@ $('#oa-paso1').on('submit', function(event){
     });
 });
 
-$('#oa-paso2').on('submit', function(event){
-    event.preventDefault();
+$('#btnGuardarPaso2').on('click', function(){
     var oaIntroduccion = $("#introduccion-oa").code();
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso2" ).children('input[name=csrfmiddlewaretoken]').val();
@@ -56,8 +56,7 @@ $('#oa-paso2').on('submit', function(event){
     });
 });
 
-$('#oa-paso3').on('submit', function(event){
-    event.preventDefault();
+$('#btnGuardarPaso3').on('click', function(){
     var secciones = [];
     $(".editor.seccion").each(function() {
         var idSeccion = $(this).data("id");

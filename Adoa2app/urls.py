@@ -26,6 +26,10 @@ from .views import CrearVideo
 from .views import GuardarVideo
 from .views import TraerTerminosVideo
 from .views import EliminarActividad
+from .views import CrearPregunta
+from .views import GuardarPregunta
+from .views import TraerPregunta
+from .views import EliminarPregunta
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
@@ -54,4 +58,8 @@ urlpatterns = [
     url(r'^CrearOA/GuardarVideo/$', GuardarVideo),
     url(r'^CrearOA/TraerTerminosVideo/$', TraerTerminosVideo),
     url(r'^CrearOA/EliminarActividad/$', EliminarActividad),
+    url(r'^CrearOA/CrearPregunta/$', CrearPregunta),
+    url(r'^CrearOA/GuardarPregunta/$', GuardarPregunta),
+    url(r'^CrearOA/TraerPregunta/$', TraerPregunta),
+    url(r'^CrearOA/EliminarPregunta/$', EliminarPregunta),
 ]
