@@ -25,13 +25,13 @@
                                             {% csrf_token %}
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <input id="oatitulo" name="oatitulo" type="text" class="validate">
+                                                    <input id="oatitulo" length="50" name="oatitulo" type="text" class="validate">
                                                     <label for="oatitulo" class="">Titulo</label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <textarea id="oadescripcion" name="oadescripcion" class="materialize-textarea"></textarea>
+                                                    <textarea id="oadescripcion" length="300" name="oadescripcion" class="materialize-textarea"></textarea>
                                                     <label for="Descripcion">Descripcion</label>
                                                 </div>
                                             </div>
@@ -161,8 +161,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a id="" class="modal-action modal-close waves-effectbtn-flat ">Guardar</a>
-                    <a class="modal-action modal-close waves-effect btn-flat ">Cancerlar</a>
+                    <a id="" class="modal-action modal-close waves-effect btn-flat ">Volver</a>
                 </div>
             </div>
         {% endblock %}

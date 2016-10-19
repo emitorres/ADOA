@@ -4,9 +4,9 @@ from .Evaluacion import Evaluacion
 from .PatronPedagogico import SeccionNombre
 
 class ObjetoAprendizaje(models.Model):
-    titulo = models.CharField(max_length=300)
-    descripcion = models.CharField(max_length=300)
-    introduccion = models.CharField(max_length=2000)
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    introduccion = models.TextField()
     PatronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE,null=True)
     Evaluacion = models.OneToOneField(
         Evaluacion,
@@ -18,7 +18,7 @@ class ObjetoAprendizaje(models.Model):
         db_table = "ObjetoAprendizaje"
     
 class SeccionContenido(models.Model):
-    contenido = models.CharField(max_length=2000)
+    contenido = models.TextField()
     ObjetoAprendizaje = models.ForeignKey(ObjetoAprendizaje, on_delete=models.CASCADE)
     SeccionNombre = models.ForeignKey(SeccionNombre, on_delete=models.CASCADE)
     

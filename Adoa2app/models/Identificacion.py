@@ -2,13 +2,13 @@ from django.db import models
 from .Actividad import Actividad
 
 class Identificacion(Actividad):
-    enunciado = models.CharField(max_length=200)
+    enunciado = models.TextField()
     
     class Meta:
         db_table = "Identificacion"
     
 class IdentificacionItem(models.Model):
-    concepto = models.CharField(max_length=200)
+    concepto = models.TextField()
     respuesta = models.BooleanField()
     Identificacion = models.ForeignKey(Identificacion, on_delete=models.CASCADE)
     

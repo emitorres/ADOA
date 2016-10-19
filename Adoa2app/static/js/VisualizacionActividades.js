@@ -1,40 +1,50 @@
 function verVerdaderoFalso(idActividad){
+    $('#modalVerActividadContenido').html('');
+    
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "VerVerdaderoFalso/", // the endpoint
+        url : "TraerTerminosVerdaderoFalso/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            if(data.enunciado !==''){
-                $("#verdaderoFalsoEnunciado").val(data.enunciado);
-            }
+            $('#modalVerActividadContenido').append(
+            "<div class='col s12'>"+
+                "<p><b>"+data.enunciado+"</b></p>"+
+            "</div>"
+            );
             if(data.terminos != '[]'){
                 var terminos = JSON.parse(data.terminos);
                 terminos.forEach(function(termino) {
                     $("#modalVerActividadContenido").append(
                     "<div class='row'>"+
-                        "<div class='col s7'>"+
-                            "<label>"+termino.fields.afirmacion+"</label>"+
+                        "<div class='col s6'>"+
+                            "<p>"+termino.fields.afirmacion+"</p>"+
                         "</div>"+
                         "<div class='input-field col s3'>"+
-                            "<select actividadId='"+termino.pk+"' class='selectVerdaderoFalso' name='selectVerdaderoFalso'>"+
+                            "<select id='selectVerdaderoFalso"+termino.pk+"' class='selectVerdaderoFalso' name='selectVerdaderoFalso'>"+
                                 "<option value='' disabled='' selected=''>Seleccione la respuesta</option>"+
                                 "<option value='0' >Falso</option>"+
                                 "<option value='1' >Verdadero</option>"+
                             "</select>"+
                             "<label>Respuesta</label>"+
                         "</div>"+
-                        "<input type='hidden' name='respuesta"+termino.pk+"' id='respuesta"+termino.pk+"' value=''>"+
+                        "<input type='hidden' class='respuestaVerdaderoFalso' name='respuesta"+termino.pk+"' data-id='"+termino.pk+"' id='respuesta"+termino.pk+"' value=''>"+
+                        "<div class='col s3' id='resultado"+termino.pk+"'>"+
+                        "</div>"+
                     "</div>"
                     );
                     if(termino.fields.respuesta === true){
-                        $("#respuesta-"+termino.pk).val('1');
+                        $("#respuesta"+termino.pk).val('1');
                     }else{
-                        $("#respuesta-"+termino.pk).val('0');
+                        $("#respuesta"+termino.pk).val('0');
                     }
                     
                 });
-                $("#modalVerActividadContenido").append();
+                $("#modalVerActividadContenido").append(
+                    "<div class='row col s12'>"+
+                        "<a class='btn waves-effect waves-light red' onclick='validarRespuestasVerdaderoFalso()'>Validar</a>"+
+                    "</div>"
+                );
             }
             $('select').material_select();
             $('#modalVerActividad').openModal();
@@ -45,8 +55,15 @@ function verVerdaderoFalso(idActividad){
     });
 }
 
-function validarRespuestaVerdaderoFalso(this){
-    
+function validarRespuestasVerdaderoFalso(boton){
+    $(".respuestaVerdaderoFalso").each(function() {
+        var id = $(this).data("id");
+        if($("#selectVerdaderoFalso"+id).val() == $("#respuesta"+id).val()){
+            $("#resultado"+id).html("<div class='chip chip-actividad green'> CORRECTO </div>");
+        }else{
+            $("#resultado"+id).html("<div class='chip chip-actividad red'> INCORRECTO </div>");
+        }
+    });
 }
 
 function verIdentificacion(idActividad){

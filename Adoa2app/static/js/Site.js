@@ -47,7 +47,7 @@ var toolbar = [
 
 $('.editor').materialnote({
     toolbar: toolbar,
-    height: 100,
+    height: 300,
     minHeight: 100,
     defaultBackColor: '#fff'
 });

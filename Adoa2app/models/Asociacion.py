@@ -2,14 +2,14 @@ from django.db import models
 from .Actividad import Actividad
 
 class Asociacion(Actividad):
-    enunciado = models.CharField(max_length=200)
+    enunciado = models.TextField()
     
     class Meta:
         db_table = "Asociacion"
     
 class AsociacionItem(models.Model):
-    campo1 = models.CharField(max_length=200)
-    campo2 = models.CharField(max_length=200)
+    campo1 = models.TextField()
+    campo2 = models.TextField()
     Asociacion = models.ForeignKey(Asociacion, on_delete=models.CASCADE)
     
     class Meta:
