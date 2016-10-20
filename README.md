@@ -1,2 +1,0 @@
-# ADOA
-Proyecto de Software
