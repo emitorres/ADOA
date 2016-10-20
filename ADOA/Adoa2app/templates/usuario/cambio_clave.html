@@ -1,0 +1,27 @@
+{% extends "usuario/UsuarioBase.html" %}
+
+{% load tags_html %}
+
+{% block contenido %}
+
+<h2> {% image_tag "llave.png" %} Cambiar Clave </h2>
+
+<form action='.' method='POST'>
+
+    {% include 'tags/error_form.html' %}
+
+    {% csrf_token %}
+
+    <pre>
+    Clave Actual : {{ formulario.actual }}
+    Clave Nueva  : {{ formulario.nueva }}
+    Repita Nueva : {{ formulario.repetida }}
+    </pre>
+
+    <input type='submit' value='Actualizar'>
+    
+
+</form>
+<br />
+
+{% endblock %}

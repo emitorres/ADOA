@@ -1,0 +1,51 @@
+{% extends "administrador/AdministradorBase.html" %}
+
+{% load tags_html %}
+
+{% block bread %}
+<div id="breadcrumbs-wrapper">
+    <div class="container">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12 m12 l12">
+                <h5 class="breadcrumbs-title">Administrador</h5>
+                <ol class="breadcrumbs">
+                    <li><a style="color: #00bcd4;text-decoration:none" href="">Inicio</a></li>
+                    <li class="active">Menu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block informacion %}
+    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <div class="divider"></div>
+{% endblock %}
+{% block contenido %}
+
+<h2>{% image_tag 'usuario.png' %} Listado de Accesos </h2>
+
+<table class='webgrid'>
+	<tr class='webgrid-header'>
+		<th>ID</th>
+		<th>Tipo Usuario</th>
+		<th>Opcion Menu</th>
+	</tr>
+
+	{% for registro in lista %}
+	<tr class='webgrid-row-style'>
+		<td> {{ registro.id }} </td>
+		<td> {{ registro.tipousuario }} </td>
+		<td> {{ registro.menu }} </td>
+		<td><a class= "green btn" href='{% url 'administrador:administrador_menu_tipo_edit' registro.id %}'><i class="material-icons">mode_edit</i></a>
+		<a class= "red btn" href='{% url 'administrador:administrador_menu_tipo_edit' registro.id %}'><i class="material-icons">delete</i></a></td>
+
+	</tr>
+	{% endfor %}
+</table>
+
+<br />
+<a href='{% url 'administrador:administrador_menu_tipo_edit' 0 %}'> {% image_tag 'crear.gif' %} </a>
+
+{% endblock %}

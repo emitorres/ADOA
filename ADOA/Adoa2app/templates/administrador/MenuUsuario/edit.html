@@ -1,0 +1,81 @@
+{% extends "administrador/AdministradorBase.html" %}
+
+{% load tags_html %}
+
+{% block bread %}
+<div id="breadcrumbs-wrapper">
+    <div class="container">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12 m12 l12">
+                <h5 class="breadcrumbs-title">Administrador</h5>
+                <ol class="breadcrumbs">
+                    <li><a style="color: #00bcd4;text-decoration:none" href="">Inicio</a></li>
+                    <li class="active">Menu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block informacion %}
+    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <div class="divider"></div>
+{% endblock %}
+{% block contenido %}
+
+<h2>Accesos del Sistema</h2>
+
+
+
+    {% include 'tags/error_form.html' %}
+     
+ <div class="row">
+    
+     <form class="col s12" action='.' method='POST'>
+ {% csrf_token %}
+        <div class="col s6">
+           Opcion Menu : {{ formulario.menu }}
+      
+        </div>
+         <div class="col s6">
+ Tipo Usuario: {{ formulario.tipousuario }}
+            
+        </div>
+  <input type='submit' value='Enviar'>
+        {% url_button 'Cancelar' 'administrador:administrador_permisos_index' %}
+    </form>
+  </div>
+         
+
+
+         <form class="col s12" action='.' method='POST'>
+          {% csrf_token %}
+         <select class="browser-default" name="menu">
+                {% for menu in listaMenu %}
+                
+                    <option name="menu" value='{{ menu.id }}'>{{ menu.nombre }}</option>")
+                  
+                {% endfor %}
+  </select>
+
+
+<select class="browser-default" name="tipo">
+                {% for tipo in listaTipo %}
+                
+                    <option  name="tipo" value='{{ tipo.id }}'>{{ tipo.nombre }}</option>")
+                  
+                {% endfor %}
+  </select>
+
+
+
+       <input type='submit' value='Enviar'>
+        {% url_button 'Cancelar' 'administrador:administrador_permisos_index' %}
+    </form>
+
+    
+    <br />
+
+
+{% endblock %}
