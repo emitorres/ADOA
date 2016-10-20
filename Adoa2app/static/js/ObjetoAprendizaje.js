@@ -9,6 +9,7 @@ var toolbar = [
             ['height', ['lineheight']],
         ];
 cargarListaPatrones();
+cargarDatosGuardados();
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
@@ -18,7 +19,7 @@ $('#oa-paso1').on('submit', function(event){
     var oaPatron = $("#oapatron").val();
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "Paso1/", // the endpoint
+        url : "/CrearOA/Paso1/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -44,7 +45,7 @@ $('#btnGuardarPaso2').on('click', function(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso2" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "Paso2/", // the endpoint
+        url : "/CrearOA/Paso2/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -69,7 +70,7 @@ $('#btnGuardarPaso3').on('click', function(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "Paso3/", // the endpoint
+        url : "/CrearOA/Paso3/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -84,7 +85,7 @@ $('#btnGuardarPaso3').on('click', function(){
 function cargarListaPatrones(){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerPatrones/", // the endpoint
+        url : "/CrearOA/TraerPatrones/", // the endpoint
         type : "POST", // http method
         data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -107,7 +108,7 @@ function cambiarTab(tabContentId,tabId){
 function cargarSeccionesPatron(patronId){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerSeccionesPatron/", // the endpoint
+        url : "/CrearOA/TraerSeccionesPatron/", // the endpoint
         type : "POST", // http method
         data : { patron : patronId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -134,5 +135,31 @@ function cargarSeccionesPatron(patronId){
     });
 }
 
+function cargarDatosGuardados(){
+
+    var oaId = $("#editoa").val();
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "/CrearOA/TraerDatosObjeto/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+        var terminos = JSON.parse(data.terminos);
+            $("#oaid").val(data.oaid);
+            $("#evaluacionid").val(data.evaluacionid);
+            $("#btnTab1").removeClass('disabled');
+            $("#btnGuardarPaso1").removeClass('red');
+            $("#btnGuardarPaso1").addClass('green');
+            $("#btnGuardarPaso1").html('Editar');
+            //cargarSeccionesPatron(oaPatron);
+            $(".tab").removeClass("disabled");
+            
+            Materialize.toast("Patron cargado con exito", 3000, 'rounded')
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al guardar el objeto', 3000, 'rounded')
+        }
+    });
+}
 
 

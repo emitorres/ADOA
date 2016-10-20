@@ -17,6 +17,7 @@
                                     </ul>
                                 </div>
                                 <br>
+                                <input type="hidden" name="editoa" id="editoa" value="{{ objeto.pk }}">
                                 <input type="hidden" name="oaid" id="oaid" value="0">
                                 <input type="hidden" name="evaluacionid" id="evaluacionid" value="0">
                                 <div id="contentTab1" class="col s12">
@@ -132,7 +133,7 @@
                 </div>
             </div>
             <!-- Modal Structure -->
-            <div id="modalEditarActividad" class="modal modal-fixed-footer">
+            <div id="modalEditarActividad" class="modal modal-fixed-footer modal-actividad">
                 <div class="modal-content">
                     <h4>Editar Actividad</h4>
                     <div class="row" id="modalEditarActividadContenido">
@@ -143,7 +144,7 @@
                     <a class="modal-action modal-close waves-effect btn-flat ">Cancerlar</a>
                 </div>
             </div>
-            <div id="modalEditarPregunta" class="modal modal-fixed-footer">
+            <div id="modalEditarPregunta" class="modal modal-fixed-footer modal-actividad">
                 <div class="modal-content">
                     <h4>Editar Pregunta</h4>
                     <div class="row" id="modalEditarPreguntaContenido">
@@ -154,7 +155,7 @@
                     <a class="modal-action modal-close waves-effect btn-flat ">Cancerlar</a>
                 </div>
             </div>
-            <div id="modalVerActividad" class="modal modal-fixed-footer">
+            <div id="modalVerActividad" class="modal modal-fixed-footer modal-actividad">
                 <div class="modal-content">
                     <h4>Actividad</h4>
                     <div class="row" id="modalVerActividadContenido">

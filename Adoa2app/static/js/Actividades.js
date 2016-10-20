@@ -3,23 +3,18 @@ function crearActividad() {
     
     switch(idTipoActividad) {
     case "1":
-        Materialize.toast('Actividad 1 seleccionada', 3000, 'rounded');
         crearVerdaderoFalso();
         break;
     case "2":
-        Materialize.toast('Actividad 2 Seleccionada', 3000, 'rounded');
         crearAsociacion();
         break;
     case "3":
-        Materialize.toast('Actividad 3 Seleccionada', 3000, 'rounded');
         crearVideo();
         break;
     case "4":
-        Materialize.toast('Actividad 4 Seleccionada', 3000, 'rounded');
         crearOrdenamiento();
         break;
     case "5":
-        Materialize.toast('Actividad 5 Seleccionada', 3000, 'rounded');
         crearIdentificacion();
         break;
     default:
@@ -32,7 +27,7 @@ function crearVerdaderoFalso(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearVerdaderoFalso/", // the endpoint
+        url : "/CrearOA/CrearVerdaderoFalso/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -68,7 +63,7 @@ function modalEditarVerdaderoFalso(idActividad){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerTerminosVerdaderoFalso/", // the endpoint
+        url : "/CrearOA/TraerTerminosVerdaderoFalso/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -153,7 +148,7 @@ function guardarVerdaderoFalso(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarVerdaderoFalso/", // the endpoint
+        url : "/CrearOA/GuardarVerdaderoFalso/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -169,7 +164,7 @@ function crearIdentificacion(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearIdentificacion/", // the endpoint
+        url : "/CrearOA/CrearIdentificacion/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -205,7 +200,7 @@ function modalEditarIdentificacion(idActividad){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerTerminosIdentificacion/", // the endpoint
+        url : "/CrearOA/TraerTerminosIdentificacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -287,7 +282,7 @@ function guardarIdentificacion(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarIdentificacion/", // the endpoint
+        url : "/CrearOA/GuardarIdentificacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -303,7 +298,7 @@ function crearOrdenamiento(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearOrdenamiento/", // the endpoint
+        url : "/CrearOA/CrearOrdenamiento/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -339,7 +334,7 @@ function modalEditarOrdenamiento(idActividad){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerTerminosOrdenamiento/", // the endpoint
+        url : "/CrearOA/TraerTerminosOrdenamiento/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -432,7 +427,7 @@ function guardarOrdenamiento(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarOrdenamiento/", // the endpoint
+        url : "/CrearOA/GuardarOrdenamiento/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -448,7 +443,7 @@ function crearAsociacion(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearAsociacion/", // the endpoint
+        url : "/CrearOA/CrearAsociacion/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -484,7 +479,7 @@ function modalEditarAsociacion(idActividad){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerTerminosAsociacion/", // the endpoint
+        url : "/CrearOA/TraerTerminosAsociacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -558,7 +553,7 @@ function guardarAsociacion(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarAsociacion/", // the endpoint
+        url : "/CrearOA/GuardarAsociacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -610,7 +605,7 @@ function modalEditarVideo(idActividad){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerTerminosVideo/", // the endpoint
+        url : "/CrearOA/TraerTerminosVideo/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -636,7 +631,7 @@ function guardarVideo(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarVideo/", // the endpoint
+        url : "/CrearOA/GuardarVideo/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad,descripcion : descripcion, link : link, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -653,7 +648,7 @@ function eliminarActividad(idActividad){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "EliminarActividad/", // the endpoint
+        url : "/CrearOA/EliminarActividad/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

@@ -31,7 +31,7 @@ function crearPregunta(){
     var evaluacionId = $("#evaluacionid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearPregunta/", // the endpoint
+        url : "/CrearOA/CrearPregunta/", // the endpoint
         type : "POST", // http method
         data : { evaluacionId : evaluacionId, pregunta : pregunta, respuestacorrecta : respuestacorrecta, respuestaincorrecta1 : respuestaincorrecta1, respuestaincorrecta2 : respuestaincorrecta2, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -76,7 +76,7 @@ function modalEditarPregunta(idPregunta){
     
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "TraerPregunta/", // the endpoint
+        url : "/CrearOA/TraerPregunta/", // the endpoint
         type : "POST", // http method
         data : { preguntaId : idPregunta, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -112,7 +112,7 @@ function guardarPregunta(idPregunta){
     var evaluacionId = $("#evaluacionid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "GuardarPregunta/", // the endpoint
+        url : "/CrearOA/GuardarPregunta/", // the endpoint
         type : "POST", // http method
         data : { preguntaId : idPregunta, pregunta : pregunta, respuestacorrecta : respuestacorrecta, respuestaincorrecta1 : respuestaincorrecta1, respuestaincorrecta2 : respuestaincorrecta2, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
@@ -128,7 +128,7 @@ function guardarPregunta(idPregunta){
 function eliminarPregunta(idPregunta){
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "EliminarPregunta/", // the endpoint
+        url : "/CrearOA/EliminarPregunta/", // the endpoint
         type : "POST", // http method
         data : { preguntaId : idPregunta, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

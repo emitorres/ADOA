@@ -9,11 +9,12 @@ from django.core import serializers
 from Adoa2app.models import VerdaderoFalso, Identificacion, Ordenamiento,\
     Asociacion, Video, Actividad, Evaluacion
 from Adoa2app.models.VerdaderoFalso import VerdaderoFalsoItem
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, Http404
 from Adoa2app.models.Identificacion import IdentificacionItem
 from Adoa2app.models.Ordenamiento import OrdenamientoItem
 from Adoa2app.models.Asociacion import AsociacionItem
 from Adoa2app.models.Evaluacion import EvaluacionItem
+from django.shortcuts import render
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -24,6 +25,13 @@ class LogOn(TemplateView):
 class CrearOA(TemplateView):
     model = ObjetoAprendizaje
     template_name = 'CrearOA.html'
+    
+def EditarOA(request, objId):
+    try:
+        objeto = ObjetoAprendizaje.objects.get(pk=objId)
+    except ObjetoAprendizaje.DoesNotExist:
+        raise Http404("Poll does not exist")
+    return render(request, 'CrearOA.html', {'objeto': objeto})
 
 class Objetos(TemplateView):
     model = ObjetoAprendizaje
@@ -121,13 +129,8 @@ def Paso3(request):
 def TraerPatrones(request):
     if request.method == 'POST':
         
-        response_data = {}
-        
         patrones = PatronPedagogico.objects.all()
         patronesJson = serializers.serialize('json', patrones)
-        
-        response_data['result'] = 'Patrones!'
-        response_data['patrones'] = patronesJson
 
         return HttpResponse(
             patronesJson,
@@ -141,8 +144,6 @@ def TraerPatrones(request):
         
 def TraerSeccionesPatron(request):
     if request.method == 'POST':
-        
-        response_data = {}
         
         patronId = request.POST['patron']
         patron = PatronPedagogico.objects.get(pk=patronId)
@@ -498,7 +499,6 @@ def GuardarVideo(request):
 def TraerTerminosVideo(request):
     if request.method == 'POST':
         
-        response_data = {}
         actividadId = request.POST['actividadId']
         video = Video.objects.get(pk=actividadId)
 
@@ -645,6 +645,45 @@ def EliminarPregunta(request):
         response_data['result'] = 'Pregunta Eliminada!'
         return HttpResponse(
             json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+        
+def TraerDatosObjeto(request):
+    if request.method == 'POST':
+        oaid = int(request.POST['oaid'])
+        oa = ObjetoAprendizaje.objects.get(pk=oaid)
+        objetoJson = serializers.serialize('json', [oa])
+        patronJson = serializers.serialize('json', [oa.PatronPedagogico])
+        
+        
+        if oa.Evaluacion != None:
+            evaluacion = oa.Evaluacion
+            evaluacionItems = oa.Evaluacion.evaluacionitem_set.all()
+            evaluacionJson = serializers.serialize('json', [evaluacion])
+            evaluacionItemsJson = serializers.serialize('json', evaluacionItems)
+        else:
+            evaluacion = []
+            evaluacionItems = []
+            evaluacionJson = serializers.serialize('json', evaluacion)
+            evaluacionItemsJson = serializers.serialize('json', evaluacionItems)
+            
+        actividadesJson = serializers.serialize('json', oa.actividad_set.all())
+        seccionesContenidoJson = serializers.serialize('json', oa.seccioncontenido_set.all())
+        seccionesNombreJson = serializers.serialize('json', oa.PatronPedagogico.seccionnombre_set.all())
+
+        return JsonResponse(
+            {'objeto':objetoJson,
+             'patron': patronJson,
+             'evaluacion':evaluacionJson,
+             'evaluacionItems':evaluacionItemsJson,
+             'actividades': actividadesJson,
+             'seccionesNombre':seccionesNombreJson,
+             'seccionesContenido': seccionesContenidoJson},
             content_type="application/json"
         )
     else:
