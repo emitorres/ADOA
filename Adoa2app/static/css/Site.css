@@ -1,0 +1,112 @@
+.rgba {
+    /*background-color:rgba(255,0,0,0.6); /* rgbA */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* rgbA */
+    width: 100%;
+    height: 120px;
+    margin-top: -105px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: #e0e0e0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.modal-login{
+    width: 400px;
+}
+
+.profile-image-login {
+    width: 100px;
+    height: 100px !important;
+}
+
+.btn, .btn:hover, .btn-large:hover {
+    background-color: #ff5a92;
+}
+
+.panel-stat .stat-title {
+    color: #ee6e73;
+    text-transform: uppercase;
+}
+
+/*Texto del slide con borde negro */
+.sliderText{
+text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+/*Editor de texto*/
+.note-editor .btn, .note-editor .btn-large, .popover .btn, .popover, .btn-large, .note-editor .note-toolbar, .note-editor .note-resizebar{
+	background-color: #42a5f5;
+}
+
+/*Botones editor de texto*/
+/*.btn, .btn-large{
+	color: #1224E3;
+}*/
+
+/*Bordes del editor de texto*/
+.note-editor{
+	border-bottom-color:#42a5f5;
+	border-left-color:#42a5f5;
+	border-right-color:#42a5f5;
+}
+
+.tab, .tabs{
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+.tabs .tab a {
+    color: #ffffff;
+}
+
+.tabs .tab a:hover {
+    color: #f9c9cb;
+}
+
+.btn-actividad {
+    float: right;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.lean-overlay {
+    position: fixed;
+    z-index:999 !important;
+    top: -100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    background: #000;
+    display: none;
+
+    will-change: opacity;
+}
+
+.note-image-dialog{
+    z-index: 2000 !important;
+}
+
+.chip-actividad {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 2px;
+    }
+    
+.modal-actividad{
+    width: 70% !important;
+    height: 80% !important;
+    max-height: 80% !important; 
+}
+}
+
