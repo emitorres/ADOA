@@ -672,7 +672,12 @@ def TraerDatosObjeto(request):
             evaluacionJson = serializers.serialize('json', evaluacion)
             evaluacionItemsJson = serializers.serialize('json', evaluacionItems)
             
-        actividadesJson = serializers.serialize('json', oa.actividad_set.all())
+        verdaderosFalsosJson = serializers.serialize('json', VerdaderoFalso.objects.filter(ObjetoAprendizaje=oa))
+        identificacionesJson = serializers.serialize('json', Identificacion.objects.filter(ObjetoAprendizaje=oa))
+        asociacionesJson = serializers.serialize('json', Asociacion.objects.filter(ObjetoAprendizaje=oa))
+        videosJson = serializers.serialize('json', Video.objects.filter(ObjetoAprendizaje=oa))
+        ordenamientosJson = serializers.serialize('json', Ordenamiento.objects.filter(ObjetoAprendizaje=oa))
+        
         seccionesContenidoJson = serializers.serialize('json', oa.seccioncontenido_set.all())
         seccionesNombreJson = serializers.serialize('json', oa.PatronPedagogico.seccionnombre_set.all())
 
@@ -681,7 +686,11 @@ def TraerDatosObjeto(request):
              'patron': patronJson,
              'evaluacion':evaluacionJson,
              'evaluacionItems':evaluacionItemsJson,
-             'actividades': actividadesJson,
+             'verdaderofalso': verdaderosFalsosJson,
+             'identificacion': identificacionesJson,
+             'asociacion': asociacionesJson,
+             'video': videosJson,
+             'ordenamiento': ordenamientosJson,
              'seccionesNombre':seccionesNombreJson,
              'seccionesContenido': seccionesContenidoJson},
             content_type="application/json"
