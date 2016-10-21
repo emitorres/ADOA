@@ -1,0 +1,65 @@
+{% extends "administrador/AdministradorBase.html" %}
+
+{% load tags_html %}
+
+{% block bread %}
+<div id="breadcrumbs-wrapper">
+	<div class="container">
+		<div class="row" style="margin-bottom: 0px">
+			<div class="col s12 m12 l12">
+				<h5 class="breadcrumbs-title">Administrador</h5>
+					<ol class="breadcrumbs">
+                  		<li><a style="color: #00bcd4">Inicio</a></li>
+                  		<li class="active">Usuarios</li>
+                	</ol>
+			</div>
+		</div>
+	</div>	
+</div>
+{% endblock %}
+
+{% block informacion %}
+	<p class="caption">Listado de todos los usuarios del sistema.</p>
+	<div class="divider"></div>
+{% endblock %}
+
+{% block contenido %}
+<div class="row">
+	<div class="col s12 m12 l12">
+		<h5>Listado de Usuarios</h5>
+	</div>
+</div>
+
+<div class="row">
+<div class="col s12">
+<table class='striped bordered'>
+	<tr>
+		<th>ID</th>
+		<th>Nombre</th>
+		<th>Apepllido</th>
+		<th>Tipo</th>
+		<th>Opciones</th>
+		
+	</tr>
+
+
+{% for registro in lista %}
+	<tr >
+		<td> {{ registro.id }} </td>
+		<td> {{ registro.nombre }} </td>
+		<td> {{ registro.apellido }} </td>
+		<td> {{ registro.tipousuario }} </td>
+		<td><a class= "green btn" href='{% url 'administrador:administrador_usuarios_edit' registro.id %}'><i class="material-icons">mode_edit</i></a>
+		<a class= "red btn" href='{% url 'administrador:administrador_usuarios_edit' registro.id %}'><i class="material-icons">delete</i></a></td>
+
+	</tr>
+
+
+	{% endfor %}
+</table>
+</div>
+</div>
+<br />
+<a href='{% url 'administrador:administrador_usuarios_edit' 0 %}'> {% image_tag 'crear.gif' %} </a>
+
+{% endblock %}

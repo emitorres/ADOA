@@ -1,0 +1,25 @@
+{% extends "usuario/UsuarioBase.html" %}
+{% load staticfiles %}
+{% block contenido %}
+<div class="row">
+    {% csrf_token %}
+  <div class="col s12 m8 l10 offset-m2 offset-l1">
+    <div class="card">
+        <div class="card-content" style="margin-top:50px">
+        <div class="card-title">Email Confirmado</div>
+       	 	 <p style="font-weight: bold; font-size: 15px">Gracias tu email ha sido confirmado. Ya puedes iniciar sesión y disfrutar de los servicios que provee ADOA 2.0</p>
+         
+
+                
+        </div>
+        <div class="card-action center-align">
+           <a class="btn waves-effect waves-light" type="submit" name="action" href='{% url 'usuario:usuario_iniciarSesion' %}'>Iniciar Sesion
+                <i class="material-icons right">send</i></a>
+
+        </div>
+  
+    </div>
+  </div>
+</div>
+{% endblock %}
+

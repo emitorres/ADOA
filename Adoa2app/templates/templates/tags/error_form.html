@@ -1,0 +1,15 @@
+{% load tags_html %}
+
+{% if ver_error %}
+
+<script type="text/javascript">
+    Materialize.toast('{{ msg_no }}', 6000,'rounded')
+</script>
+{% for registro in lista_err %}
+    <!--<li style='color:red;'> {{ registro }} </li>-->
+    <script type="text/javascript">
+        Materialize.toast('{{ registro }}', 6000,'rounded')
+    </script>
+{% endfor %}
+
+{% endif %}
