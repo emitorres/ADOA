@@ -137,7 +137,7 @@ function validarRespuestasIdentificacion(){
 function verAsociacion(idActividad){
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "/CrearOA/VerAsociacion/", // the endpoint
+        url : "/CrearOA/TraerTerminosAsociacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

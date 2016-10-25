@@ -336,4 +336,4 @@ function cargarTablaObjetos(){
                 Materialize.toast('Error al cargar los patrones pedagogicos', 3000, 'rounded')
             }
         });
-
+    }

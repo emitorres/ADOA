@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^CrearOA/$', CrearOA, name = 'CrearOA'),
     #url(r'^CrearOA/$', CrearOA.as_view()),
     url(r'^EditarOA/(\d+)/$', EditarOA),
-    url(r'^Objetos/$', Objetos.as_view()),
+    url(r'^Objetos/$', Objetos, name= 'Objetos'),
     url(r'^Objetos/TraerObjetos/$', TraerObjetos),
     url(r'^CrearOA/Paso1/$', Paso1),
     url(r'^CrearOA/Paso2/$', Paso2),

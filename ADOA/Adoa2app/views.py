@@ -33,7 +33,7 @@ def CrearOA(request):
     id = request.session['usuario'].id
     usuario = Usuario.objects.get(id= id)
     
-    return render_to_response('CrearOA.html', locals(), context_instance = RequestContext(request))  
+    return render_to_response(template_name, locals(), context_instance = RequestContext(request))  
 """
 def CrearOA(request):
 
@@ -47,11 +47,17 @@ def EditarOA(request, objId):
         objeto = ObjetoAprendizaje.objects.get(pk=objId)
     except ObjetoAprendizaje.DoesNotExist:
         raise Http404("Poll does not exist")
-    return render(request, 'CrearOA.html', {'objeto': objeto})
+    id = request.session['usuario'].id
+    usuario = Usuario.objects.get(id= id)
+    return render(request, 'CrearOA.html', {'id': id, 'objeto': objeto})
 
-class Objetos(TemplateView):
+def Objetos(request):
     model = ObjetoAprendizaje
     template_name = 'Objetos.html'
+    
+    id = request.session['usuario'].id
+    usuario = Usuario.objects.get(id= id)
+    return render_to_response(template_name, locals(), context_instance = RequestContext(request))  
 
     
 def Paso1(request):
