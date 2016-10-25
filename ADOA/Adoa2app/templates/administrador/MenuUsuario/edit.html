@@ -24,7 +24,7 @@
 {% endblock %}
 {% block contenido %}
 
-<h2>Accesos del Sistema</h2>
+<h5>Accesos del Sistema</h5>
 
 
 
@@ -34,48 +34,30 @@
     
      <form class="col s12" action='.' method='POST'>
  {% csrf_token %}
+ <div class="row">
         <div class="col s6">
            Opcion Menu : {{ formulario.menu }}
       
         </div>
+        </div>
+        <div class="row">
          <div class="col s6">
  Tipo Usuario: {{ formulario.tipousuario }}
             
         </div>
-  <input type='submit' value='Enviar'>
-        {% url_button 'Cancelar' 'administrador:administrador_permisos_index' %}
+</div>
+  <button class="btn waves-effect waves-light" type="submit" name="action">Aceptar
+    <i class="material-icons right">send</i>
+  </button>
+        
+ <a class="btn waves-effect waves-light" type="submit" name="action" href='{% url 'administrador:administrador_permisos_index' %}'>Cancelar
+                <i class="material-icons right">send</i></a>
+
     </form>
   </div>
          
 
 
-         <form class="col s12" action='.' method='POST'>
-          {% csrf_token %}
-         <select class="browser-default" name="menu">
-                {% for menu in listaMenu %}
-                
-                    <option name="menu" value='{{ menu.id }}'>{{ menu.nombre }}</option>")
-                  
-                {% endfor %}
-  </select>
-
-
-<select class="browser-default" name="tipo">
-                {% for tipo in listaTipo %}
-                
-                    <option  name="tipo" value='{{ tipo.id }}'>{{ tipo.nombre }}</option>")
-                  
-                {% endfor %}
-  </select>
-
-
-
-       <input type='submit' value='Enviar'>
-        {% url_button 'Cancelar' 'administrador:administrador_permisos_index' %}
-    </form>
-
-    
-    <br />
-
+        
 
 {% endblock %}

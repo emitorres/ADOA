@@ -18,18 +18,18 @@
     <header>
         <!-- Dropdowns -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="CrearOA.html">Nuevo</a></li>
-            <li><a href="#!">Listado</a></li>
+            <li><a href="/CrearOA">Nuevo</a></li>
+            <li><a href="/Objetos">Listado</a></li>
         </ul>
         <ul id="dropdown2" class="dropdown-content">
             <li><a href="#!">Nuevo</a></li>
             <li><a href="#!">Listado</a></li>
         </ul>
         <ul id="dropdown3" class="dropdown-content">
-            <li><a href="#!">Administrar</a></li>
-            <li><a href="#!">Editar Informacion</a></li>
+            <li><a href='{% url 'usuario:usuario_cambio_clave' id %}'>Cambiar Contraseña</a></li>
+            <li><a href='{% url 'usuario:perfil_index' %}'>Editar Perfil</a></li>
             <li class="divider"></li>
-            <li><a href="#!">Cerrar Sesion</a></li>
+            <li><a href='{% url 'usuario:usuario_salir' %}'>Cerrar Sesión</a></li>
         </ul>
         <ul id="dropdown4" class="dropdown-content">
             <li><a href="#!">Nuevo</a></li>
@@ -40,7 +40,8 @@
             <li><a href="#!">Listado</a></li>
         </ul>
         <ul id="dropdown6" class="dropdown-content">
-            <li><a href="#!">Administrar</a></li>
+
+            <li><a href='{% url 'usuario:usuario_cambio_clave' id %}'>Cambiar Contraseña</a></li>
             <li><a href="#!">Editar Informacion</a></li>
             <li class="divider"></li>
             <li><a href="#!">Cerrar Sesion</a></li>

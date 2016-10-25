@@ -1,27 +1,60 @@
-{% extends "usuario/UsuarioBase.html" %}
 
+<!--*****************************************************************-->
+{% extends "usuario/UsuarioBase.html" %}
+{% load staticfiles %}
 {% load tags_html %}
 
+{% block title %}
+	<title>Inicio Sesion</title>
+{% endblock %}
+
 {% block contenido %}
+<div class="row">
 
-<h2> {% image_tag "llave.png" %} Cambiar Clave </h2>
+</div>
+{% include 'tags/error_form.html' %}
+<div class="row">
+  <div class="col s12 m8 l8 offset-m2 offset-l2">
+  <!--<div class="col s12 m6 offset-m3">-->
+    <div class="card">
+        <div class="card-content">
+         		<span class="card-title">Cambiar Contraseña</span>
+            <div class="divider col s12"></div>
+       	 	  <form action='.' method='POST'>
+          
+            {% csrf_token %}
 
-<form action='.' method='POST'>
+              <div class="row">
+                <div class="input-field col s10 m10 l10">
+                  <label for="{{formulario.actual.name}}">{{formulario.actual.label}}</label>
+                  {{formulario.actual}}     
+                </div>
+              </div>
 
-    {% include 'tags/error_form.html' %}
+              <div class="row">
+                <div class="input-field col s10 m10 l10">
+                  <label for="{{formulario.nueva.name}}">{{formulario.nueva.label}}</label>
+                  {{formulario.nueva}}     
+                </div>
+              </div>
 
-    {% csrf_token %}
-
-    <pre>
-    Clave Actual : {{ formulario.actual }}
-    Clave Nueva  : {{ formulario.nueva }}
-    Repita Nueva : {{ formulario.repetida }}
-    </pre>
-
-    <input type='submit' value='Actualizar'>
-    
-
-</form>
-<br />
+               <div class="row">
+                <div class="input-field col s10 m10 l10">
+                  <label for="{{formulario.repetida.name}}">{{formulario.repetida.label}}</label>
+                  {{formulario.repetida}}     
+                </div>
+              </div>
+                
+        </div>
+        <div class="card-action center-align">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </button>
+        
+        </div>
+    </form>  
+    </div>
+  </div>
+</div>
 
 {% endblock %}

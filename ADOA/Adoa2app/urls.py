@@ -36,8 +36,9 @@ from Adoa2app.views import EditarOA
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
     url(r'^LogOn/$', LogOn.as_view()),
-    url(r'^CrearOA/$', CrearOA.as_view()),
-    url(r'^CrearOA/(\d+)/$', EditarOA),
+    url(r'^CrearOA/$', CrearOA, name = 'CrearOA'),
+    #url(r'^CrearOA/$', CrearOA.as_view()),
+    url(r'^EditarOA/(\d+)/$', EditarOA),
     url(r'^Objetos/$', Objetos.as_view()),
     url(r'^Objetos/TraerObjetos/$', TraerObjetos),
     url(r'^CrearOA/Paso1/$', Paso1),

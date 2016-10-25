@@ -62,8 +62,7 @@ class IngresoForm(forms.Form):
 
 	usuario = forms.CharField(error_messages = {'required': 'Debe ingresar un usuario'})
 	clave   = forms.CharField(widget = forms.PasswordInput(),
-							  error_messages = {'required': 'Debe ingresar una clave'})
-	
+							  error_messages = {'required': 'Debe ingresar una clave'})	
 	def clean_usuario(self):
 		"""
 		email = self.cleaned_data.get('usuario')
@@ -83,12 +82,25 @@ class IngresoForm(forms.Form):
 			return email	
 
 class CambioPwdForm(forms.Form):
-	actual = forms.CharField(widget = forms.PasswordInput(),
-							 error_messages = {'required': 'Debe ingresar la clave actual'})
+	
 	nueva = forms.CharField(widget = forms.PasswordInput(),
 							error_messages = {'required': 'Debe ingresar la clave nueva'})
 	repetida = forms.CharField(widget = forms.PasswordInput(),
 							   error_messages = {'required': 'Debe ingresar la clave repetida'})
+	
+
+	fields = [
+		'nueva',
+		'repetida',
+	]
+
+	labels = {
+		'nueva':'Nueva',
+		'repetida':'Repetida',
+		
+	}
+
+
 	# Las validaciones para campos son clean_<nombre_campo>
 	# Si el metodo se llama clean es para todos los campos juntos
 	#validaciones propias
@@ -102,7 +114,50 @@ class CambioPwdForm(forms.Form):
 		h = handler.verify(repetida, n)
 		if not h:
 			raise forms.ValidationError('Clave nueva y repetida deben ser iguales')
-		return repetida			
+		return repetida		
+
+
+class CambioPwdForm2(forms.Form):
+	actual = forms.CharField(widget = forms.PasswordInput(),
+							 error_messages = {'required': 'Debe ingresar la clave actual'})
+	nueva = forms.CharField(widget = forms.PasswordInput(),
+							error_messages = {'required': 'Debe ingresar la clave nueva'})
+	repetida = forms.CharField(widget = forms.PasswordInput(),
+							   error_messages = {'required': 'Debe ingresar la clave repetida'})
+	
+
+	
+
+	
+	fields = [
+		'actual',
+		'nueva',
+		'repetida',
+	]
+
+	labels = {
+		'actual':'Actual',
+		'nueva':'Nueva',
+		'repetida':'Repetida',
+		
+	}
+
+
+	# Las validaciones para campos son clean_<nombre_campo>
+	# Si el metodo se llama clean es para todos los campos juntos
+	#validaciones propias
+	def clean_repetida(self):
+		nueva = self.cleaned_data.get('nueva')
+		repetida = self.cleaned_data.get('repetida')
+		#if nueva != repetida:
+		n = handler.encrypt(nueva)
+		r = handler.encrypt(repetida)
+
+		h = handler.verify(repetida, n)
+		if not h:
+			raise forms.ValidationError('Clave nueva y repetida deben ser iguales')
+		return repetida		
+
 
 class PerfilForm(forms.ModelForm):
 	class Meta:
@@ -149,14 +204,14 @@ class RecuperarContrasenaForm(forms.ModelForm):
 
 			widgets = {
 
-				'email':forms.EmailInput(),
+				'email':forms.TextInput(),
 			}
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
-		usuarioEmail = Usuario.objects.all()
-		for user in usuarioEmail:
-			if user.email != email :
-				raise forms.ValidationError('No existe ningun usuario registrado con ese correo electronico. Por favor verifique su mail y vuelva a intentarlo')
+		try:
+			Usuario.objects.get(email = email);
+		except:
+			raise forms.ValidationError('No existe ningun usuario registrado con ese correo electronico. Por favor verifique su mail y vuelva a intentarlo')
 		return email	
 
 class TipoUsuarioForm(forms.ModelForm):

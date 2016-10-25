@@ -12,7 +12,7 @@ class TipoUsuarioManager(models.Manager):
 		return self.model.objects.all()
 	
 	def traerPorId(self, tuId):
-		return self.model.objects.filter(id = tuId)
+		return self.model.objects.get(id = tuId)
 
 #---------------------------------------------------------------------------
 
@@ -54,6 +54,13 @@ class UsuarioManager(models.Manager):
 
 
 		if not h: return False
+		usuario.clave = handler.encrypt(nueva)
+		usuario.save()
+		return True
+
+	def cambiar_clave2(self, id,nueva):
+		usuario = self.model.objects.get(id = id)
+
 		usuario.clave = handler.encrypt(nueva)
 		usuario.save()
 		return True

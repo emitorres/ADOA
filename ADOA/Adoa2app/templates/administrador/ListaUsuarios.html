@@ -50,8 +50,8 @@
 		<td> {{ registro.apellido }} </td>
 		<td> {{ registro.tipousuario }} </td>
 		<td><a class= "green btn" href='{% url 'administrador:administrador_usuarios_edit' registro.id %}'><i class="material-icons">mode_edit</i></a>
-		<a class= "red btn" href='{% url 'administrador:administrador_usuarios_edit' registro.id %}'><i class="material-icons">delete</i></a></td>
-
+		<a class= "red btn" href='{% url 'usuario:usuario_eliminar_usuario' registro.id %}'><i class="material-icons">delete</i></a></td>
+	
 	</tr>
 
 

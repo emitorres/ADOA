@@ -1,3 +1,5 @@
+
+<!--*****************************************************************-->
 {% extends "usuario/UsuarioBase.html" %}
 {% load staticfiles %}
 {% load tags_html %}
@@ -16,7 +18,7 @@
   <!--<div class="col s12 m6 offset-m3">-->
     <div class="card">
         <div class="card-content">
-         		<span class="card-title">Iniciar Sesion con tu cuenta de ADOA</span>
+         		<span class="card-title">Cambiar Contraseña</span>
             <div class="divider col s12"></div>
        	 	  <form action='.' method='POST'>
           
@@ -24,26 +26,24 @@
 
               <div class="row">
                 <div class="input-field col s10 m10 l10">
-                  <label for="{{formulario.usuario.name}}">{{formulario.usuario.label}}</label>
-                  {{formulario.usuario}}     
+                  <label for="{{formulario.nueva.name}}">{{formulario.nueva.label}}</label>
+                  {{formulario.nueva}}     
                 </div>
               </div>
 
-              <div class="row">
+               <div class="row">
                 <div class="input-field col s10 m10 l10">
-                  <label for="{{formulario.clave.name}}">{{formulario.clave.label}}</label>
-                  {{formulario.clave}}     
+                  <label for="{{formulario.repetida.name}}">{{formulario.repetida.label}}</label>
+                  {{formulario.repetida}}     
                 </div>
               </div>
                 
         </div>
         <div class="card-action center-align">
-          <button class="btn waves-effect waves-light" type="submit" name="action">Iniciar Sesion!
+          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
             <i class="material-icons right">send</i>
           </button>
-           <a type="submit" name="action" href='{% url 'usuario:usuario_recuperar_contrasena' %}'>¿Olvidaste tu cuenta?</a>
-                
-              
+        
         </div>
     </form>  
     </div>

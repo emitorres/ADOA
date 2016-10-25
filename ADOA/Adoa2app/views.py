@@ -15,6 +15,10 @@ from Adoa2app.models.Ordenamiento import OrdenamientoItem
 from Adoa2app.models.Asociacion import AsociacionItem
 from Adoa2app.models.Evaluacion import EvaluacionItem
 from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponse
+from django.template import RequestContext
+from Adoa2app.usuario.models import Usuario
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -22,10 +26,22 @@ class Index(TemplateView):
 class LogOn(TemplateView):
     template_name = 'LogOn.html'
     
-class CrearOA(TemplateView):
+def CrearOA(request):
     model = ObjetoAprendizaje
     template_name = 'CrearOA.html'
+
+    id = request.session['usuario'].id
+    usuario = Usuario.objects.get(id= id)
     
+    return render_to_response('CrearOA.html', locals(), context_instance = RequestContext(request))  
+"""
+def CrearOA(request):
+
+    id = request.session['usuario'].id
+    usuario = Usuario.objects.get(id= id)
+
+    return render_to_response('CrearOA.html', locals(), context_instance = RequestContext(request))  
+"""
 def EditarOA(request, objId):
     try:
         objeto = ObjetoAprendizaje.objects.get(pk=objId)
@@ -672,7 +688,12 @@ def TraerDatosObjeto(request):
             evaluacionJson = serializers.serialize('json', evaluacion)
             evaluacionItemsJson = serializers.serialize('json', evaluacionItems)
             
-        actividadesJson = serializers.serialize('json', oa.actividad_set.all())
+        verdaderosFalsosJson = serializers.serialize('json', VerdaderoFalso.objects.filter(ObjetoAprendizaje=oa))
+        identificacionesJson = serializers.serialize('json', Identificacion.objects.filter(ObjetoAprendizaje=oa))
+        asociacionesJson = serializers.serialize('json', Asociacion.objects.filter(ObjetoAprendizaje=oa))
+        videosJson = serializers.serialize('json', Video.objects.filter(ObjetoAprendizaje=oa))
+        ordenamientosJson = serializers.serialize('json', Ordenamiento.objects.filter(ObjetoAprendizaje=oa))
+        
         seccionesContenidoJson = serializers.serialize('json', oa.seccioncontenido_set.all())
         seccionesNombreJson = serializers.serialize('json', oa.PatronPedagogico.seccionnombre_set.all())
 
@@ -681,7 +702,11 @@ def TraerDatosObjeto(request):
              'patron': patronJson,
              'evaluacion':evaluacionJson,
              'evaluacionItems':evaluacionItemsJson,
-             'actividades': actividadesJson,
+             'verdaderofalso': verdaderosFalsosJson,
+             'identificacion': identificacionesJson,
+             'asociacion': asociacionesJson,
+             'video': videosJson,
+             'ordenamiento': ordenamientosJson,
              'seccionesNombre':seccionesNombreJson,
              'seccionesContenido': seccionesContenidoJson},
             content_type="application/json"

@@ -91,8 +91,8 @@ function verIdentificacion(idActividad){
                         "<div class='input-field col s3'>"+
                             "<select id='selectIdentificacion"+termino.pk+"' class='selectIdentificacion' name='selectIdentificacion'>"+
                                 "<option value='' disabled='' selected=''>Seleccione si corresponde</option>"+
-                                "<option value='0' >Si</option>"+
-                                "<option value='1' >No</option>"+
+                                "<option value='0' >No</option>"+
+                                "<option value='1' >Si</option>"+
                             "</select>"+
                             "<label>Corresponde</label>"+
                         "</div>"+
@@ -151,17 +151,72 @@ function verAsociacion(idActividad){
 }
 
 function verOrdenamiento(idActividad){
+    $('#modalVerActividadContenido').html('');
+    
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "/CrearOA/VerOrdenamiento/", // the endpoint
+        url : "/CrearOA/TraerTerminosOrdenamiento/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            
+            $('#modalVerActividadContenido').append(
+            "<div class='col s12'>"+
+                "<p><b>"+data.enunciado+"</b></p>"+
+            "</div>"
+            );
+            if(data.terminos != '[]'){
+                var terminos = JSON.parse(data.terminos);
+                terminos.forEach(function(termino) {
+                    $("#modalVerActividadContenido").append(
+                    "<div class='row'>"+
+                        "<div class='col s6'>"+
+                            "<p>"+termino.fields.texto+"</p>"+
+                        "</div>"+
+                        "<div class='input-field col s3'>"+
+                            "<select id='selectOrdenamiento"+termino.pk+"' class='selectOrdenamiento' name='selectOrdenamiento'>"+
+                                "<option value='' disabled='' selected=''>Seleccione el orden</option>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<input type='hidden' class='respuestaOrdenamiento' name='respuesta"+termino.pk+"' data-id='"+termino.pk+"' id='respuesta"+termino.pk+"' value=''>"+
+                        "<div class='col s3' id='resultado"+termino.pk+"'>"+
+                        "</div>"+
+                    "</div>"
+                    );
+                    $("#respuesta"+termino.pk).val(termino.fields.orden);
+                });
+                $("#modalVerActividadContenido").append(
+                    "<div class='row col s12'>"+
+                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"+
+                    "</div>"
+                );
+            }
+            $('select').material_select();
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+        }
+    });
+}
+
+function validarRespuestasOrdenamiento(){
+    $(".respuestaOrdenamiento").each(function() {
+        var id = $(this).data("id");
+        if($("#selectOrdenamiento"+id).val() == $("#respuesta"+id).val()){
+            $("#resultado"+id).html("<div class='chip chip-actividad green'> CORRECTO </div>");
+        }else{
+            $("#resultado"+id).html("<div class='chip chip-actividad red'> INCORRECTO </div>");
         }
     });
 }
