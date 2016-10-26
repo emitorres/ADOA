@@ -108,5 +108,9 @@ text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #
     height: 80% !important;
     max-height: 80% !important; 
 }
+
+/*Fix Menu en ie 11 */
+a.dropdown-button{
+display: inline-block;
 }
 
