@@ -97,5 +97,5 @@ class MenuTipoUsuario(models.Model):
     objects = MenuTipoUsuarioManager() # Para usar managers
 
     class Meta:
-        db_table = u'usuario_menu_tipousuarios' # Esto si queremos usar nombres propios y no los de Django
+        db_table = 'MenuTipoUsuario'
         ordering = ['tipousuario', 'menu']
