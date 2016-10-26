@@ -587,8 +587,12 @@ def CrearPregunta(request):
         respuestacorrecta = request.POST['respuestacorrecta']
         respuestaincorrecta1 = request.POST['respuestaincorrecta1']
         respuestaincorrecta2 = request.POST['respuestaincorrecta2']
+        ordenrespuestacorrecta = request.POST['ordenrespuestacorrecta']
+        ordenrespuestaincorrecta1 = request.POST['ordenrespuestaincorrecta1']
+        ordenrespuestaincorrecta2 = request.POST['ordenrespuestaincorrecta2']
         
-        evaluacionItem = EvaluacionItem(pregunta = pregunta, respuestaCorrecta = respuestacorrecta, respuestaIncorrecta1 = respuestaincorrecta1, respuestaIncorrecta2 = respuestaincorrecta2, Evaluacion = evaluacion)
+        evaluacionItem = EvaluacionItem(pregunta = pregunta, respuestaCorrecta = respuestacorrecta, respuestaIncorrecta1 = respuestaincorrecta1, respuestaIncorrecta2 = respuestaincorrecta2,
+                                        ordenRespuestaCorrecta = ordenrespuestacorrecta, ordenRespuestaIncorrecta1 = ordenrespuestaincorrecta1, ordenRespuestaIncorrecta2 = ordenrespuestaincorrecta2, Evaluacion = evaluacion)
         evaluacionItem.save()
 
         response_data['result'] = 'Pregunta Creada!'
@@ -614,11 +618,17 @@ def GuardarPregunta(request):
         respuestacorrecta = request.POST['respuestacorrecta']
         respuestaincorrecta1 = request.POST['respuestaincorrecta1']
         respuestaincorrecta2 = request.POST['respuestaincorrecta2']
+        ordenrespuestacorrecta = request.POST['ordenrespuestacorrecta']
+        ordenrespuestaincorrecta1 = request.POST['ordenrespuestaincorrecta1']
+        ordenrespuestaincorrecta2 = request.POST['ordenrespuestaincorrecta2']
         
         evaluacionItem.pregunta = pregunta
         evaluacionItem.respuestaCorrecta = respuestacorrecta
         evaluacionItem.respuestaIncorrecta1 = respuestaincorrecta1
         evaluacionItem.respuestaIncorrecta2 = respuestaincorrecta2
+        evaluacionItem.ordenRespuestaCorrecta = ordenrespuestacorrecta
+        evaluacionItem.ordenRespuestaIncorrecta1 = ordenrespuestaincorrecta1
+        evaluacionItem.ordenRespuestaIncorrecta2 = ordenrespuestaincorrecta2
         evaluacionItem.save()
 
         response_data['result'] = 'Pregunta Editada!'
@@ -645,6 +655,9 @@ def TraerPregunta(request):
         response_data['respuestacorrecta'] = evaluacionItem.respuestaCorrecta
         response_data['respuestaincorrecta1'] = evaluacionItem.respuestaIncorrecta1
         response_data['respuestaincorrecta2'] = evaluacionItem.respuestaIncorrecta2
+        response_data['ordenrespuestacorrecta'] = evaluacionItem.ordenRespuestaCorrecta
+        response_data['ordenrespuestaincorrecta1'] = evaluacionItem.ordenRespuestaIncorrecta1
+        response_data['ordenrespuestaincorrecta2'] = evaluacionItem.ordenRespuestaIncorrecta2
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
