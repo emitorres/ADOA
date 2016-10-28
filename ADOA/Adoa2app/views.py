@@ -735,5 +735,26 @@ def TraerDatosObjeto(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+        
+def TraerTerminosEvaluacion(request):
+    if request.method == 'POST':
+        
+        
+        evaluacionId = request.POST['evaluacionid']
+        evaluacion = Evaluacion.objects.get(pk=evaluacionId)
+        
+        terminos = evaluacion.evaluacionitem_set.all()
+        
+        terminosJson = serializers.serialize('json', terminos)
+
+        return JsonResponse(
+            {'enunciado':evaluacion.enunciado,'terminos': terminosJson},
+            content_type="application/json"
+        )
+    else:
+        return JsonResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
     
         

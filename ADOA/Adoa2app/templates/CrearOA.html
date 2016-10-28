@@ -121,10 +121,11 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        <div class="row col s12" id="evaluacion">
+                                        <div class="row col s12" id="verevaluacion">
                                           <a id="btnAgregarPregunta" onclick="agregarPreguntaEvaluacion()" class="btn waves-effect waves-light red left">Agregar Pregunta</a>
+                                          <a id="btnVerEvaluacion" onclick="verEvaluacion()" class="btn waves-effect waves-light red right">Ver Evalucion</a>
                                         </div>
-                                        <a id="btnTab5" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
+                                        <a id="btnTab5" href="/Objetos" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +163,17 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a id="" class="modal-action modal-close waves-effect btn-flat ">Volver</a>
+                    <a class="modal-action modal-close waves-effect btn-flat ">Volver</a>
+                </div>
+            </div>
+            <div id="modalVerEvaluacion" class="modal modal-fixed-footer modal-actividad">
+                <div class="modal-content">
+                    <h4>Evaluacion</h4>
+                    <div class="row" id="modalVerEvaluacionContenido">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-action modal-close waves-effect btn-flat ">Volver</a>
                 </div>
             </div>
         {% endblock %}

@@ -569,7 +569,7 @@ function crearVideo(){
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
-        url : "CrearVideo/", // the endpoint
+        url : "/CrearOA/CrearVideo/", // the endpoint
         type : "POST", // http method
         data : { oaid : oaId, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {

@@ -67,7 +67,7 @@ function crearPregunta(){
             var idPregunta = data.idPregunta;
             $("#preguntas").show();
             $("#listapreguntas").append(
-            "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+pregunta+
+            "<li id='pregunta"+idPregunta+"' class='collection-item'><div><span id='preguntaspan"+idPregunta+"'"+pregunta.substr(0, 50)+
             "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
             "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
             "</div></li>"

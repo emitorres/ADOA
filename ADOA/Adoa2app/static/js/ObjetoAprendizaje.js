@@ -263,23 +263,13 @@ function cargarDatosGuardados(){
                     );
                 });
                 
-                videolista.forEach(function(actividad) {
-                    $("#actividades").show();
-                    var idActividad = actividad.pk;
-                    $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Video"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "<a onclick='verVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "</div></li>"
-                    );
-                });
                 
                 evaluacionItems.forEach(function(pregunta) {
                     var idPregunta = pregunta.pk;
+                    var pregunta = pregunta.fields.pregunta;
                     $("#preguntas").show();
                     $("#listapreguntas").append(
-                    "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+pregunta.fields.pregunta+
+                    "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+pregunta.substr(0,140)+
                     "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
                     "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
