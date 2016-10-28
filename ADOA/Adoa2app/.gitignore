@@ -2,3 +2,4 @@
 /tests.pyc
 /urls.pyc
 /views.pyc
+*.pyc
