@@ -19,13 +19,15 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
 from Adoa2app.usuario.models import Usuario
+from Adoa2app.usuario.access import my_access_required
 
 class Index(TemplateView):
     template_name = 'Index.html'
     
 class LogOn(TemplateView):
     template_name = 'LogOn.html'
-    
+
+@my_access_required    
 def CrearOA(request):
     model = ObjetoAprendizaje
     template_name = 'CrearOA.html'
@@ -42,6 +44,7 @@ def CrearOA(request):
 
     return render_to_response('CrearOA.html', locals(), context_instance = RequestContext(request))  
 """
+@my_access_required
 def EditarOA(request, objId):
     try:
         objeto = ObjetoAprendizaje.objects.get(pk=objId)
@@ -735,16 +738,16 @@ def TraerDatosObjeto(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
-        
+		
 def TraerTerminosEvaluacion(request):
     if request.method == 'POST':
-        
-        
+
+
         evaluacionId = request.POST['evaluacionid']
         evaluacion = Evaluacion.objects.get(pk=evaluacionId)
-        
+
         terminos = evaluacion.evaluacionitem_set.all()
-        
+
         terminosJson = serializers.serialize('json', terminos)
 
         return JsonResponse(
@@ -755,6 +758,4 @@ def TraerTerminosEvaluacion(request):
         return JsonResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
-        )
-    
-        
+        )    

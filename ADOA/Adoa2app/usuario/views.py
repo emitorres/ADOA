@@ -15,6 +15,12 @@ from passlib.hash import django_pbkdf2_sha256 as handler
 
 from passlib.hash import pbkdf2_sha256
 import uuid
+def index_usuarioBase(request):
+	id = request.session['usuario'].id
+	usuario = Usuario.objects.get(id= id)
+
+
+	return render_to_response('usuario/ConfiguracionBase.html', locals(), context_instance = RequestContext(request))
 
 def usuario_index(request):
 	return render_to_response('usuario/InicioSesion.html', locals(), context_instance = RequestContext(request))
@@ -133,6 +139,9 @@ def perfil_index(request):
 	
 @my_login_required
 def perfil_editar(request,registro):
+	id = request.session['usuario'].id
+	usuario = Usuario.objects.get(id= id)
+
 	valido = False
 	ver_error = False
 	msg_ok = 'Operacion Exitosa'
@@ -149,7 +158,7 @@ def perfil_editar(request,registro):
 		valido = formulario.is_valid()
 		if valido:
 			formulario.save()
-			return redirect('usuario:perfil_index')
+			return redirect('usuario:index_usuarioBase')
 			#nombre = formulario.cleaned_data['nombre']
 		else:
 			ver_error = True
@@ -272,7 +281,8 @@ def cambiar_clave(request,registro):
 @my_login_required
 def cambio_clave(request,registro):
 	# formulario - msg_no - ver_error - lista_err: se deben llamar asi, el include las referencian con ese nombre
-
+	id = request.session['usuario'].id
+	usuario = Usuario.objects.get(id= id)
 
 	valido = False
 	ver_error = False
@@ -292,7 +302,7 @@ def cambio_clave(request,registro):
 
 			cambio = Usuario.objects.cambiar_clave(usuario.id, actual, nueva)
 
-			if cambio: return HttpResponseRedirect('/adoa/')
+			if cambio: return HttpResponseRedirect('/usuario/configuracion/')
 			else: ver_error = True
 		else:
 			ver_error = True

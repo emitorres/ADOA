@@ -17,13 +17,12 @@ def my_login_required(f):
 	return wrap
 # Define si tiene acceso controlando login y acceso por menu
 def my_access_required(f):
-
 	def wrap(request, *args, **kwargs):
 
 		# Para tener acceso por menu siempre hay que estar logueado
 		if 'usuario' not in request.session:
-			#return HttpResponseRedirect('/acceso_denegado/')
 			return redirect('usuario:usuario_acceso_denegado')
+
 		# Esta logueado, controla acceso por menu
 		tipo_usuario = request.session['usuario'].tipousuario.id
 		url1 = f.__name__
@@ -32,8 +31,8 @@ def my_access_required(f):
 			menu = Menu.objects.get(url = url1)
 			menu.tipousuarios.traerPorId(tipo_usuario)
 		except:
-			#return HttpResponseRedirect('/acceso_denegado/')
 			return redirect('usuario:usuario_acceso_denegado')
+
 		return f(request, *args, **kwargs)
 
 	wrap.__doc__ = f.__doc__

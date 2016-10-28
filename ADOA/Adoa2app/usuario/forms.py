@@ -166,21 +166,21 @@ class PerfilForm(forms.ModelForm):
 			fields = [
 				'nombre',
 				'apellido',
-				'dni',
+
 				'carrera',
 			]
 
 			labels = {
 				'nombre':'Nombre',
 				'apellido':'Apellido',
-				'dni':'DNI',
+
 				'carrera':'Carrera',
 			}
 
 			widgets = {
 				'nombre':forms.TextInput(),
 				'apellido':forms.TextInput(),
-				'dni':forms.TextInput(),
+
 				'carrera':forms.TextInput(),
 			}
 

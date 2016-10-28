@@ -21,6 +21,22 @@ function cerrarModal(id){
 }
   $(document).ready(function(){
     $('.tooltipped').tooltip({delay: 50});
+
+      $('#alternar-panel-oculto').toggle( 
+        function(e){ 
+            $('#panel-oculto').toggle( "slide" ,1000);
+
+            $('#main').css({'padding-left': '0px'});
+            $(this).find('i').text('menu');
+            e.preventDefault();
+        }, 
+        function(e){ 
+            $('#panel-oculto').toggle( "slide",1000);
+            $('#main').css({'padding-left': '240px'});
+            $(this).find('i').text('menu');
+            e.preventDefault();
+        }
+    );
   });
      
       function showToast(message, duration){
@@ -37,3 +53,8 @@ function cerrarModal(id){
                alert('Toast dismissed!');
             });
       }
+
+
+
+
+   

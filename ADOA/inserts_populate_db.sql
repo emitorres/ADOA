@@ -4,6 +4,7 @@ INSERT INTO  PatronPedagogico  VALUES (2, 'Spiral', '02');
 INSERT INTO  PatronPedagogico  VALUES (3, 'Lay of the land', '03');
 INSERT INTO  PatronPedagogico  VALUES (4, 'Toy box', '04');
 INSERT INTO  PatronPedagogico  VALUES (5, 'Toolbox', '05');
+INSERT INTO  PatronPedagogico  VALUES (6, 'Sin patrón', '06');
 
 -- Secciones
 INSERT INTO  SeccionNombre  VALUES (1, 'Ideas principales', 1);
@@ -24,68 +25,40 @@ INSERT INTO  SeccionNombre  VALUES (15, 'Situación actual de la problemática',
 INSERT INTO  SeccionNombre  VALUES (16, 'Síntesis de herramientas', 5);
 INSERT INTO  SeccionNombre  VALUES (17, 'Explicación metodología 1', 5);
 INSERT INTO  SeccionNombre  VALUES (18, 'Explicación metodología 2', 5);
+INSERT INTO  SeccionNombre  VALUES (19, 'Contenido', 6);
 
 -- TipoUsuario
 insert into TipoUsuario values (1, 'Administrador', now(), now());
 insert into TipoUsuario values (2, 'Docente editor', now(), now());
 insert into TipoUsuario values (3, 'Docente común', now(), now());
 
+-- TipoUsuario
+INSERT INTO TipoUsuario values (1, 'Administrador', now(), now());
+INSERT INTO TipoUsuario values (2, 'Docente editor', now(), now());
+INSERT INTO TipoUsuario values (3, 'Docente común', now(), now());
+
 -- Menu
-INSERT INTO `Menu`(id,
-                   nombre,
-                   url,
-                   created,
-                   updated)
-     VALUES (1,
-             'Menu Administrador',
-             'index_administrador',
-             '2016-10-20 01:24:38.0',
-             '2016-10-20 01:24:38.0');
+INSERT INTO Menu VALUES (1,'Menu Administrador','index_administrador',now(), now());
+INSERT INTO Menu VALUES (2,'Listado usuarios','usuarios_index',now(), now());
+INSERT INTO Menu VALUES (3,'Edición usuario','usuarios_edit',now(), now());
+INSERT INTO Menu VALUES (4,'Listado perfiles','perfiles_index',now(), now());	 
+INSERT INTO Menu VALUES (5,'Edición perfiles', 'perfiles_edit', now(), now());			 
+INSERT INTO Menu VALUES (6,'Usuario base','index_usuarioBase', now(), now());
+INSERT INTO Menu VALUES (7,'Crear objeto','CrearOA', now(), now());
 
-INSERT INTO `Menu`(id,
-                   nombre,
-                   url,
-                   created,
-                   updated)
-     VALUES (2,
-             'Listado usuarios',
-             'usuarios_index',
-             '2016-10-20 03:14:29.0',
-             '2016-10-20 03:14:29.0');
+-- MenuTipoUsuario
+INSERT INTO MenuTipoUsuario VALUES (1, 1, 1);
+INSERT INTO MenuTipoUsuario VALUES (2, 2, 1);
+INSERT INTO MenuTipoUsuario VALUES (3, 3, 1);
+INSERT INTO MenuTipoUsuario VALUES (4, 4, 1);	 
+INSERT INTO MenuTipoUsuario VALUES (5, 5, 1);
+INSERT INTO MenuTipoUsuario VALUES (6, 6, 1);
+INSERT INTO MenuTipoUsuario VALUES (7, 6, 2);
+INSERT INTO MenuTipoUsuario VALUES (8, 6, 3);
+INSERT INTO MenuTipoUsuario VALUES (9, 7, 1);
+INSERT INTO MenuTipoUsuario VALUES (10, 7, 2);
 
-INSERT INTO `Menu`(id,
-                   nombre,
-                   url,
-                   created,
-                   updated)
-     VALUES (3,
-             'Edición usuario',
-             'usuarios_edit',
-             '2016-10-20 03:16:44.0',
-             '2016-10-20 03:16:44.0');
-
-INSERT INTO `Menu`(id,
-                   nombre,
-                   url,
-                   created,
-                   updated)
-     VALUES (4,
-             'Listado perfiles',
-             'perfiles_index',
-             '2016-10-20 03:19:03.0',
-             '2016-10-20 03:19:03.0');   
-             
--- MenuTipoUsuarios
-INSERT INTO usuario_menu_tipousuarios(id, menu_id, tipousuario_id)
-     VALUES (1, 1, 1);
-
-INSERT INTO usuario_menu_tipousuarios(id, menu_id, tipousuario_id)
-     VALUES (2, 2, 1);
-
-INSERT INTO usuario_menu_tipousuarios(id, menu_id, tipousuario_id)
-     VALUES (3, 3, 1);
-
-INSERT INTO usuario_menu_tipousuarios(id, menu_id, tipousuario_id)
-     VALUES (4, 4, 1);   
+-- Usuario administrador
+INSERT INTO Usuario VALUES (1, 1, 'Marcos', 'Amaro', '31332463', 'Sistemas', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.n.amaro@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0');
      
 COMMIT;

@@ -72,8 +72,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         #'ENGINE': 'mysql.connector.django',
         'NAME': 'adoa2',
-        'USER': 'django',
-        'PASSWORD': 'django-pass',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
     }
 }

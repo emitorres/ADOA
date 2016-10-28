@@ -1,4 +1,4 @@
-{% extends "usuario/UsuarioBase.html" %}
+{% extends "usuario/ConfiguracionBase.html" %}
 
 
 {% load staticfiles %}
@@ -20,19 +20,10 @@
 
 {% else %}
 
-
-<div class="row" style="padding-top:45px">
-	<div class="col s12 m10 offset-m1">
-        <div class="card">
-           	<div class="card-content">
-            	<span class="card-title">Editar Perfil</span>
-
-          	 	
-
           	 	<p class="caption">Complete el siguiente formulario para cambiar sus datos personales</p>
-          	 	 	<br>
+          
           	 	<div class="divider"></div>
-          	 	<br>
+          	 	 <br>
           	 	{% include 'tags/error_form.html' %}
 
           	 	<form action='.' method='POST'>
@@ -53,28 +44,16 @@
 
 					<div class="row">
 						<div class="input-field col s6">
-							<label for="{{formulario.dni.name}}">{{formulario.dni.label}}</label>
-							{{formulario.dni}}			
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field col s6">
 							<label for="{{formulario.carrera.name}}">{{formulario.carrera.label}}</label>
 							{{formulario.carrera}}			
 						</div>
 					</div>
-
-            </div>
-
-            <div class="card-action">
+          
             	<button class="btn waves-effect waves-light" type="submit" name="action">Actualizar Datos<i class="material-icons right">send</i>
             	</button>
-           	</div>
+           	
 		</form>
-        </div>
-    </div>
-</div>
+
 
 {% endif %}
 

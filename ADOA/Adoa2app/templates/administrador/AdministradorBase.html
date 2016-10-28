@@ -2,37 +2,52 @@
 {% load staticfiles %}
 <html>
 <head>
-	 <!--Import Google Icon Font-->
+ 	<!--Import Google Raleway Font-->
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+    <!--/Import Google Raleway Font-->
+
+	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--/Import Google Icon Font-->
+
 	<!--Import materialize.css-->
-
 	<link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/materialize.min.css" %}' media="screen,projection"/>
+	<!--/Import materialize.css-->
 
+	<!--Import adoa.css-->
 	<link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/adoa.css" %}' media="screen,projection"/>
+	<!--/Import adoa.css-->
+
+	<!--Import fuente.css-->
+	<link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+	<!--/Import fuente.css-->
 
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.0.2.min.js"></script>
 
+	<!--Import Jquery 2.0.2-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<!--/Import Jquery 2.0.2-->
+
+	<!--Import materialize.min.js-->
 	<script type="text/javascript" src='{% css_tag "materialize/js/materialize.min.js" %}'></script>
+	<!--/Import materialize.min.js-->
 
-    <script type="text/javascript" src='{% css_tag "materialize/js/adoa.js" %}'></script>
+	<!--Import adoa.js-->
+	<script type="text/javascript" src='{% css_tag "materialize/js/adoa.js" %}'></script>
+	<!--Import adoa.js-->
 
-<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!--Import Jquery-migrate 1.2.1-->
+	<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!--/Import Jquery-migrate 1.2.1-->
 
-  <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-
-
- <link rel="stylesheet" type="text/css" href='{% css_tag "materialize/css/easy-responsive-tabs.css" %}' />
-   
-    <script src='{% css_tag "materialize/js/easyResponsiveTabs.js" %}'></script>
-
+	<!--Import Jquery-ui 1.12.0-->
+	<script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	<!--/Import Jquery-ui 1.12.0-->
 
 </head>
 <body>
-
-
 
 	<header id="header" class="page-topbar">
 		<nav>
@@ -117,6 +132,7 @@
     			<li><a class="subheader red-text" style="font-weight: bold">PERMISOS</a></li>
     			<li><a class="waves-effect" href='{% url 'administrador:administrador_permisos_index' %}'><i class="material-icons violet-text">list</i>Lista de Accesos</a></li>
 
+
   			</ul>
   			
 		</aside>
@@ -149,62 +165,38 @@
 
                 {% endblock %}
 
-                <div>
-
-<div id="panel-oculto" style="display:none">sd</div>
- 
-
+                <div><div id="panel-oculto" style="display:none">sd</div>
 
 				</div><!--SECTION PRINCIPAL-->
 			</div><!--CONTAINER PRINCIPAL-->
 		</section>
 	</div><!--WRAPPER PRINCIPAL-->
-
-
 </div><!--MAIN PRINCIPAL-->
 
 
-</body>
-
-
-
-
-
-
-
-            <script type="text/javascript">
+<!--Mostrar/Ocultar menu lateral-->
+<script type="text/javascript">
 $(document).ready(function(){ 
-
-
     $('#alternar-panel-oculto').toggle( 
         function(e){ 
-            /*$('#panel-oculto').slideDown("slow");*/
             $('#panel-oculto').toggle( "slide" ,1000);
 
             $('#main').css({'padding-left': '0px'});
-
-
-            /*$('#panel-oculto').css({'padding-left': '0px','display':'none'});*/
-
-
-
             $(this).find('i').text('menu');
             e.preventDefault();
         }, 
         function(e){ 
-        	 
-            /*$('#panel-oculto').slideUp("fast");*/
             $('#panel-oculto').toggle( "slide",1000);
-
             $('#main').css({'padding-left': '240px'});
-
-            /*$('#panel-oculto').css({'padding-left': '240px','display':'block'});*/
-
-            /*$(this).text('<i class="material-icons">menu</i>');*/
             $(this).find('i').text('menu');
             e.preventDefault();
         }
     );
 });
 </script>
+<!--/Mostrar/Ocultar menu lateral-->
+
+</body>
+
+
 </html>

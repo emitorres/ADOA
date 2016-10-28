@@ -8,6 +8,7 @@ from Adoa2app.usuario.access import my_access_required
 @my_access_required
 def index_administrador(request):
 	return render_to_response('administrador/AdministradorBase.html', locals(), context_instance = RequestContext(request))
+
 @my_access_required
 def usuarios_index(request):
 	lista = Usuario.objects.all()
