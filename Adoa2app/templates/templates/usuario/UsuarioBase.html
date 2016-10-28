@@ -1,0 +1,65 @@
+{% load staticfiles %}
+{% load tags_html %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" href='{% static "stylesheets/materialize/css/materialize.min.css" %}' />
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+	  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  	<script type="text/javascript "src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
+	<script type="text/javascript "src='{% static "stylesheets/materialize/js/adoa.js" %}'></script>
+
+
+	{% block title %} {% endblock %}
+</head>
+<body>
+
+<header>
+    <nav class="light-blue lighten-1">
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo"> <h4>Adoa</h4></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        <ul class="right hide-on-med-and-down">
+          <!-- Dropdown Trigger -->
+          	<li>
+		    	<a href="{% url 'usuario:usuario_iniciarSesion' %}" class="waves-effect waves-light modal-trigger">
+		        	<i class="material-icons right">power_settings_new</i>
+		        	Iniciar Sesion
+	         	</a>
+
+          	</li>
+
+          <li>
+          <a class="waves-effect waves-light modal-trigger" href="#modalRegister">Registrarse<i class="material-icons right">subject</i></a></li>
+          <li><a class="dropdown-button" href="#!">Manual de Usuario<i class="material-icons right">live_help</i></a></li>
+        </ul>
+
+        <ul class="side-nav" id="mobile-demo">
+          <!-- Dropdown Trigger -->
+          <li><a class="waves-effect waves-light modal-trigger" href="#modalLogin">Iniciar Sesion<i class="material-icons right">power_settings_new</i></a></li>
+          <li><a class="waves-effect waves-light modal-trigger" href="#modalRegister">Registrarse<i class="material-icons right">subject</i></a></li>
+          <li><a class="dropdown-button" href="#!">Manual de Usuario<i class="material-icons right">live_help</i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+
+          			
+	<div class="container"><!--CONTAINER PRINCIPAL-->
+				{% block contenido %}
+{% endblock %}
+        
+	</div><!--CONTAINER PRINCIPAL-->
+		
+
+</body>
+</html>

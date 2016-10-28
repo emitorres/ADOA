@@ -1,0 +1,284 @@
+{% load tags_html %}
+{% load staticfiles %}
+<html>
+<head>
+	 <!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+
+	<link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/materialize.min.css" %}' media="screen,projection"/>
+
+	<link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/adoa.css" %}' media="screen,projection"/>
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	<script type="text/javascript" src='{% css_tag "materialize/js/materialize.min.js" %}'></script>
+
+    <script type="text/javascript" src='{% css_tag "materialize/js/adoa.js" %}'></script>
+
+
+
+
+
+
+
+ <link rel="stylesheet" type="text/css" href='{% css_tag "materialize/css/easy-responsive-tabs.css" %}' />
+    <script src='{% css_tag "materialize/js/jquery-1.9.1.min.js" %}'></script>
+    <script src='{% css_tag "materialize/js/easyResponsiveTabs.js" %}'></script>
+
+
+
+
+
+
+
+
+	
+<style type="text/css" rel="stylesheet">
+        body {
+            background: #fff;
+        }
+        #container {
+            width: 940px;
+            margin: 0 auto;
+        }
+        @media only screen and (max-width: 768px) {
+            #container {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+	<header id="header" class="page-topbar">
+		<nav>
+			<div class="navbar-fixed">
+			<nav> 	
+	    		<div class="nav-wrapper">
+      				<a href="#" class="brand-logo">
+					<!--<img src="logo3.png">-->
+					{% image_tag 'adoa.png' %}
+      				</a>
+      				<ul id="dropdown1" class="dropdown-content" style="margin-top: 64px">
+  								<li>
+                                     
+              				
+                                </li>
+ 								<li><a href='{% url 'usuario:perfil_index' %}'>Editar Perfil</a>
+
+ 								</li>
+							    <li class="divider"></li>
+							  <li>{% url_tag 'Cerrar Sesion' 'usuario:usuario_salir' %}    </li>
+					</ul>
+	      			<ul id="nav-mobile" class="right hide-on-med-and-down">
+	      				<li><a href="sass.html">Inicio</a></li>
+	      				<li><a href="sass.html">Sass</a></li>
+	        			<li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">settings</i></a></li>
+	      			</ul>
+	      				
+	      				<!--.show-on-medium-and-down           hide-on-med-and-down-->
+	      			<div class="header-search-wrapper hide-on-med-and-down">
+                       			<!--<i class="material-icons">search</i>-->
+                       	<form>
+                       		<div class="input-field" style="height: 30px">
+	                        	<input name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize" type="search" style="padding-left: 80px;">
+	                        	<label class="" for="search"><i class="material-icons">search</i></label>
+							</div>
+						</form>
+                    </div>
+	      					
+	    		</div>
+	    		</nav>
+	   		</div>
+  		</nav>
+	</header>
+
+<div id="main"><!--MAIN PRINCIPAL-->
+	<div class="wrapper"><!--WRAPPER PRINCIPAL-->
+		<div class="sidebar1">
+		<aside id="left-sidebar-nav">
+			<ul id="panel-oculto" class="side-nav fixed" style="width: 240px; margin-top:64px">
+    			<li>
+					<div class="userView" style="padding-left: 0px;padding-right: 0px;padding-top: 10px;">
+						<img class="background" src=" {% static "images/office.jpg" %}" >
+	    				<div class="row" style="margin-bottom: 0px;">
+	    					<div class="col s12 m12 l12" style="padding-left: 0px;padding-right: 0px;">
+	    						<img class="circle" src="{% static "images/user2.png" %}" style="margin-left: 90px;">
+	    					</div>
+	    				</div>
+	    				<div class="row" style="margin-bottom: 0px;">
+							<div class="col s12 m12 l12" style="padding-left: 0px;padding-right: 0px;">
+	    						<a><span class="white-text name center-align" style="font-weight:bold;font-size:20px;margin-left: 0px;"> {% traer_usuario request %} </span></a>
+	    					</div>
+	    					<div class="row"></div>
+	    				</div>
+	    			</div>
+	    		</li>
+
+	    		<li><a class="subheader red-text" style="font-weight: bold">PROYECTO</a></li>
+    			<li><a href="#!"><i class="material-icons blue-text">home</i>Inicio</a></li>
+    			<li><a href="#!"><i class="material-icons green-text">forward</i>Crear Nuevo Objeto</a></li>
+   				<li><div class="divider"></div></li>
+    			<li><a class="subheader red-text" style="font-weight: bold">OPCIONES</a></li>
+    			<li><a class="waves-effect" href="#!"><i class="material-icons orange-text">mode_edit</i>Editar Objeto</a></li>
+    			<li><a class="waves-effect" href="#!"><i class="material-icons red-text">file_upload</i>Importar Objeto</a></li>
+    			<li><div class="divider"></div></li>
+    			<li><a class="subheader red-text" style="font-weight: bold">EXPORTAR</a></li>
+    			<li><a class="waves-effect" href="#!"><i class="material-icons violet-text">file_download</i>Exportar Objeto</a></li>
+
+  			</ul>
+  			
+		</aside>
+		</div>
+		<section id="content">
+            {% block bread %}
+				<div id="breadcrumbs-wrapper">
+					<div class="container">
+						<div class="row" style="margin-bottom: 0px">
+							<div class="col s12 m12 l12">
+								<h5 class="breadcrumbs-title">Adoa 2.0</h5>
+								<ol class="breadcrumbs">
+                  					<li><a style="color: #00bcd4;text-decoration:none" href="{% url 'principal:index_adoa' %}">Inicio</a></li>
+                				</ol>
+							</div>
+						</div>
+					</div>		
+				</div>
+			{% endblock %}
+			
+			<div class="container"><!--CONTAINER PRINCIPAL-->
+				<div class="section"><!--SECTION PRINCIPAL aca va toodoo-->
+					<p class="caption">Widgets allow users to turn personal content into dynamic web apps that can be shared on websites where the code can be installed.</p>
+            		<div class="divider"></div>
+            		
+                        
+<div id="panel-oculto" style="display:none">sd</div>
+ 
+<a href="#" id="alternar-panel-oculto" style="margin-left: 200px"><i class="material-icons">list</i></a>
+
+
+
+
+
+
+
+        <h1 style="font-size:32px">Easy Responsive Tabs to Accordion (with Nested Tabs)</h1>
+      
+        <!--Horizontal Tab-->
+        <div id="parentHorizontalTab">
+            <ul class="resp-tabs-list hor_1">
+                <li>Horizontal 1</li>
+                <li>Horizontal 2</li>
+                <li>Horizontal 3</li>
+            </ul>
+            <div class="resp-tabs-container hor_1">
+
+                <div>
+                    <p>Tab 1 Container</p>
+                </div>
+
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. Proin consectetur nibh quis urna gravida mollis.
+                    <br>
+                    <br>
+                    <p>Tab 2 Container</p>
+                </div>
+
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer laoreet placerat suscipit. Sed sodales scelerisque commodo. Nam porta cursus lectus. Proin nunc erat, gravida a facilisis quis, ornare id lectus. Proin consectetur nibh quis urna gravida mollis.
+                    <br>
+                    <br>
+                    <p>Tab 3 Container</p>
+                </div>
+
+            </div>
+
+        </div>
+       
+
+       
+     
+    
+	
+	<!--Plug-in Initialisation-->
+	<script type="text/javascript">
+    $(document).ready(function() {
+        //Horizontal Tab
+        $('#parentHorizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+
+      
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+
+				</div><!--SECTION PRINCIPAL-->
+			</div><!--CONTAINER PRINCIPAL-->
+		</section>
+	</div><!--WRAPPER PRINCIPAL-->
+
+
+</div><!--MAIN PRINCIPAL-->
+<script type="text/javascript">
+$(document).ready(function(){ 
+    $('#alternar-panel-oculto').toggle( 
+        function(e){ 
+            /*$('#panel-oculto').slideDown("slow");*/
+            $('#panel-oculto').toggle( "slide" ,1000);
+            $('#main').css({'padding-left': '0px'});
+            $(this).find('i').text('list');
+            e.preventDefault();
+        }, 
+        function(e){ 
+             
+            /*$('#panel-oculto').slideUp("fast");*/
+            $('#panel-oculto').toggle( "slide",1000);
+            $('#main').css({'padding-left': '240px'});
+            
+            /*$(this).text('<i class="material-icons">menu</i>');*/
+            $(this).find('i').text('list');
+            e.preventDefault();
+        }
+    );
+});
+</script>
+            
+</body>
+</html>

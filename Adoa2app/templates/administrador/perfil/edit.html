@@ -1,0 +1,58 @@
+{% extends "administrador/AdministradorBase.html" %}
+
+{% load tags_html %}
+
+{% block bread %}
+<div id="breadcrumbs-wrapper">
+    <div class="container">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12 m12 l12">
+                <h5 class="breadcrumbs-title">Administrador</h5>
+                <ol class="breadcrumbs">
+                    <li><a style="color: #00bcd4;text-decoration:none" href="">Inicio</a></li>
+                    <li><a style="color: #00bcd4;text-decoration:none" href="">Perfiles</a></li>
+                    <li class="active">Editar Perfiles</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block informacion %}
+    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <div class="divider"></div>
+{% endblock %}
+
+
+{% block contenido %}
+
+<h5>Perfiles</h5>
+
+{% if valido %}
+
+    <h4> {% image_tag "ok.gif" %} {{ msg_ok }} </h4>
+    <pre> Nombre: {{ nombre }} </pre>
+    {% url_button 'Listado' 'administrador:administrador_perfiles_index' %}
+
+{% else %}
+
+    {% include 'tags/error_form.html' %}
+
+    <form action=',' method='POST'>
+
+        {% csrf_token %}
+
+        <pre>
+        Nombre : {{ formulario.nombre }}
+        </pre>
+
+        <input type='submit' value='Enviar'>
+        {% url_button 'Cancelar' 'administrador:administrador_perfiles_index' %}
+
+    </form>
+    <br />
+
+{% endif %}
+
+{% endblock %}

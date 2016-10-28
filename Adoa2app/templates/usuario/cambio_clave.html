@@ -1,0 +1,69 @@
+
+<!--*****************************************************************-->
+{% extends "usuario/ConfiguracionBase.html" %}
+{% load staticfiles %}
+{% load tags_html %}
+
+{% block title %}
+	<title>Inicio Sesion</title>
+{% endblock %}
+{% block menuInfo %}
+ <nav style="height:57px"> 
+
+      <div class="nav-wrapper">
+      <ul id="nav-mobile" class="left hide-on-med-and-down" > 
+
+         <li><a href="/CrearOA" style="height:57px"><i style="height:57px;font-weight:bold" class="material-icons white-text">arrow_back</i></a></li>
+      </ul>
+         <a class="brand-logo" style="margin-left:10px">
+         <h5 style="margin-top: 18px;">Configuración de la seguridad</h5>
+         </a>
+
+         
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %}
+
+{% include 'tags/error_form.html' %}
+
+              <p class="caption">Complete el siguiente formulario para cambiar su clave. Recuerde que debe ingresar su contraseña actual para poder realizar el cambio.</p>
+          
+              <div class="divider"></div>
+               
+       	 	  <form action='.' method='POST'>
+          
+            {% csrf_token %}
+
+              <div class="row" style=" margin-bottom: 0px;">
+                <div class="input-field col s8 m8 l8">
+                  <label for="{{formulario.actual.name}}">{{formulario.actual.label}}</label>
+                  {{formulario.actual}}     
+                </div>
+              </div>
+
+              <div class="row" style=" margin-bottom: 0px;">
+                <div class="input-field col s8 m8 l8">
+                  <label for="{{formulario.nueva.name}}">{{formulario.nueva.label}}</label>
+                  {{formulario.nueva}}     
+                </div>
+              </div>
+
+               <div class="row" style=" margin-bottom: 0px;">
+                <div class="input-field col s8 m8 l8">
+                  <label for="{{formulario.repetida.name}}">{{formulario.repetida.label}}</label>
+                  {{formulario.repetida}}     
+                </div>
+              </div>
+                
+        </div>
+      
+          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </button>
+  
+    </form>  
+
+
+
+{% endblock %}

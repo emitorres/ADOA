@@ -15,7 +15,7 @@ from passlib.hash import django_pbkdf2_sha256 as handler
 
 from passlib.hash import pbkdf2_sha256
 import uuid
-from gtk.keysyms import greater
+
 def usuario_index(request):
 	return render_to_response('usuario/InicioSesion.html', locals(), context_instance = RequestContext(request))
 

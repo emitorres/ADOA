@@ -1,0 +1,55 @@
+{% extends "administrador/AdministradorBase.html" %}
+
+{% load tags_html %}
+
+
+{% block bread %}
+<div id="breadcrumbs-wrapper">
+    <div class="container">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col s12 m12 l12">
+                <h5 class="breadcrumbs-title">Administrador</h5>
+                    <ol class="breadcrumbs">
+                        <li><a style="color: #00bcd4">Inicio</a></li>
+                        <li><a style="color: #00bcd4">Usuarios</a></li>
+                        <li class="active">Editar</li>
+                    </ol>
+            </div>
+        </div>
+    </div>  
+</div>
+{% endblock %}
+
+{% block informacion %}
+    <p class="caption">A continuacion podra modificar el nivel de acceso de los usuarios al sistema.</p>
+    <div class="divider"></div>
+{% endblock %}
+
+{% block contenido %}
+
+<h5>Editar Usuarios</h5>
+
+{% if valido %}
+
+    <h4> {% image_tag "ok.gif" %} {{ msg_ok }} </h4>
+    <pre> Nombre: {{ nombre }} </pre>
+    {% url_button 'Listado' 'administrador:administrador_usuarios_index' %}
+
+{% else %}
+
+    {% include 'tags/error_form.html' %}
+
+    <form action='.' method='POST'>
+
+    {% csrf_token %}
+      
+ {{ formulario.as_p }}
+
+      <button>Actualizar</button>
+    </form>
+    <br />
+
+
+{% endif %}
+
+{% endblock %}
