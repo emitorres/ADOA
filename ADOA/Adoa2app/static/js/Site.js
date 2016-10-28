@@ -1,4 +1,5 @@
 // Initialize collapse button
+//$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 $(document).ready(function(){
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
