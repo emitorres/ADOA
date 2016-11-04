@@ -764,3 +764,319 @@ def TraerTerminosEvaluacion(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )    
+
+
+def ExportarOA(request, objId):
+    try:
+        import zipfile
+        import StringIO
+        from django.conf import settings
+        import sys
+        import os
+        from django.conf import settings
+
+        reload(sys)
+        sys.setdefaultencoding("ISO-8859-1")
+        oa = ObjetoAprendizaje.objects.get(pk=objId)
+        filename = oa.titulo.replace(' ', '_') + '.zip'
+        s = StringIO.StringIO()
+        #z = zipfile.ZipFile(s, 'w')
+        zf = zipfile.ZipFile(s, "w", zipfile.ZIP_DEFLATED,False)
+        #zf = zipfile.ZipFile(filename,mode='w',compression=zipfile.ZIP_DEFLATED)
+
+        zf.writestr("imsmanifest.xml" , manifestXml(oa.titulo) )
+        zf.writestr("introduccion.html", crearIntroduccion(oa))
+        zf.writestr("contenido.html", crearContenido(oa))
+        zf.writestr("actividad.html", crearActividad(oa))
+        #zf.writestr("evaluacion.html", crearEvalucion(objeto))
+
+        #----------------------ARCHIVOS ESTATICOS------------------------------
+
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
+        abrirAch=open(pathfile+"/Actividades.js","r" )
+        zf.writestr("Actividades.js",abrirAch.read())
+
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
+        abrirAch=open(pathfile+"/Evaluacion.js","r" )
+        zf.writestr("Evaluacion.js",abrirAch.read())
+
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        abrirAch=open(pathfile+"/SCOFunctions.js","r" )
+        zf.writestr("SCOFunctions.js",abrirAch.read())
+
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        abrirAch=open(pathfile+"/SCORM_API_wrapper.js","r" )
+        zf.writestr("SCORM_API_wrapper.js",abrirAch.read())
+
+        #----------------------/ARCHIVOS ESTATICOS------------------------------
+
+        #zf.writestr('prueba.txt', 'Hello, world')
+        zf.close()
+        
+        resp = HttpResponse(s.getvalue(), content_type = "application/x-zip-compressed")
+        
+        resp['Content-Disposition'] = 'attachment; filename=%s' % filename
+        return resp
+    except ObjetoAprendizaje.DoesNotExist:
+        raise Http404("Poll does not exist")
+    return ""
+
+def paginaMaestra(seccion,contenido,scriptExtra):
+    cadena = '<html>\n\
+    <head>\n\
+        <meta charset="utf-8"> \
+        <link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />\n\
+        <script type="text/javascript" src="SCORM_API_wrapper.js"></script>\n\
+        <script type="text/javascript" src="SCOFunctions.js"></script>\n\
+        '+scriptExtra+'\
+    </head>\n\
+    <body onload="loadPage()" onunload="unloadPage()">\n\
+        <script type="text/javascript">pipwerks.SCORM.data.set("cmi.completion_status","completed")</script>\n\
+            <div id="pagina">\n\
+                <h1 class="titulo">'+seccion+'</h1>\n\
+                <div class="cont">'+contenido+'\n\
+                </div>\n\
+            </div>\n\
+    </body>\n\
+</html>'
+    return cadena
+
+def manifestXml(titulo):
+    return '<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" \
+            xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" \
+            xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" \
+            xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" \
+            xmlns:imsss="http://www.imsglobal.org/xsd/imsss" \
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
+            identifier="com.scorm.manifesttemplates.scorm2004.4thEd.nometadata" version="1" \
+            xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd\ http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd">\
+    <metadata>\
+            <schema>ADL SCORM</schema>\
+        <schemaversion>2004 4th Edition</schemaversion>\
+    </metadata>\
+    <organizations default="B0">\
+        <organization identifier="B0" adlseq:objectivesGlobalToSystem="false">\
+            <!-- Titulo que se visuliza arriba de todo en el moodle-->\
+            <title>'+titulo+'</title>\
+                <!--<item identifier="'+titulo+'">-->\
+                    <!--seccion de introduccion que se ve en moodle-->\
+                    <item identifier="introduccion" identifierref="introduccion_resource">\
+                        <title>Introduccion</title>\
+                    </item>\
+                    <!--seccion de contenido que se ve en moodle-->\
+                    <item identifier="contenido" identifierref="contenido_resource">\
+                        <title>Contenido</title>\
+                    </item>\
+                    <!--seccion de actividades que se ve en moodle-->\
+                    <item identifier="actividades" identifierref="actividades_resource">\
+                        <title>Actividades</title>\
+                    </item>\
+                    <!--seccion de evalucion que se ve en moodle-->\
+                    <item identifier="evaluacion" identifierref="evalucion_resource">\
+                        <title>Evaluacion</title>\
+                    </item>\
+            <!--</item>-->\
+        </organization>\
+    </organizations>\
+    <resources>\
+        <!-- contenido de la seccion introduccion -->\
+        <resource identifier="introduccion_resource" type="webcontent" adlcp:scormType="sco" href="introduccion.html">\
+            <file href="introduccion.html"/>\
+        </resource>\
+        <!-- contenido de la seccion introduccion -->\
+        <resource identifier="contenido_resource" type="webcontent" adlcp:scormType="sco" href="contenido.html">\
+            <file href="contenido.html"/>\
+        </resource>\
+        <!-- contenido de la seccion introduccion -->\
+        <resource identifier="actividades_resource" type="webcontent" adlcp:scormType="sco" href="actividad.html">\
+            <file href="actividad.html"/>\
+        </resource>\
+        <!-- contenido de la seccion introduccion -->\
+        <resource identifier="evalucion_resource" type="webcontent" adlcp:scormType="sco" href="evaluacion.html">\
+            <file href="evaluacion.html"/>\
+        </resource>\
+        <!--Archivos comunes para todos los contenidos -->\
+        <resource identifier="common_files" type="webcontent" adlcp:scormType="asset">\
+            <file href="css/estilo.css"/>\
+            <file href="SCOFunctions.js"/>\
+            <file href="evaluacion.js"/>\
+            <file href="SCORM_API_wrapper.js"/>\
+        </resource>\
+    </resources>\
+</manifest>'
+
+def crearIntroduccion(objeto):
+    contenido="<div>"+objeto.descripcion+"</div>"
+    return paginaMaestra("Introduccion",contenido,"")
+
+def crearContenido(objeto):
+    
+    patron = PatronPedagogico.objects.get(id = objeto.PatronPedagogico_id)
+
+    seccionNom = SeccionNombre.objects.filter(PatronPedagogico= patron)
+
+    ####Aca tengo todo
+    seccionCon = SeccionContenido.objects.filter(SeccionNombre= seccionNom,ObjetoAprendizaje=objeto)
+    ####Aca tengo todo
+
+#-----------------------------EARLY BIRD--------------------------------------------
+    if (patron.id == 1):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<div>"+seccionCon[1].contenido+"</div>"
+#-----------------------------/EARLY BIRD-------------------------------------------
+
+#-----------------------------SPIRAL------------------------------------------------
+    if (patron.id == 2):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[1].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[2].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[3].contenido+"</div>"
+#-----------------------------/SPIRAL----------------------------------------------
+
+#-----------------------------LAY OF THE LAND--------------------------------------
+    if (patron.id == 3):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[1].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[2].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[3].contenido+"</div>"
+#-----------------------------/LAY OF THE LAND--------------------------------------
+
+#-----------------------------TOY BOX-----------------------------------------------
+    if (patron.id == 4):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[1].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[2].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[3].contenido+"</div>"
+#-----------------------------/TOY BOX----------------------------------------------
+
+#-----------------------------TOOLBOX-----------------------------------------------
+    if (patron.id == 5):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[1].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[2].contenido+"</div>"
+
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[3].contenido+"</div>"
+#-----------------------------/TOOL BOX----------------------------------------------
+
+#-----------------------------SIN PATRON---------------------------------------------
+    if (patron.id == 6):
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<div>"+seccionCon[0].contenido+"</div>"
+#-----------------------------/SIN PATRON--------------------------------------------
+
+    return paginaMaestra("Contenido",contenido,"")
+
+def crearActividad(objeto):
+
+
+#******************************************************************************************************
+
+    contenido = 'contenido'
+    script = 'script'
+#******************************************************************************************************
+
+    return paginaMaestra("Verdadero o Falso",contenido,script)
+ 
+"""
+
+#--------------------------VERDADERO O FALSO-----------------------------------------
+    if(session.actividad.titulo=="Verdadero o Falso"):
+        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
+                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
+        contenido="<script>\nvar pregunta=["
+        for item in session.actividad.listaItems:
+            contenido+='["%s","%s"]\r,'% (item.pregunta.replace("\n","").replace("\r",""),item.result.replace("\n","").replace("\r",""))
+        contenido+="];\rverdaderoFalso();\n;</script>"
+        return paginaMaestra("Verdadero o Falso",contenido.encode('utf-8'),script)
+#--------------------------VIDEO-----------------------------------------
+    elif(session.actividad.titulo=="Video"):
+        titulo='Video'
+        '''contenido='Descripcion: %s' % ( session.actividad.descripcion )
+        contenido+='<table width=100%><tr><td align="center" style="text-align: center;">'+session.actividad.link.replace("//","http://")+'</td></tr></table>'''
+        contenido="<div>"
+        for item in session.actividad.listaItems:
+            contenido+='<h3>'+item.video.replace("\n","").replace("\r","")+'</h3>\r<h5>'+item.descripcion.replace("\n","").replace("\r","")+'</h5>\r<table width=100%><tr><td align="center" style="text-align: center;">'+item.link.replace("//","http://")+'</td></tr></table>'
+        contenido+="</div>"
+        return paginaMaestra(titulo,contenido.encode('utf-8'),"")
+#--------------------------IDENTIFICACION-----------------------------------------
+    elif(session.actividad.titulo=="Identificacion"):
+        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
+                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
+        contenido="<script>\nvar identificar=["
+        for item in session.actividad.listaItems:
+            contenido+='["%s","%s"]\r,'% (item.item.replace("\n","").replace("\r",""),item.resp.replace("\n","").replace("\r",""))
+        contenido+="];\ridentificacion(\"%s\");\n;</script>"%session.actividad.enunciado
+        return paginaMaestra("Identificacion",contenido.encode('utf-8'),script)
+#--------------------------ORDENAMIENTO-----------------------------------------
+    elif(session.actividad.titulo=="Ordenamiento"):
+        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
+                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
+        numero=1
+        contenido="<script>\nvar ordenar=["
+        for item in session.actividad.listaItems:
+            contenido+='["%s",%d]\r,'% (item.termino.replace("\n","").replace("\r",""),numero)
+            numero=numero+1
+        contenido+="];\rordenamiento(\"%s\");\n;</script>"%session.actividad.enunciado
+        return paginaMaestra("Ordenamiento",contenido.decode('iso-8859-1').encode('utf8'),script)
+#---------------------------------------Asociacion------------------------------------------------------------
+    elif(session.actividad.titulo=="Asociacion"):
+        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
+                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
+        contenido="<script>\nvar img=["
+        for item in session.actividad.listaItems:
+            contenido+='[\'%s\',\'%s\']\r,'% (item.img1.replace("\n","").replace("\r",""),item.img2.replace("\n","").replace("\r",""))
+        contenido+="];\rAsimilar(\"%s\");\n;</script>"%session.actividad.enunciado
+        return paginaMaestra("Asociacion",contenido,script)
+#---------------------------------------ERROR------------------------------------------------------------
+    else:
+        return paginaMaestra("Actividad","Sin implementar","")
+"""
+def crearEvalucion(objeto):
+    script='<script type="text/javascript" src="evaluacion.js"></script>\n\
+                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
+    contenido="<script>\nvar pregunta=["
+    '''for item in session.evaluacion.listaItems:
+        contenido+='["%s",["%s","%s","%s"] ]\r,'% (item.pregunta,item.respuesta1,item.respuesta2,item.respuesta3)
+    contenido+="];\rEvaluacion();</script>"'''
+    for item in session.evaluacion.listaItems:
+        contenido+="[[ '%s' ],["%item.pregunta
+        for correc in item.correctas:
+            contenido+=" '%s' ,"%correc
+        contenido = contenido[:-1]
+        contenido+="],["
+        for incorrec in item.incorrectas:
+            contenido+=" '%s' ,"%incorrec
+        contenido = contenido[:-1]
+        contenido+="]],"
+    contenido = contenido[:-1]
+    contenido+="];\revaluacion();</script>"
+    return paginaMaestra("Evaluacion",contenido.encode('utf-8'),script)

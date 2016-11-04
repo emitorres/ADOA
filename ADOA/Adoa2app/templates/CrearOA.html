@@ -22,7 +22,7 @@
         <input type="hidden" name="evaluacionid" id="evaluacionid" value="0">
 
         <div id="contentTab1" class="col s12" style="padding-left: 0px;">
-            <div class="row col s6">
+            <div class="row col s8">
                 <form id="oa-paso1" class="col s12">
                     {% csrf_token %}
                     <div class="row">
@@ -102,7 +102,7 @@
                     Actividad  
                     </h3>
                     <p>
-                    Seleccione una o más de las actividades disponibles, para desarrollar el objeto.
+                    Seleccione una o más de las actividades disponibles para desarrollar el objeto.
                     </p>
                     <div class="divider"></div>
                     <br><br>
@@ -212,5 +212,10 @@
         </div>
     </div>
     <!--*********************************/MODAL VER ACTIVIDAD*************************************-->
+<div class="fixed-action-btn horizontal" id="botonfloat" style="visibility:hidden">
+    <a class="btn-floating btn-large red" id="botonfloat" href="/CrearOA/">
+      <i class="large material-icons">mode_edit</i>
+    </a>
 
+  </div>
 {% endblock %}

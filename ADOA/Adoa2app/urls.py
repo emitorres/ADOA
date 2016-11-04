@@ -31,6 +31,7 @@ from .views import GuardarPregunta
 from .views import TraerPregunta
 from .views import EliminarPregunta
 from .views import TraerDatosObjeto
+from .views import ExportarOA
 from .views import TraerTerminosEvaluacion
 from Adoa2app.views import EditarOA
 
@@ -39,6 +40,9 @@ urlpatterns = [
     url(r'^LogOn/$', LogOn.as_view()),
     url(r'^CrearOA/$', CrearOA, name = 'CrearOA'),
     #url(r'^CrearOA/$', CrearOA.as_view()),
+
+    url(r'^ExportarOA/(\d+)/$', ExportarOA),
+
     url(r'^EditarOA/(\d+)/$', EditarOA),
     url(r'^Objetos/$', Objetos, name= 'Objetos'),
     url(r'^Objetos/TraerObjetos/$', TraerObjetos),

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from Adoa2app.usuario.forms import RegistroForm, IngresoForm,PerfilForm,PerfilIndexForm, RecuperarContrasenaForm,CambioPwdForm,CambioPwdForm2
+from Adoa2app.usuario.forms import CambioPerfilForm, RegistroForm, IngresoForm,PerfilForm,PerfilIndexForm, RecuperarContrasenaForm,CambioPwdForm,CambioPwdForm2
 from Adoa2app.usuario.models import Usuario, TipoUsuario,token
 from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
@@ -10,16 +10,29 @@ from Adoa2app.usuario.access import my_login_required,my_access_required
 from django.contrib.auth.hashers import make_password
 from django.conf import settings
 from passlib.hash import django_pbkdf2_sha256 as handler
+from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,SeccionContenido
 
+
+from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 
 
 from passlib.hash import pbkdf2_sha256
 import uuid
+from gtk.keysyms import greater
+
+import os
+import zipfile
+import cStringIO
+import zlib
+
+import sys
+reload(sys)
+
+import gzip
+
 def index_usuarioBase(request):
 	id = request.session['usuario'].id
 	usuario = Usuario.objects.get(id= id)
-
-
 	return render_to_response('usuario/ConfiguracionBase.html', locals(), context_instance = RequestContext(request))
 
 def usuario_index(request):
@@ -42,13 +55,14 @@ def registro(request):
 		valido = formulario.is_valid()
 		if valido:
 			user = formulario.save(commit=False)
-			
 			#enc = pbkdf2_sha256.encrypt(user.dni, rounds=10,salt_size=32)
-			
 			#user.clave = Usuario.objects.encriptar(user.dni)
-
 			user.clave = Usuario.objects.encriptarPass(user.dni)
 			user.estado = False
+			if user.sexo == 1:
+				user.sexo = 1
+			else:
+				user.sexo = 0
 			"""	
 			email = formulario.cleaned_data.get("email")
 			email_base, proveedor = email.split("@")
@@ -96,6 +110,42 @@ def registro(request):
 		formulario = RegistroForm(instance = usuario)
 	# locals() es un diccionario con todas las variables locales y sus valores
 	return render_to_response('usuario/Registro.html', locals(), context_instance = RequestContext(request))
+
+def cambioPerfil(request):
+
+	id = request.session['usuario'].id
+	usuario = Usuario.objects.get(id= id)
+	valido = False
+	ver_error = False
+	msg_no  = 'Ingreso no valido'
+	lista_err = []
+	lista_ok = []
+	if request.method == 'POST':
+		formulario = CambioPerfilForm(request.POST)
+		valido = formulario.is_valid()
+		if valido:
+			razones = formulario.cleaned_data['razones']
+			subject = 'Cambio Perfil'
+			toMail = [settings.EMAIL_HOST_USER]
+			fromMail = usuario.email
+			message = 'El usuario '+ usuario.nombre +' ' + usuario.apellido+ ' solicito cambio de perfil.' + '\n\n'+ 'Razones: '+'\n\n'+razones
+			mail = EmailMessage(subject, message, fromMail, toMail)
+			ver_ok = True if mail.send() > 0 else False
+
+			if ver_ok is True:
+				lista_ok.append('Email enviado correctamente. En breve sera atendida su solicitud')
+			else:
+				lista_err.append('No se pudo enviar el mail de recuperacion. Por favor, intente mas tarde')	
+		else:
+			ver_error = True
+			# Arma una lista con errores
+			for field in formulario:
+				for error in field.errors:
+					lista_err.append(field.label + ': ' + error)
+	else:
+		formulario = CambioPerfilForm()
+
+	return render_to_response('usuario/CambioPerfil.html', locals(), context_instance = RequestContext(request))
 
 def iniciarSesion(request):
 	valido = False
@@ -319,7 +369,6 @@ def cambio_clave(request,registro):
 
 
 
-
 def confirmar_cuenta(request,registro):
 
 	token2 = token.objects.all()
@@ -337,16 +386,37 @@ def confirmar_cuenta(request,registro):
 			usuario.save()
 			token1.delete()
 
+		expresion_regular = r"(\@edu\.)|(\@.*\.edu\.)"
+
+		flag = evaluar(expresion_regular,emailuser)
+
+		if flag:
+			usuario.tipousuario = TipoUsuario.objects.get(id = 2)
+			usuario.estado = True
+			usuario.save()
+			token1.delete()
+		"""
 		if extension == "edu":
 			usuario.tipousuario = TipoUsuario.objects.get(id = 2)
 			#usuario.clave = '456123'
 			usuario.estado = True
 			usuario.save()
 			token1.delete()
+		"""
 		return render_to_response('usuario/ConfirmarCuenta.html', locals(), context_instance = RequestContext(request))
 	else:
 		return render_to_response('usuario/acceso_denegado.html', locals(), context_instance = RequestContext(request))			
 	
+
+import re 
+
+def evaluar(exp, cad):
+    if re.search(exp, cad, re.IGNORECASE) is None:
+    	return False
+    else:
+    	return True
+    
+
 def confirmar_cuenta2(request):
 
 	return render_to_response('usuario/ConfirmarCuenta.html', locals(), context_instance = RequestContext(request))
@@ -361,3 +431,4 @@ def traerUrlBase(request):
 	dominio = request.get_host()
 	protocolo = 'https://' if request.is_secure() else 'http://'
 	return protocolo + dominio
+

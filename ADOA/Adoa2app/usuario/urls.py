@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from Adoa2app.usuario.views import usuario_index,registro, iniciarSesion,perfil_index, perfil_editar,usuario_salir,usuario_acceso_denegado,informacion_registro, recuperar_contrasena, confirmar_cuenta,cambiar_clave,cambio_clave,eliminar_usuario,index_usuarioBase
+from Adoa2app.usuario.views import cambioPerfil,usuario_index,registro, iniciarSesion,perfil_index, perfil_editar,usuario_salir,usuario_acceso_denegado,informacion_registro, recuperar_contrasena, confirmar_cuenta,cambiar_clave,cambio_clave,eliminar_usuario,index_usuarioBase
 
 urlpatterns = patterns('',
  	url(r'^configuracion/$', index_usuarioBase, name = 'index_usuarioBase'),
@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 	url(r'^recuperar/cambio_clave/([0-9A-Za-z_\-]+)/$', cambiar_clave, name = 'usuario_cambiar_clave'),
 	url(r'^configuracion/cambio_clave/(\d+)/', cambio_clave, name = 'usuario_cambio_clave'),
 	url(r'^usuarios_delete/(\d+)/', eliminar_usuario, name='usuario_eliminar_usuario'),
+	url(r'^configuracion/cambio_perfil/$', cambioPerfil, name = 'usuario_cambio_perfil'),
 	#url(r'^confirmar_cuenta2/$',  confirmar_cuenta2, name = 'usuario_confirmar_cuenta'),
 
 

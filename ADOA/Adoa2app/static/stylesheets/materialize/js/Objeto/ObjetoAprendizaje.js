@@ -322,7 +322,7 @@ function cargarTablaObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='!#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='/ExportarOA/"+objeto.pk+"'class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
                         "<a href='!#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+

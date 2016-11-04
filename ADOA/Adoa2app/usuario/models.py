@@ -4,7 +4,7 @@ from Adoa2app.usuario.managers import TipoUsuarioManager, UsuarioManager, MenuMa
 from passlib.hash import pbkdf2_sha256
 
 # ------------ Modelo Tipo Usuario ------------
-			
+            
 class TipoUsuario(models.Model):
 
     def validate_vacio_nulo(valor):
@@ -37,14 +37,15 @@ class Usuario(models.Model):#blank = false, null= false
     tipousuario = models.ForeignKey(TipoUsuario,blank = True, null= True)
     nombre      = models.CharField(max_length=100 ,validators = [validate_vacio_nulo])
     apellido    = models.CharField(max_length=100)
-    dni  		= models.CharField(max_length=15)
+    dni         = models.CharField(max_length=15)
     carrera     = models.CharField(max_length=100)
     clave       = models.CharField(max_length=100)
     email       = models.EmailField()
     estado      = models.BooleanField()
     created     = models.DateTimeField(auto_now_add = True) # Usar datetime.date.today() - import datetime
     updated     = models.DateTimeField(auto_now = True)
-
+    sexo        = models.BooleanField()
+    
     objects = UsuarioManager() # Para usar managers
 
     def __unicode__(self):
@@ -80,7 +81,7 @@ class Menu(models.Model):
 
     # La clase Meta interna es para especificar metadatos adicionales de un modelo
     class Meta:
-    	db_table = 'Menu'
+        db_table = 'Menu'
         ordering = ['nombre']
 
 # ---------------------------------------------------------------------
@@ -97,5 +98,5 @@ class MenuTipoUsuario(models.Model):
     objects = MenuTipoUsuarioManager() # Para usar managers
 
     class Meta:
-        db_table = 'MenuTipoUsuario'
+        #db_table = 'Menu_tipousuarios'
         ordering = ['tipousuario', 'menu']

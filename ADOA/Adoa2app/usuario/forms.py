@@ -2,6 +2,15 @@ from django import forms
 from Adoa2app.usuario.models import Usuario, TipoUsuario, Menu, MenuTipoUsuario
 from passlib.hash import django_pbkdf2_sha256 as handler
 
+
+
+class CambioPerfilForm(forms.Form):
+	class Meta:
+			model = Usuario
+
+	razones   = forms.CharField(widget = forms.Textarea(attrs={'class':'materialize-textarea'}),
+							  error_messages = {'required': 'Debe ingresar una razon'})	
+
 class RegistroForm(forms.ModelForm):
 	class Meta:
 			model = Usuario
@@ -17,6 +26,7 @@ class RegistroForm(forms.ModelForm):
 				'nombre',
 				'apellido',
 				'dni',
+				'sexo',
 				'carrera',
 				'email',
 			]
@@ -25,17 +35,28 @@ class RegistroForm(forms.ModelForm):
 				'nombre':'Nombre',
 				'apellido':'Apellido',
 				'dni':'DNI',
+				'sexo':'Sexo',
 				'carrera':'Carrera',
 				'email':'Email',
 			}
-
+			sex = (('2','------'),('0','Femenino'),('1','Masculino'),)
 			widgets = {
 				'nombre':forms.TextInput(),
 				'apellido':forms.TextInput(),
-				'dni':forms.TextInput(),
+				'dni':forms.TextInput(),#attrs={'class':'browser-default'},
+
+				#'sexo':forms.(widget = forms.CheckboxSelectMultiple,choices=sex),
+				'sexo':forms.Select(attrs={'class':'browser-default','style':'margin-top: 40px'},choices=sex),
 				'carrera':forms.TextInput(),
 				'email':forms.TextInput(),
 			}
+
+	def clean_sexo(self):
+		sexo = self.cleaned_data.get('sexo')
+		if sexo == '------':
+			raise forms.ValidationError('Seleccione sexo')
+		return sexo
+
 	def clean_nombre(self):
 		nombre = self.cleaned_data.get('nombre')
 		if len(nombre) < 3:
