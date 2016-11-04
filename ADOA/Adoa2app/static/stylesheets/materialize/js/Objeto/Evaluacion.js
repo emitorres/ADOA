@@ -67,12 +67,12 @@ function crearPregunta(){
             var idPregunta = data.idPregunta;
             $("#preguntas").show();
             $("#listapreguntas").append(
-            "<li id='pregunta"+idPregunta+"' class='collection-item'><div><span id='preguntaspan"+idPregunta+"'"+pregunta.substr(0, 50)+
+            "<li id='pregunta"+idPregunta+"' class='collection-item'><div><span id='preguntaspan"+idPregunta+"'>"+pregunta.substr(0, 140)+"</span>"+
             "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
             "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
             "</div></li>"
             );
-
+            $("#btnVerEvaluacion").show();
             Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {
@@ -178,6 +178,7 @@ function guardarPregunta(idPregunta){
         data : { preguntaId : idPregunta, pregunta : pregunta, respuestacorrecta : respuestacorrecta, respuestaincorrecta1 : respuestaincorrecta1, respuestaincorrecta2 : respuestaincorrecta2,
                 ordenrespuestacorrecta: ordenrespuestacorrecta,ordenrespuestaincorrecta1: ordenrespuestaincorrecta1,ordenrespuestaincorrecta2: ordenrespuestaincorrecta2, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            $('#preguntaspan'+idPregunta).html(pregunta.substr(0, 140));
             Materialize.toast(data.result, 3000, 'rounded')
         },
         error : function(xhr,errmsg,err) {

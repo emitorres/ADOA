@@ -2,6 +2,7 @@ from django.db import models
 from .Actividad import Actividad
 
 class VerdaderoFalso(Actividad):
+    nombre = models.TextField()
     enunciado = models.TextField()
     
     class Meta:

@@ -73,7 +73,7 @@ DATABASES = {
         #'ENGINE': 'mysql.connector.django',
         'NAME': 'adoa2',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
     }
 }

@@ -28,6 +28,7 @@ $('#oa-paso1').on('submit', function(event){
         type : "POST", // http method
         data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            cambiarTab('contentTab2','tab2');
             $("#oaid").val(data.oaid);
             $("#evaluacionid").val(data.evaluacionid);
             $("#btnTab1").removeClass('disabled');
@@ -54,6 +55,7 @@ $('#btnGuardarPaso2').on('click', function(){
         type : "POST", // http method
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            cambiarTab('contentTab3','tab3');
             $("#btnGuardarPaso2").removeClass('red');
             $("#btnGuardarPaso2").addClass('green');
             $("#btnGuardarPaso2").html('Editar');
@@ -82,6 +84,7 @@ $('#btnGuardarPaso3').on('click', function(){
         type : "POST", // http method
         data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
+            cambiarTab('contentTab4','tab4');   
             $("#btnGuardarPaso3").removeClass('red');
             $("#btnGuardarPaso3").addClass('green');
             $("#btnGuardarPaso3").html('Editar');
@@ -206,11 +209,12 @@ function cargarDatosGuardados(){
                 verdaderofalsolista.forEach(function(actividad) {
                     $("#actividades").show();
                     var idActividad = actividad.pk;
+                    var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Verdadero o Falso"+
+                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Verdadero o Falso)"+
                     "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "<a onclick='verVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+                    "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
                 });
@@ -218,11 +222,12 @@ function cargarDatosGuardados(){
                 ordenamientolista.forEach(function(actividad) {
                     $("#actividades").show();
                     var idActividad = actividad.pk;
+                    var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Ordenamiento"+
+                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Ordenamiento)"+
                     "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+                    "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
                 });
@@ -230,11 +235,12 @@ function cargarDatosGuardados(){
                 identificacionlista.forEach(function(actividad) {
                     $("#actividades").show();
                     var idActividad = actividad.pk;
+                    var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Identificacion"+
+                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Identificacion)"+
                     "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "<a onclick='verIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+                    "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
                 });
@@ -242,11 +248,12 @@ function cargarDatosGuardados(){
                 asociacionlista.forEach(function(actividad) {
                     $("#actividades").show();
                     var idActividad = actividad.pk;
+                    var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Asociacion"+
+                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Asociacion)"+
                     "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "<a onclick='verAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+                    "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
                 });
@@ -254,11 +261,12 @@ function cargarDatosGuardados(){
                 videolista.forEach(function(actividad) {
                     $("#actividades").show();
                     var idActividad = actividad.pk;
+                    var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>Video"+
+                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Video)"+
                     "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "<a onclick='verVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
+                    "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
                 });
@@ -266,14 +274,15 @@ function cargarDatosGuardados(){
                 
                 evaluacionItems.forEach(function(pregunta) {
                     var idPregunta = pregunta.pk;
-                    var pregunta = pregunta.fields.pregunta;
+                    var preguntatexto = pregunta.fields.pregunta;
                     $("#preguntas").show();
                     $("#listapreguntas").append(
-                    "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+pregunta.substr(0,140)+
+                    "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+preguntatexto.substr(0,140)+
                     "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
                     "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
                     "</div></li>"
                     );
+                    $("#btnVerEvaluacion").show();
                 });
                 
                 

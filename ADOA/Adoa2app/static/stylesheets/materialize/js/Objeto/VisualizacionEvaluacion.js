@@ -24,7 +24,7 @@ function verEvaluacion(){
                             "</div>"+
                             "<div class='col s3' id='resultado"+termino.pk+"'>"+
                             "</div>"+
-                            "<div class='col s12 hoverable'>"+
+                            "<div class='col s12'>"+
                                 "<div class='col s9'>"+
                                     "<p id='respuesta1-"+termino.pk+"'></p>"+
                                 "</div>"+
@@ -35,7 +35,7 @@ function verEvaluacion(){
                                     "</p>"+
                                 "</div>"+
                             "</div>"+
-                            "<div class='col s12 hoverable'>"+
+                            "<div class='col s12'>"+
                                 "<div class='col s9'>"+
                                     "<p id='respuesta2-"+termino.pk+"'></p>"+
                                 "</div>"+
@@ -46,7 +46,7 @@ function verEvaluacion(){
                                     "</p>"+
                                 "</div>"+
                             "</div>"+
-                            "<div class='col s12 hoverable'>"+
+                            "<div class='col s12'>"+
                                 "<div class='col s9'>"+
                                     "<p id='respuesta3-"+termino.pk+"'></p>"+
                                 "</div>"+

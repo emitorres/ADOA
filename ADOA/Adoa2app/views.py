@@ -192,9 +192,10 @@ def CrearVerdaderoFalso(request):
         response_data = {}
         
         oaid = request.POST['oaid']
+        nombreactividad = request.POST['nombreactividad']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         
-        verdaderoFalso = VerdaderoFalso(ObjetoAprendizaje = oa)
+        verdaderoFalso = VerdaderoFalso(ObjetoAprendizaje = oa, nombre = nombreactividad)
         verdaderoFalso.save()
         
         response_data['verdaderoFalsoId'] = verdaderoFalso.id
@@ -264,9 +265,10 @@ def CrearIdentificacion(request):
         response_data = {}
         
         oaid = request.POST['oaid']
+        nombreactividad = request.POST['nombreactividad']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         
-        identificacion = Identificacion(ObjetoAprendizaje = oa)
+        identificacion = Identificacion(ObjetoAprendizaje = oa, nombre = nombreactividad)
         identificacion.save()
         
         response_data['identificacionId'] = identificacion.id
@@ -336,9 +338,10 @@ def CrearOrdenamiento(request):
         response_data = {}
         
         oaid = request.POST['oaid']
+        nombreactividad = request.POST['nombreactividad']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         
-        ordenamiento = Ordenamiento(ObjetoAprendizaje = oa)
+        ordenamiento = Ordenamiento(ObjetoAprendizaje = oa, nombre = nombreactividad)
         ordenamiento.save()
         
         response_data['ordenamientoId'] = ordenamiento.id
@@ -408,9 +411,10 @@ def CrearAsociacion(request):
         response_data = {}
         
         oaid = request.POST['oaid']
+        nombreactividad = request.POST['nombreactividad']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         
-        asociacion = Asociacion(ObjetoAprendizaje = oa)
+        asociacion = Asociacion(ObjetoAprendizaje = oa, nombre = nombreactividad)
         asociacion.save()
         
         response_data['asociacionId'] = asociacion.id
@@ -480,9 +484,10 @@ def CrearVideo(request):
         response_data = {}
         
         oaid = request.POST['oaid']
+        nombreactividad = request.POST['nombreactividad']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         
-        video = Video(ObjetoAprendizaje = oa)
+        video = Video(ObjetoAprendizaje = oa, nombre = nombreactividad)
         video.save()
         
         response_data['videoId'] = video.id
