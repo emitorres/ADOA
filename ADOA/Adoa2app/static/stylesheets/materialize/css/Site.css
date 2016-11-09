@@ -114,3 +114,10 @@ a.dropdown-button{
 display: inline-block;
 }
 
+textarea{
+    padding: 0px !important;
+}
+.input-field {
+    margin-top: 0rem !important;
+}
+

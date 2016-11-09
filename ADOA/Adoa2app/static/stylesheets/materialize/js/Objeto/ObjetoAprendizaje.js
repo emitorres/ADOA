@@ -38,10 +38,10 @@ $('#oa-paso1').on('submit', function(event){
             cargarSeccionesPatron(oaPatron);
             $(".tab").removeClass("disabled");
             
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded')
+            Materialize.toast('Error al guardar el objeto', 3000)
         }
     });
 });
@@ -59,10 +59,10 @@ $('#btnGuardarPaso2').on('click', function(){
             $("#btnGuardarPaso2").removeClass('red');
             $("#btnGuardarPaso2").addClass('green');
             $("#btnGuardarPaso2").html('Editar');
-            Materialize.toast('Guardado con exito!!', 3000, 'rounded')
+            Materialize.toast('Guardado con exito!!', 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 });
@@ -88,10 +88,10 @@ $('#btnGuardarPaso3').on('click', function(){
             $("#btnGuardarPaso3").removeClass('red');
             $("#btnGuardarPaso3").addClass('green');
             $("#btnGuardarPaso3").html('Editar');
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 });
@@ -109,7 +109,7 @@ function cargarListaPatrones(){
             $("#oapatron").material_select();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar los patrones pedagogicos', 3000, 'rounded')
+            Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
         }
     });
 }
@@ -144,7 +144,7 @@ function cargarSeccionesPatron(patronId){
             });
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -211,12 +211,17 @@ function cargarDatosGuardados(){
                     var idActividad = actividad.pk;
                     var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Verdadero o Falso)"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='verVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='actividad"+idActividad+"'>"+
+                        "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                        "<td>Verdadero o Falso</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
+                    
                 });
                 
                 ordenamientolista.forEach(function(actividad) {
@@ -224,11 +229,15 @@ function cargarDatosGuardados(){
                     var idActividad = actividad.pk;
                     var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Ordenamiento)"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='actividad"+idActividad+"'>"+
+                        "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                        "<td>Ordenamiento</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='verOrdenamiento"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
                 });
                 
@@ -237,11 +246,15 @@ function cargarDatosGuardados(){
                     var idActividad = actividad.pk;
                     var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Identificacion)"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='verIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='actividad"+idActividad+"'>"+
+                        "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                        "<td>Identificacion</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
                 });
                 
@@ -250,11 +263,15 @@ function cargarDatosGuardados(){
                     var idActividad = actividad.pk;
                     var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Asociacion)"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='verAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='actividad"+idActividad+"'>"+
+                        "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                        "<td>Asociacion</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
                 });
                 
@@ -263,11 +280,15 @@ function cargarDatosGuardados(){
                     var idActividad = actividad.pk;
                     var nombreActividad = actividad.fields.nombre;
                     $("#listaactividades").append(
-                    "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Video)"+
-                    "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='verVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-                    "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='actividad"+idActividad+"'>"+
+                        "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                        "<td>Video</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
                 });
                 
@@ -277,10 +298,13 @@ function cargarDatosGuardados(){
                     var preguntatexto = pregunta.fields.pregunta;
                     $("#preguntas").show();
                     $("#listapreguntas").append(
-                    "<li id='pregunta"+idPregunta+"' class='collection-item'><div>"+preguntatexto.substr(0,140)+
-                    "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-                    "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-                    "</div></li>"
+                    "<tr id='pregunta"+idPregunta+"'>"+
+                        "<td>"+preguntatexto.substr(0, 140)+"</td>"+
+                        "<td>"+
+                            "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                        "</td>"+
+                    "</tr>"
                     );
                     $("#btnVerEvaluacion").show();
                 });
@@ -298,10 +322,10 @@ function cargarDatosGuardados(){
                 $("#btnGuardarPaso3").html('Editar');
                 $(".tab").removeClass("disabled");
                 
-                Materialize.toast("Objeto cargado con exito", 3000, 'rounded')
+                Materialize.toast("Objeto cargado con exito", 3000)
             },
             error : function(xhr,errmsg,err) {
-                Materialize.toast('Error al cargar el objeto', 3000, 'rounded')
+                Materialize.toast('Error al cargar el objeto', 3000)
             }
         });
     }
@@ -332,7 +356,7 @@ function cargarTablaObjetos(){
                 $('#tablaObjetos').DataTable();
             },
             error : function(xhr,errmsg,err) {
-                Materialize.toast('Error al cargar los patrones pedagogicos', 3000, 'rounded')
+                Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
             }
         });
     }

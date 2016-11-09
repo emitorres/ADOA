@@ -18,7 +18,7 @@ function crearActividad() {
         crearIdentificacion();
         break;
     default:
-        Materialize.toast('Ninguna Actividad Seleccionada', 3000, 'rounded');
+        Materialize.toast('Ninguna Actividad Seleccionada', 3000);
     }
 
 }
@@ -35,15 +35,19 @@ function crearVerdaderoFalso(){
             var idActividad = data.verdaderoFalsoId;
             $("#actividades").show();
             $("#listaactividades").append(
-            "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Verdadero o Falso)"+
-            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='verVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-            "<a onclick='modalEditarVerdaderoFalso("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='actividad"+idActividad+"'>"+
+                "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                "<td>Verdadero o Falso</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+            Materialize.toast('Error al crear actividad', 3000)
         }
     });
 }
@@ -104,7 +108,7 @@ function modalEditarVerdaderoFalso(idActividad){
             $('#modalEditarActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -153,10 +157,11 @@ function guardarVerdaderoFalso(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            Materialize.toast(data.result, 3000, 'rounded')
+            $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -173,15 +178,19 @@ function crearIdentificacion(){
             var idActividad = data.identificacionId;
             $("#actividades").show();
             $("#listaactividades").append(
-            "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 140)+" (Identificacion)"+
-            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='verIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-            "<a onclick='modalEditarIdentificacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='actividad"+idActividad+"'>"+
+                "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                "<td>Identificacion</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+            Materialize.toast('Error al crear actividad', 3000)
         }
     });
 }
@@ -243,7 +252,7 @@ function modalEditarIdentificacion(idActividad){
             $('#modalEditarActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -288,10 +297,11 @@ function guardarIdentificacion(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            Materialize.toast(data.result, 3000, 'rounded')
+            $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -308,15 +318,19 @@ function crearOrdenamiento(){
             var idActividad = data.ordenamientoId;
             $("#actividades").show();
             $("#listaactividades").append(
-            "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Ordenamiento)"+
-            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='verOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-            "<a onclick='modalEditarOrdenamiento("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='actividad"+idActividad+"'>"+
+                "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                "<td>Ordenamiento</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+            Materialize.toast('Error al crear actividad', 3000)
         }
     });
 }
@@ -381,7 +395,7 @@ function modalEditarOrdenamiento(idActividad){
             $('#modalEditarActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -434,10 +448,11 @@ function guardarOrdenamiento(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            Materialize.toast(data.result, 3000, 'rounded')
+            $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -454,15 +469,19 @@ function crearAsociacion(){
             var idActividad = data.asociacionId;
             $("#actividades").show();
             $("#listaactividades").append(
-            "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Asociacion)"+
-            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='verAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-            "<a onclick='modalEditarAsociacion("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='actividad"+idActividad+"'>"+
+                "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                "<td>Asociacion</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+            Materialize.toast('Error al crear actividad', 3000)
         }
     });
 }
@@ -517,7 +536,7 @@ function modalEditarAsociacion(idActividad){
             $('#modalEditarActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -561,10 +580,11 @@ function guardarAsociacion(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            Materialize.toast(data.result, 3000, 'rounded')
+            $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -582,15 +602,19 @@ function crearVideo(){
             var idActividad = data.videoId;
             $("#actividades").show();
             $("#listaactividades").append(
-            "<li id='actividad"+idActividad+"' class='collection-item'><div>"+nombreActividad.substr(0, 50)+" (Video)"+
-            "<a onclick='eliminarActividad("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='verVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>visibility</i></a>"+
-            "<a onclick='modalEditarVideo("+idActividad+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='actividad"+idActividad+"'>"+
+                "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                "<td>Video</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al crear actividad', 3000, 'rounded')
+            Materialize.toast('Error al crear actividad', 3000)
         }
     });
 }
@@ -624,7 +648,7 @@ function modalEditarVideo(idActividad){
             $('#modalEditarActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -641,10 +665,11 @@ function guardarVideo(idActividad){
         type : "POST", // http method
         data : { actividadId : idActividad,descripcion : descripcion, link : link, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            Materialize.toast(data.result, 3000, 'rounded')
+            $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -659,10 +684,10 @@ function eliminarActividad(idActividad){
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#actividad"+idActividad).remove();
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }

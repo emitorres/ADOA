@@ -50,7 +50,7 @@ function verVerdaderoFalso(idActividad){
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -118,7 +118,7 @@ function verIdentificacion(idActividad){
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -145,7 +145,7 @@ function verAsociacion(idActividad){
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -205,7 +205,7 @@ function verOrdenamiento(idActividad){
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }
@@ -244,7 +244,7 @@ function verVideo(idActividad){
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 }

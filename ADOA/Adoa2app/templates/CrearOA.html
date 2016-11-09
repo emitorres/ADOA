@@ -127,11 +127,19 @@
                         <button id="btnCrearActividad" class="btn waves-effect waves-light red left" onclick="crearActividad()"><i class="material-icons left"></i>Crear Actividad</button>
                     </div>
                     <div id="actividades" style="display: none" class="row col s12">
-                        <ul id="listaactividades" class="collection with-header">
-                            <li class="collection-header">
-                                <h4>Actividades</h4>
-                            </li>
-                        </ul>
+                        <h4>Actividades</h4>
+                        <table class="highlight">
+                        <thead>
+                          <tr>
+                              <th data-field="nombre">Nombre</th>
+                              <th data-field="tipo">Tipo</th>
+                              <th data-field="acciones">Acciones</th>
+                          </tr>
+                        </thead>
+                
+                        <tbody id="listaactividades">
+                        </tbody>
+                      </table>
                     </div>
                 </div>
             </div>
@@ -142,11 +150,17 @@
         <div id="contentTab5" class="col s12">
             <div class="section">
                 <div id="preguntas" style="display: none" class="row col s12">
-                        <ul id="listapreguntas" class="collection with-header">
-                            <li class="collection-header">
-                                <h4>Preguntas</h4>
-                            </li>
-                        </ul>
+                        <h4>Preguntas</h4>
+                        <table class="highlight">
+                        <thead>
+                          <tr>
+                              <th data-field="Enunciado">Enunciado</th>
+                              <th data-field="acciones">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listapreguntas">
+                        </tbody>
+                      </table>
                     </div>
                 <!--<div class="row col s12" id="evaluacion">-->
                 <div class="row col s12" id="verevaluacion">
@@ -154,7 +168,7 @@
                    <a id="btnVerEvaluacion" onclick="verEvaluacion()" style="display: none" class="btn waves-effect waves-light red right">Ver Evalucion</a>
                 </div>
                 <!--<a id="btnTab5" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>-->
-                <a id="btnTab5" href="/Objetos" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>
+                <!--<a id="btnTab5" href="/Objetos" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>-->
             </div>
         </div>
         <!--**********************************/EVALUACION*******************************************-->

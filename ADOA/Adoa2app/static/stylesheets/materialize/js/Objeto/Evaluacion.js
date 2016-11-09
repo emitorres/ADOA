@@ -67,16 +67,19 @@ function crearPregunta(){
             var idPregunta = data.idPregunta;
             $("#preguntas").show();
             $("#listapreguntas").append(
-            "<li id='pregunta"+idPregunta+"' class='collection-item'><div><span id='preguntaspan"+idPregunta+"'>"+pregunta.substr(0, 140)+"</span>"+
-            "<a onclick='eliminarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>delete</i></a>"+
-            "<a onclick='modalEditarPregunta("+idPregunta+")' href='#!' class='btn-floating waves-effect waves-light red btn-actividad right'><i class='material-icons'>mode_edit</i></a>"+
-            "</div></li>"
+             "<tr id='pregunta"+idPregunta+"'>"+
+                "<td>"+pregunta.substr(0, 140)+"</td>"+
+                "<td>"+
+                    "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                "</td>"+
+              "</tr>"
             );
             $("#btnVerEvaluacion").show();
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -154,7 +157,7 @@ function modalEditarPregunta(idPregunta){
             $('#modalEditarPregunta').openModal();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000, 'rounded')
+            Materialize.toast('Error al cargar las secciones', 3000)
         }
     });
 
@@ -179,10 +182,10 @@ function guardarPregunta(idPregunta){
                 ordenrespuestacorrecta: ordenrespuestacorrecta,ordenrespuestaincorrecta1: ordenrespuestaincorrecta1,ordenrespuestaincorrecta2: ordenrespuestaincorrecta2, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $('#preguntaspan'+idPregunta).html(pregunta.substr(0, 140));
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
@@ -195,10 +198,10 @@ function eliminarPregunta(idPregunta){
         data : { preguntaId : idPregunta, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#pregunta"+idPregunta).remove();
-            Materialize.toast(data.result, 3000, 'rounded')
+            Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000, 'rounded');
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 }
