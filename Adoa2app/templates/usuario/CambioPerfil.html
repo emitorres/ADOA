@@ -1,0 +1,63 @@
+{% extends "usuario/ConfiguracionBase.html" %}
+
+
+{% load staticfiles %}
+{% load tags_html %}
+
+{% block title %} 
+	<title>Registro Usuario</title>
+{% endblock %}
+
+{% block menuInfo %}
+    <nav style="height:57px"> 
+
+      <div class="nav-wrapper">
+      <ul id="nav-mobile" class="left hide-on-med-and-down" > 
+
+         <li><a href='{% url 'usuario:perfil_editar' id %}' style="height:57px"><i style="height:57px;font-weight:bold" class="material-icons white-text">arrow_back</i></a></li>
+      </ul>
+         <a class="brand-logo" style="margin-left:10px">
+         <h5 style="margin-top: 18px;">Cambio Perfil</h5>
+         </a>
+
+         
+      </div>
+    </nav>
+{% endblock %}
+{% block contenido %} 
+
+<p class="caption">A continuación indique las razones por las cuales desea un cambio de perfil</p>
+<div class="divider"></div>
+<br>
+{% include 'tags/error_form.html' %}
+{% include 'tags/success_form.html' %}
+
+
+<form action='.' method='POST'>
+{% csrf_token %}
+  
+
+        <div class="row">
+	        <div class="input-field col s6">
+				<label for="{{formulario.razones.name}}">{{formulario.razones.label}}</label>
+	            {{formulario.razones}}     
+	        </div>
+ 		</div>
+        <button class="btn waves-effect waves-light" type="submit" name="action" href="/usuario/cambio_perfil/">Enviar<i class="material-icons right">send</i>
+        </button>
+     
+
+    </div>
+   
+  </div>
+  </form>
+
+
+{% endblock %}
+
+
+
+
+
+
+       

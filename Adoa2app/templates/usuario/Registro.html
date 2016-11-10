@@ -1,0 +1,108 @@
+{% extends "usuario/UsuarioBase.html" %}
+{% load staticfiles %}
+{% load tags_html %}
+
+{% block title %}
+	<title>Registro Usuario</title>
+{% endblock %}
+
+{% block contenido %}
+
+{% if valido %}
+
+
+{% include 'usuario/InformacionRegistro.html' %}
+
+
+
+{% else %}
+
+
+<div class="row">
+	<div class="col s12 m10 offset-m1">
+		<div class="card">
+            <div class="card-content">
+            	<span class="card-title">Formulario de Registro</span>
+          	 	<div class="divider"></div>
+          	 	<br>
+          	 	<p class="caption">Complete el siguiente formulario para poder utilizar los servicios que provee ADOA 2.0</p>
+          	 	{% include 'tags/error_form.html' %}
+          	 	<form action='.' method='POST'>
+          	 		{% csrf_token %}
+          	 		<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.nombre.name}}">{{formulario.nombre.label}}</label>
+							{{formulario.nombre}}			
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.apellido.name}}">{{formulario.apellido.label}}</label>
+							{{formulario.apellido}}			
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.sexo.name}}">
+
+							{{formulario.sexo.label}}</label>
+							
+							{{formulario.sexo}}			
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.dni.name}}">{{formulario.dni.label}}</label>
+							{{formulario.dni}}			
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.carrera.name}}">{{formulario.carrera.label}}</label>
+							{{formulario.carrera}}			
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12 m8 l8">
+							<label for="{{formulario.email.name}}">{{formulario.email.label}}</label>
+							{{formulario.email}}			
+						</div>
+					</div>
+				
+            </div>
+
+            <div class="card-action">
+            	  <button class="btn waves-effect waves-light" type="submit" name="action" onclick="Materialize.toast('Registrado con exito', 4000)">Registrarse!<i class="material-icons right">send</i>
+  				  </button>
+  			</div>
+  		</form>	
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+{% endif %}
+{% endblock %}
+
+
+
+
+
+       
+
+         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+  <script type="text/javascript "src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% load staticfiles %}
+{% load tags_html %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!--Import Google Raleway Font-->
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+  <!--/Import Google Raleway Font-->
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--/Import Google Icon Font-->
+
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/materialize.min.css" %}' media="screen,projection"/>
+  <!--/Import materialize.css-->
+
+  <!--Import adoa.css-->
+  <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/adoa.css" %}' media="screen,projection"/>
+  <!--/Import adoa.css-->
+
+  <!--Import fuente.css-->
+  <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+  <!--/Import fuente.css-->
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!--Import Jquery 2.1.1-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--/Import Jquery 2.1.1-->
+
+  <!--Import materialize.min.js-->
+  <script type="text/javascript" src='{% css_tag "materialize/js/materialize.min.js" %}'></script>
+  <!--/Import materialize.min.js-->
+
+  <!--Import adoa.js-->
+  <script type="text/javascript" src='{% css_tag "materialize/js/adoa.js" %}'></script>
+  <!--Import adoa.js-->
+
+</head>
+
+<body>
+
+<header style="height:57px">
+  <nav>
+    <div class="navbar-fixed">
+      <nav class="light-blue lighten-1" style="height:57px">
+        <div class="nav-wrapper">
+          <ul id="dropdown1" class="dropdown-content" style="margin-top: 64px">
+            <li>{% url_tag 'Cerrar Sesion' 'usuario:usuario_salir' %}</li>
+            
+          </ul>
+
+          <a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-button" data-activates="dropdown1" style="height:57px"><i class="material-icons">face</i></a></li>
+          </ul>
+
+          <ul class="side-nav" id="mobile-demo">
+            <!-- Dropdown Trigger -->
+            <li><a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_iniciarSesion' %}">Iniciar Sesion<i class="material-icons right">power_settings_new</i></a></li>
+            <li><a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">Registrarse<i class="material-icons right">subject</i></a></li>
+            <li><a class="dropdown-button" href="#!">Manual de Usuario<i class="material-icons right">live_help</i></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<div id="main"><!--MAIN PRINCIPAL-->
+  <div class="wrapper"><!--WRAPPER PRINCIPAL-->
+    <div class="sidebar1">
+    <aside id="left-sidebar-nav">
+      <ul class="side-nav fixed" style="width: 240px; top:57px;">
+        
+
+          <li><a class="subheader red-text" style="font-weight: bold">Mi Cuenta</a></li>
+          <li><div class="divider"></div></li>
+          <li><a href='{% url 'usuario:index_usuarioBase' %}'><i class="material-icons blue-text">settings</i>General</a></li>
+
+          <li><a href='{% url 'usuario:usuario_cambio_clave' id %}'><i class="material-icons blue-text">lock</i>Seguridad</a></li>
+          <li><div class="divider"></div></li>
+         
+
+        </ul>
+        
+    </aside>
+
+    </div>
+    <section id="content">
+{% block menuInfo %}
+    <nav style="height:57px"> 
+
+      <div class="nav-wrapper">
+      <ul id="nav-mobile" class="left hide-on-med-and-down" > 
+
+         <li><a href="/CrearOA" style="height:57px"><i style="height:57px;font-weight:bold" class="material-icons white-text">arrow_back</i></a></li>
+      </ul>
+         <a class="brand-logo" style="margin-left:10px">
+         <h5 style="margin-top: 18px;">Configuración de la cuenta</h5>
+         </a>
+
+         
+      </div>
+    </nav>
+{% endblock %}
+        
+
+      
+      <div class="container"><!--CONTAINER PRINCIPAL-->
+
+        <div class="section" style="padding-top: 0px;" ><!--SECTION PRINCIPAL aca va toodoo-->
+        
+            {% block contenido %}
+                          {% include 'usuario/Perfil.html' %}
+
+          {% endblock %}
+     
+                <div>
+
+<div id="panel-oculto" style="display:none">sd</div>
+ 
+
+
+        </div><!--SECTION PRINCIPAL-->
+      </div><!--CONTAINER PRINCIPAL-->
+    </section>
+  </div><!--WRAPPER PRINCIPAL-->
+
+
+</div><!--MAIN PRINCIPAL-->
+
+
+
+
+</body>
+</html>

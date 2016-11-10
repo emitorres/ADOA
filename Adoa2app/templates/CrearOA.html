@@ -1,0 +1,235 @@
+{% extends "_layoutlogon.html" %}       
+{% block contenido %}
+        
+    <h4 id="tituloAccion">Crear Objeto</h4>
+    <p>A continuacion se encuentran los pasos para crear el objeto de aprendizaje.</p>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3" id="tab1"><a class="active" href="#contentTab1">Informacion</a></li>
+                <li class="tab col s3 disabled" id="tab2"><a href="#contentTab2">Introduccion</a></li>
+                <li class="tab col s3 disabled" id="tab3"><a href="#contentTab3">Contenido</a></li>
+                <li class="tab col s3 disabled" id="tab4"><a href="#contentTab4">Actividad</a></li>
+                <li class="tab col s3 disabled" id="tab5"><a href="#contentTab5">Evaluacion</a></li>
+            </ul>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <input type="hidden" name="editoa" id="editoa" value="{{ objeto.pk }}">
+        <input type="hidden" name="oaid" id="oaid" value="0">
+        <input type="hidden" name="evaluacionid" id="evaluacionid" value="0">
+
+        <div id="contentTab1" class="col s12" style="padding-left: 0px;">
+            <div class="row col s8">
+                <form id="oa-paso1" class="col s12">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="oatitulo" length="50" name="oatitulo" type="text" class="validate">
+                            <label id="labeltitulo" for="oatitulo" class="">Titulo</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="oadescripcion" length="300" name="oadescripcion" class="materialize-textarea"></textarea>
+                            <label id="labeldescripcion" for="Descripcion">Descripcion</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="oapatron" name="oapatron">
+                                <option value="" disabled="" selected="">Seleccione el Patron</option>
+                            </select>
+                            <label>Patron Pedagogico</label>
+                        </div>
+                    </div>
+                    
+                    <div class="row col s12"  style="padding-left: 0px;">
+                        <button id="btnGuardarPaso1" class="btn waves-effect waves-light red left" type="submit"  name="action">Crear</button>
+                    </div>
+                </form>
+            </div>
+            
+        
+        </div>
+
+        <!--**********************************INTRODUCCION***************************************-->
+        <div id="contentTab2" class="col s12">
+            <div>
+                <div id="oa-paso2" class="col s12">
+                    {% csrf_token %}
+                    <h3>
+                        Introduccion  
+                    </h3>
+                    <p>
+                        Introduzca una breve introducción del tema que va a desarrollar.
+                    </p>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="editor" id="introduccion-oa">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col s12">
+                        <a id="btnGuardarPaso2" class="btn waves-effect waves-light red left" name="action"><i class="material-icons left"></i>Guardar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************/INTRODUCCION***************************************-->
+
+        <!--**********************************CONTENIDO*******************************************-->
+        <div id="contentTab3" class="col s12">
+            <div id="oa-paso3" class="col s12">
+                {% csrf_token %}
+                <div id="oa-secciones">
+                </div>
+                <div class="row col s12">
+                    <a id="btnGuardarPaso3" class="btn waves-effect waves-light red left" name="action"><i class="material-icons left"></i>Guardar</a>
+                </div>
+            </div>
+        </div>
+        <!--**********************************/CONTENIDO****************************************-->
+
+        <!--**********************************ACTIVIDAD*******************************************-->
+        <div id="contentTab4" class="col s12">
+            <div class="section">
+                <h3 style="margin-top: 0px;">
+                    Actividad  
+                    </h3>
+                    <p>
+                    Seleccione una o más de las actividades disponibles para desarrollar el objeto.
+                    </p>
+                    <div class="divider"></div>
+                    <br><br>
+                <div class="row col s12" style="padding-left:0px">
+
+                    <div class="input-field col s5" style="padding-left:0px">
+                        <select id="actividadesSelect" name="actividadesSelect">
+                            <option value="" disabled="" selected="">Seleccione la actividad</option>
+                            <option value="1">Verdadero o Falso</option>
+                            <option value="2">Asociacion</option>
+                            <option value="3">Video</option>
+                            <option value="4">Ordenamiento</option>
+                            <option value="5">Identificacion</option>
+                        </select>
+                        <label style="padding-left:0px;left:0px">Actividades</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="nombreactividad" length="50" name="nombreactividad" type="text" class="validate">
+                        <label id="labelnombreactividad" for="nombreactividad" class="">Nombre</label>
+                    </div>
+                    <div class="row col s2">
+                        <button id="btnCrearActividad" class="btn waves-effect waves-light red left" onclick="crearActividad()"><i class="material-icons left"></i>Crear Actividad</button>
+                    </div>
+                    <div id="actividades" style="display: none" class="row col s12">
+                        <h4>Actividades</h4>
+                        <table class="highlight">
+                        <thead>
+                          <tr>
+                              <th data-field="nombre">Nombre</th>
+                              <th data-field="tipo">Tipo</th>
+                              <th data-field="acciones">Acciones</th>
+                          </tr>
+                        </thead>
+                
+                        <tbody id="listaactividades">
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************/ACTIVIDAD*******************************************-->
+
+        <!--**********************************EVALUACION*******************************************-->
+        <div id="contentTab5" class="col s12">
+            <div class="section">
+                <div id="preguntas" style="display: none" class="row col s12">
+                        <h4>Preguntas</h4>
+                        <table class="highlight">
+                        <thead>
+                          <tr>
+                              <th data-field="Enunciado">Enunciado</th>
+                              <th data-field="acciones">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listapreguntas">
+                        </tbody>
+                      </table>
+                    </div>
+                <!--<div class="row col s12" id="evaluacion">-->
+                <div class="row col s12" id="verevaluacion">
+                  <a id="btnAgregarPregunta" onclick="agregarPreguntaEvaluacion()" class="btn waves-effect waves-light red left">Agregar Pregunta</a>
+                   <a id="btnVerEvaluacion" onclick="verEvaluacion()" style="display: none" class="btn waves-effect waves-light red right">Ver Evaluación</a>
+                </div>
+                <!--<a id="btnTab5" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>-->
+                <!--<a id="btnTab5" href="/Objetos" class="waves-effect waves-light btn right"><i class="material-icons right">send</i>Finalizar</a>-->
+            </div>
+        </div>
+        <!--**********************************/EVALUACION*******************************************-->
+    </div>
+      
+    <!--******************************MODAL EDITAR ACTIVIDAD*************************************-->
+    <div id="modalEditarActividad" class="modal modal-fixed-footer modal-actividad">
+        <div class="modal-content">
+            <h4>Editar Actividad</h4>
+            <div class="row" id="modalEditarActividadContenido">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a id="btnGuardarActividad" onclick="" class="modal-action modal-close waves-effect btn-flat ">Guardar</a>
+            <a class="modal-action modal-close waves-effect btn-flat ">Cancelar</a>
+        </div>
+    </div>
+    <!--******************************/MODAL EDITAR ACTIVIDAD*************************************-->
+
+    <!--******************************MODAL EDITAR PREGUNTA*************************************-->
+    <div id="modalEditarPregunta" class="modal modal-fixed-footer modal-actividad">
+        <div class="modal-content">
+            <h4>Editar Pregunta</h4>
+            <div class="row" id="modalEditarPreguntaContenido">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a id="btnGuardarPregunta" onclick="guardarPregunta()" class="modal-action modal-close waves-effect btn-flat ">Guardar</a>
+            <a class="modal-action modal-close waves-effect btn-flat ">Cancelar</a>
+        </div>
+    </div>
+    <!--******************************/MODAL EDITAR PREGUNTA*************************************-->
+
+    <!--*********************************MODAL VER ACTIVIDAD*************************************-->
+    <div id="modalVerActividad" class="modal modal-fixed-footer modal-actividad">
+        <div class="modal-content">
+            <h4>Actividad</h4>
+            <div class="row" id="modalVerActividadContenido">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!--<a id="" class="modal-action modal-close waves-effect btn-flat ">Volver</a>-->
+            <a class="modal-action modal-close waves-effect btn-flat ">Volver</a>
+        </div>
+    </div>
+    
+    <div id="modalVerEvaluacion" class="modal modal-fixed-footer modal-actividad">
+        <div class="modal-content">
+            <h4>Evaluacion</h4>
+            <div class="row" id="modalVerEvaluacionContenido"></div>
+        </div>
+        
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect btn-flat ">Volver</a>
+        </div>
+    </div>
+    <!--*********************************/MODAL VER ACTIVIDAD*************************************-->
+<div class="fixed-action-btn horizontal" id="botonfloat" style="visibility:hidden">
+    <a class="btn-floating btn-large red" id="botonfloat" href="/CrearOA/">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+
+  </div>
+{% endblock %}
