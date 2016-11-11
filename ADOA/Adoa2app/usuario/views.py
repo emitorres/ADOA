@@ -18,7 +18,7 @@ from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
 
 from passlib.hash import pbkdf2_sha256
 import uuid
-from gtk.keysyms import greater
+
 
 import os
 import zipfile
