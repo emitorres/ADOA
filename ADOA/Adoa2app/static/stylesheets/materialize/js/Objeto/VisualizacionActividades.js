@@ -1,3 +1,6 @@
+$(document).ready(function() {
+    $('select').material_select();
+  });
 function verVerdaderoFalso(idActividad){
     $('#modalVerActividadContenido').html('');
     

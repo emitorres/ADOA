@@ -808,33 +808,65 @@ def ExportarOA(request, objId):
 
         #----------------------ARCHIVOS ESTATICOS------------------------------
 
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
         abrirAch=open(pathfile+"/VisualizacionActividades.js","r" )
         zf.writestr("Actividades.js",abrirAch.read())
 
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
         abrirAch=open(pathfile+"/VisualizacionEvaluacion.js","r" )
         zf.writestr("Evaluacion.js",abrirAch.read())
         
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js"
         abrirAch=open(pathfile+"/jquery-2.1.1.min.js","r" )
         zf.writestr("jquery-2.1.1.min.js",abrirAch.read())
         
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/css"
+        pathfile = "Adoa2app/static/stylesheets/materialize/css"
         abrirAch=open(pathfile+"/materialize.min.css","r" )
         zf.writestr("css/materialize.min.css",abrirAch.read())
         
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js"
         abrirAch=open(pathfile+"/materialize.min.js","r" )
         zf.writestr("materialize.min.js",abrirAch.read())
 
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCOFunctions.js","r" )
         zf.writestr("SCOFunctions.js",abrirAch.read())
 
-        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCORM_API_wrapper.js","r" )
         zf.writestr("SCORM_API_wrapper.js",abrirAch.read())
+        
+        
+#===============================================================================
+#         
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+#         abrirAch=open(pathfile+"/VisualizacionActividades.js","r" )
+#         zf.writestr("Actividades.js",abrirAch.read())
+# 
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+#         abrirAch=open(pathfile+"/VisualizacionEvaluacion.js","r" )
+#         zf.writestr("Evaluacion.js",abrirAch.read())
+#         
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+#         abrirAch=open(pathfile+"/jquery-2.1.1.min.js","r" )
+#         zf.writestr("jquery-2.1.1.min.js",abrirAch.read())
+#         
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/css"
+#         abrirAch=open(pathfile+"/materialize.min.css","r" )
+#         zf.writestr("css/materialize.min.css",abrirAch.read())
+#         
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+#         abrirAch=open(pathfile+"/materialize.min.js","r" )
+#         zf.writestr("materialize.min.js",abrirAch.read())
+# 
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
+#         abrirAch=open(pathfile+"/SCOFunctions.js","r" )
+#         zf.writestr("SCOFunctions.js",abrirAch.read())
+# 
+#         pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
+#         abrirAch=open(pathfile+"/SCORM_API_wrapper.js","r" )
+#         zf.writestr("SCORM_API_wrapper.js",abrirAch.read())
+#===============================================================================
 
         #----------------------/ARCHIVOS ESTATICOS------------------------------
 
@@ -1095,7 +1127,7 @@ def crearVerdaderoFalsoScorm(actividad):
             contenido+="<input type='hidden' class='respuestaVerdaderoFalso' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='0'>"
         
     contenido+="<div class='row col s12'>"\
-                    "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"\
+                    "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"\
                 "</div>"
     contenido+="<script>$('select').material_select();</script>"
 
@@ -1186,7 +1218,7 @@ def crearEvalucion(oa):
         "</div>"
         
     contenido+="<div class='row col s12'>"\
-        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasEvaluacion()'>Correccion</a>"\
+        "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasEvaluacion()'>Correccion</a>"\
     "</div>"
     
     return paginaMaestra("Evaluacion",contenido.encode('utf-8'),script)
