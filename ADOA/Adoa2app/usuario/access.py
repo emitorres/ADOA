@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
-from Adoa2app.usuario.models import Menu
+from Adoa2app.usuario.models import Menu, MenuTipoUsuario
 
 #from db.models import Menu
 
@@ -26,10 +26,9 @@ def my_access_required(f):
 		# Esta logueado, controla acceso por menu
 		tipo_usuario = request.session['usuario'].tipousuario.id
 		url1 = f.__name__
-
+		menu = Menu.objects.get(url = url1)
 		try:
-			menu = Menu.objects.get(url = url1)
-			menu.tipousuarios.traerPorId(tipo_usuario)
+			MenuTipoUsuario.objects.get(menu_id = menu.id, tipousuario_id = tipo_usuario)
 		except:
 			return redirect('usuario:usuario_acceso_denegado')
 

@@ -784,27 +784,55 @@ def ExportarOA(request, objId):
         zf = zipfile.ZipFile(s, "w", zipfile.ZIP_DEFLATED,False)
         #zf = zipfile.ZipFile(filename,mode='w',compression=zipfile.ZIP_DEFLATED)
 
-        zf.writestr("imsmanifest.xml" , manifestXml(oa.titulo) )
+        zf.writestr("imsmanifest.xml" , manifestXml(oa) )
         zf.writestr("introduccion.html", crearIntroduccion(oa))
         zf.writestr("contenido.html", crearContenido(oa))
-        zf.writestr("actividad.html", crearActividad(oa))
-        #zf.writestr("evaluacion.html", crearEvalucion(objeto))
+        zf.writestr("evaluacion.html", crearEvalucion(oa))
+        
+        verdaderosFalsos = VerdaderoFalso.objects.filter(ObjetoAprendizaje=oa)
+        identificaciones = Identificacion.objects.filter(ObjetoAprendizaje=oa)
+        asociaciones = Asociacion.objects.filter(ObjetoAprendizaje=oa)
+        videos = Video.objects.filter(ObjetoAprendizaje=oa)
+        ordenamientos = Ordenamiento.objects.filter(ObjetoAprendizaje=oa)
+        for actividad in verdaderosFalsos:
+            zf.writestr("actividad"+str(actividad.id)+".html", crearVerdaderoFalsoScorm(actividad))
+        for actividad in identificaciones:
+            zf.writestr("actividad"+str(actividad.id)+".html", crearIdentificacionScorm(actividad))
+        for actividad in asociaciones:
+            zf.writestr("actividad"+str(actividad.id)+".html", crearAsociacionScorm(actividad))
+        for actividad in videos:
+            zf.writestr("actividad"+str(actividad.id)+".html", crearVideoScorm(actividad))
+        for actividad in ordenamientos:
+            zf.writestr("actividad"+str(actividad.id)+".html", crearOrdenamientoScorm(actividad))
+            
 
         #----------------------ARCHIVOS ESTATICOS------------------------------
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
-        abrirAch=open(pathfile+"/Actividades.js","r" )
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+        abrirAch=open(pathfile+"/VisualizacionActividades.js","r" )
         zf.writestr("Actividades.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
-        abrirAch=open(pathfile+"/Evaluacion.js","r" )
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/Objeto"
+        abrirAch=open(pathfile+"/VisualizacionEvaluacion.js","r" )
         zf.writestr("Evaluacion.js",abrirAch.read())
+        
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+        abrirAch=open(pathfile+"/jquery-2.1.1.min.js","r" )
+        zf.writestr("jquery-2.1.1.min.js",abrirAch.read())
+        
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/css"
+        abrirAch=open(pathfile+"/materialize.min.css","r" )
+        zf.writestr("css/materialize.min.css",abrirAch.read())
+        
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js"
+        abrirAch=open(pathfile+"/materialize.min.js","r" )
+        zf.writestr("materialize.min.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCOFunctions.js","r" )
         zf.writestr("SCOFunctions.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = "/home/adoa2016/Documents/LiClipse Workspace/Adoa2/ADOA/ADOA/Adoa2app/static/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCORM_API_wrapper.js","r" )
         zf.writestr("SCORM_API_wrapper.js",abrirAch.read())
 
@@ -825,9 +853,13 @@ def paginaMaestra(seccion,contenido,scriptExtra):
     cadena = '<html>\n\
     <head>\n\
         <meta charset="utf-8"> \
-        <link rel="stylesheet" type="text/css" href="css/estilo.css" media="screen" />\n\
+        <link rel="stylesheet" type="text/css" href="css/materialize.min.css" media="screen" />\n\
         <script type="text/javascript" src="SCORM_API_wrapper.js"></script>\n\
         <script type="text/javascript" src="SCOFunctions.js"></script>\n\
+        <script type="text/javascript" src="jquery-2.1.1.min.js"></script>\n\
+        <script type="text/javascript" src="materialize.min.js"></script>\n\
+        <script type="text/javascript" src="Actividades.js"></script>\n\
+        <script type="text/javascript" src="Evaluacion.js"></script>\n\
         '+scriptExtra+'\
     </head>\n\
     <body onload="loadPage()" onunload="unloadPage()">\n\
@@ -841,8 +873,15 @@ def paginaMaestra(seccion,contenido,scriptExtra):
 </html>'
     return cadena
 
-def manifestXml(titulo):
-    return '<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" \
+def manifestXml(oa):
+    actividades = oa.actividad_set.all()
+    verdaderosFalsos = VerdaderoFalso.objects.filter(ObjetoAprendizaje=oa)
+    identificaciones = Identificacion.objects.filter(ObjetoAprendizaje=oa)
+    asociaciones = Asociacion.objects.filter(ObjetoAprendizaje=oa)
+    videos = Video.objects.filter(ObjetoAprendizaje=oa)
+    ordenamientos = Ordenamiento.objects.filter(ObjetoAprendizaje=oa)
+    
+    cadena ='<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" \
             xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" \
             xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" \
             xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" \
@@ -857,8 +896,8 @@ def manifestXml(titulo):
     <organizations default="B0">\
         <organization identifier="B0" adlseq:objectivesGlobalToSystem="false">\
             <!-- Titulo que se visuliza arriba de todo en el moodle-->\
-            <title>'+titulo+'</title>\
-                <!--<item identifier="'+titulo+'">-->\
+            <title>'+oa.titulo+'</title>\
+                <!--<item identifier="'+oa.titulo+'">-->\
                     <!--seccion de introduccion que se ve en moodle-->\
                     <item identifier="introduccion" identifierref="introduccion_resource">\
                         <title>Introduccion</title>\
@@ -866,12 +905,35 @@ def manifestXml(titulo):
                     <!--seccion de contenido que se ve en moodle-->\
                     <item identifier="contenido" identifierref="contenido_resource">\
                         <title>Contenido</title>\
-                    </item>\
-                    <!--seccion de actividades que se ve en moodle-->\
-                    <item identifier="actividades" identifierref="actividades_resource">\
-                        <title>Actividades</title>\
-                    </item>\
-                    <!--seccion de evalucion que se ve en moodle-->\
+                    </item>'
+    
+    for actividad in verdaderosFalsos:
+        cadena+='<!--seccion de actividades que se ve en moodle-->\
+            <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
+                <title>'+actividad.nombre+'</title>\
+            </item>'
+    for actividad in identificaciones:
+        cadena+='<!--seccion de actividades que se ve en moodle-->\
+            <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
+                <title>'+actividad.nombre+'</title>\
+            </item>'
+    for actividad in asociaciones:
+        cadena+='<!--seccion de actividades que se ve en moodle-->\
+            <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
+                <title>'+actividad.nombre+'</title>\
+            </item>'
+    for actividad in videos:
+        cadena+='<!--seccion de actividades que se ve en moodle-->\
+            <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
+                <title>'+actividad.nombre+'</title>\
+            </item>'
+    for actividad in ordenamientos:
+        cadena+='<!--seccion de actividades que se ve en moodle-->\
+            <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
+                <title>'+actividad.nombre+'</title>\
+            </item>'
+                
+    cadena +='<!--seccion de evalucion que se ve en moodle-->\
                     <item identifier="evaluacion" identifierref="evalucion_resource">\
                         <title>Evaluacion</title>\
                     </item>\
@@ -883,31 +945,37 @@ def manifestXml(titulo):
         <resource identifier="introduccion_resource" type="webcontent" adlcp:scormType="sco" href="introduccion.html">\
             <file href="introduccion.html"/>\
         </resource>\
-        <!-- contenido de la seccion introduccion -->\
+        <!-- contenido de la seccion contenido -->\
         <resource identifier="contenido_resource" type="webcontent" adlcp:scormType="sco" href="contenido.html">\
             <file href="contenido.html"/>\
-        </resource>\
-        <!-- contenido de la seccion introduccion -->\
-        <resource identifier="actividades_resource" type="webcontent" adlcp:scormType="sco" href="actividad.html">\
-            <file href="actividad.html"/>\
-        </resource>\
-        <!-- contenido de la seccion introduccion -->\
+        </resource>'
+    for actividad in actividades:
+        cadena+='<!-- contenido de la seccion actividades -->\
+        <resource identifier="actividad'+str(actividad.id)+'_resource" type="webcontent" adlcp:scormType="sco" href="actividad'+str(actividad.id)+'.html">\
+            <file href="actividad'+str(actividad.id)+'.html"/>\
+        </resource>'
+        
+    cadena+='<!-- contenido de la seccion evaluacion -->\
         <resource identifier="evalucion_resource" type="webcontent" adlcp:scormType="sco" href="evaluacion.html">\
             <file href="evaluacion.html"/>\
         </resource>\
         <!--Archivos comunes para todos los contenidos -->\
         <resource identifier="common_files" type="webcontent" adlcp:scormType="asset">\
-            <file href="css/estilo.css"/>\
+            <file href="css/materialize.min.css"/>\
+            <file href="jquery-2.1.1.min.js"/>\
             <file href="SCOFunctions.js"/>\
-            <file href="evaluacion.js"/>\
+            <file href="Evaluacion.js"/>\
+            <file href="Actividades.js"/>\
             <file href="SCORM_API_wrapper.js"/>\
+            <file href="materialize.min.js"/>\
         </resource>\
     </resources>\
 </manifest>'
+    return cadena
 
 def crearIntroduccion(objeto):
     contenido="<div>"+objeto.descripcion+"</div>"
-    return paginaMaestra("Introduccion",contenido,"")
+    return paginaMaestra("Introduccion",contenido.encode('utf-8'),"")
 
 def crearContenido(objeto):
     
@@ -929,154 +997,196 @@ def crearContenido(objeto):
 
 #-----------------------------SPIRAL------------------------------------------------
     if (patron.id == 2):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/SPIRAL----------------------------------------------
 
 #-----------------------------LAY OF THE LAND--------------------------------------
     if (patron.id == 3):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[3].SeccionNombre+"</h4>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/LAY OF THE LAND--------------------------------------
 
 #-----------------------------TOY BOX-----------------------------------------------
     if (patron.id == 4):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/TOY BOX----------------------------------------------
 
 #-----------------------------TOOLBOX-----------------------------------------------
     if (patron.id == 5):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/TOOL BOX----------------------------------------------
 
 #-----------------------------SIN PATRON---------------------------------------------
     if (patron.id == 6):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre.encode('utf-8')+"</h4>"
+        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 #-----------------------------/SIN PATRON--------------------------------------------
 
-    return paginaMaestra("Contenido",contenido,"")
+    return paginaMaestra("Contenido",contenido.encode('utf-8'),"")
 
-def crearActividad(objeto):
+def crearVerdaderoFalsoScorm(actividad):
 
+    script = ''
+    
+    actividadItems = actividad.verdaderofalsoitem_set.all()
+    contenido= ""
+    contenido+="<div class='col s12'>"\
+        "<p><b>"+actividad.enunciado+"</b></p>"\
+    "</div>"
+    
+    for item in actividadItems:
+        contenido+="<div class='row'>"\
+                        "<div class='col s6'>"\
+                            "<p>"+item.afirmacion+"</p>"\
+                        "</div>"\
+                        "<div class='input-field col s3'>"\
+                            "<select id='selectVerdaderoFalso"+str(item.id)+"' class='selectVerdaderoFalso' name='selectVerdaderoFalso'>"\
+                                "<option value='' disabled='' selected=''>Seleccione la respuesta</option>"\
+                                "<option value='0' >Falso</option>"\
+                                "<option value='1' >Verdadero</option>"\
+                            "</select>"\
+                            "<label>Respuesta</label>"\
+                        "</div>"\
+                        "<div class='col s3' id='resultado"+str(item.id)+"'>"\
+                        "</div>"\
+                    "</div>"
+        if item.respuesta == True:
+            contenido+="<input type='hidden' class='respuestaVerdaderoFalso' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='1'>"
+        else:
+            contenido+="<input type='hidden' class='respuestaVerdaderoFalso' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='0'>"
+        
+    contenido+="<div class='row col s12'>"\
+                    "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"\
+                "</div>"
+    contenido+="<script>$('select').material_select();</script>"
 
-#******************************************************************************************************
+    return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
 
-    contenido = 'contenido'
-    script = 'script'
-#******************************************************************************************************
+def crearIdentificacionScorm(actividad):
 
-    return paginaMaestra("Verdadero o Falso",contenido,script)
- 
-"""
+    contenido = "actividad"+str(actividad.id)
+    script = ''
 
-#--------------------------VERDADERO O FALSO-----------------------------------------
-    if(session.actividad.titulo=="Verdadero o Falso"):
-        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
-                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
-        contenido="<script>\nvar pregunta=["
-        for item in session.actividad.listaItems:
-            contenido+='["%s","%s"]\r,'% (item.pregunta.replace("\n","").replace("\r",""),item.result.replace("\n","").replace("\r",""))
-        contenido+="];\rverdaderoFalso();\n;</script>"
-        return paginaMaestra("Verdadero o Falso",contenido.encode('utf-8'),script)
-#--------------------------VIDEO-----------------------------------------
-    elif(session.actividad.titulo=="Video"):
-        titulo='Video'
-        '''contenido='Descripcion: %s' % ( session.actividad.descripcion )
-        contenido+='<table width=100%><tr><td align="center" style="text-align: center;">'+session.actividad.link.replace("//","http://")+'</td></tr></table>'''
-        contenido="<div>"
-        for item in session.actividad.listaItems:
-            contenido+='<h3>'+item.video.replace("\n","").replace("\r","")+'</h3>\r<h5>'+item.descripcion.replace("\n","").replace("\r","")+'</h5>\r<table width=100%><tr><td align="center" style="text-align: center;">'+item.link.replace("//","http://")+'</td></tr></table>'
-        contenido+="</div>"
-        return paginaMaestra(titulo,contenido.encode('utf-8'),"")
-#--------------------------IDENTIFICACION-----------------------------------------
-    elif(session.actividad.titulo=="Identificacion"):
-        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
-                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
-        contenido="<script>\nvar identificar=["
-        for item in session.actividad.listaItems:
-            contenido+='["%s","%s"]\r,'% (item.item.replace("\n","").replace("\r",""),item.resp.replace("\n","").replace("\r",""))
-        contenido+="];\ridentificacion(\"%s\");\n;</script>"%session.actividad.enunciado
-        return paginaMaestra("Identificacion",contenido.encode('utf-8'),script)
-#--------------------------ORDENAMIENTO-----------------------------------------
-    elif(session.actividad.titulo=="Ordenamiento"):
-        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
-                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
-        numero=1
-        contenido="<script>\nvar ordenar=["
-        for item in session.actividad.listaItems:
-            contenido+='["%s",%d]\r,'% (item.termino.replace("\n","").replace("\r",""),numero)
-            numero=numero+1
-        contenido+="];\rordenamiento(\"%s\");\n;</script>"%session.actividad.enunciado
-        return paginaMaestra("Ordenamiento",contenido.decode('iso-8859-1').encode('utf8'),script)
-#---------------------------------------Asociacion------------------------------------------------------------
-    elif(session.actividad.titulo=="Asociacion"):
-        script='<script type="text/javascript" src="scriptAct.js"></script>\n\
-                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
-        contenido="<script>\nvar img=["
-        for item in session.actividad.listaItems:
-            contenido+='[\'%s\',\'%s\']\r,'% (item.img1.replace("\n","").replace("\r",""),item.img2.replace("\n","").replace("\r",""))
-        contenido+="];\rAsimilar(\"%s\");\n;</script>"%session.actividad.enunciado
-        return paginaMaestra("Asociacion",contenido,script)
-#---------------------------------------ERROR------------------------------------------------------------
-    else:
-        return paginaMaestra("Actividad","Sin implementar","")
-"""
-def crearEvalucion(objeto):
-    script='<script type="text/javascript" src="evaluacion.js"></script>\n\
-                <script type="text/javascript" src="jquery-1.11.1.min.js"></script> '
-    contenido="<script>\nvar pregunta=["
-    '''for item in session.evaluacion.listaItems:
-        contenido+='["%s",["%s","%s","%s"] ]\r,'% (item.pregunta,item.respuesta1,item.respuesta2,item.respuesta3)
-    contenido+="];\rEvaluacion();</script>"'''
-    for item in session.evaluacion.listaItems:
-        contenido+="[[ '%s' ],["%item.pregunta
-        for correc in item.correctas:
-            contenido+=" '%s' ,"%correc
-        contenido = contenido[:-1]
-        contenido+="],["
-        for incorrec in item.incorrectas:
-            contenido+=" '%s' ,"%incorrec
-        contenido = contenido[:-1]
-        contenido+="]],"
-    contenido = contenido[:-1]
-    contenido+="];\revaluacion();</script>"
+    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+
+def crearOrdenamientoScorm(actividad):
+
+    contenido = "actividad"+str(actividad.id)
+    script = ''
+
+    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+
+def crearVideoScorm(actividad):
+
+    contenido = ""
+    script = ''
+    
+    contenido += "<div class='offset-s2 col s8'>"\
+                "<div class='video-container'>"\
+                    "<iframe  src='"+actividad.link+"' frameborder='0' allowfullscreen></iframe>"\
+                "</div>"\
+            "</div>"\
+            "<div class='col s12'>"\
+                "<p><b>"+actividad.descripcion+"</b></p>"\
+            "</div>"
+
+    return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
+
+def crearAsociacionScorm(actividad):
+
+    contenido = "actividad"+str(actividad.id)
+    script = ''
+
+    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+
+def crearEvalucion(oa):
+    script=''
+                
+    evaluacionItems = oa.Evaluacion.evaluacionitem_set.all()
+    contenido= ""
+    for pregunta in evaluacionItems:
+        contenido+="<div class='row col s10'>"\
+                "<div class='col s9'>"\
+                    "<b>"+pregunta.pregunta+"</b>"\
+                "</div>"\
+                "<div class='col s3' id='resultado"+str(pregunta.id)+"'>"\
+                "</div>"\
+                "<div class='col s12'>"\
+                    "<div class='col s9'>"\
+                        "<p id='respuesta1-"+str(pregunta.id)+"'>"+pregunta.respuestaCorrecta+"</p>"\
+                    "</div>"\
+                    "<div class='col s3'>"\
+                        "<p>"\
+                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' class='correcta' id='radiorespuesta1-"+str(pregunta.id)+"' />"\
+                            "<label for='radiorespuesta1-"+str(pregunta.id)+"'></label>"\
+                        "</p>"\
+                    "</div>"\
+                "</div>"\
+                "<div class='col s12'>"\
+                    "<div class='col s9'>"\
+                        "<p id='respuesta2-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta1+"</p>"\
+                    "</div>"\
+                    "<div class='col s3'>"\
+                        "<p>"\
+                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta2-"+str(pregunta.id)+"' />"\
+                            "<label for='radiorespuesta2-"+str(pregunta.id)+"'></label>"\
+                        "</p>"\
+                    "</div>"\
+                "</div>"\
+                "<div class='col s12'>"\
+                    "<div class='col s9'>"\
+                        "<p id='respuesta3-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta2+"</p>"\
+                    "</div>"\
+                    "<div class='col s3'>"\
+                        "<p >"\
+                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta3-"+str(pregunta.id)+"' />"\
+                            "<label for='radiorespuesta3-"+str(pregunta.id)+"'></label>"\
+                        "</p>"\
+                    "</div>"\
+                "</div>"\
+        "</div>"
+        
+    contenido+="<div class='row col s12'>"\
+        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasEvaluacion()'>Correccion</a>"\
+    "</div>"
+    
     return paginaMaestra("Evaluacion",contenido.encode('utf-8'),script)
