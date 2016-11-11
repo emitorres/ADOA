@@ -98,5 +98,5 @@ class MenuTipoUsuario(models.Model):
     objects = MenuTipoUsuarioManager() # Para usar managers
 
     class Meta:
-        #db_table = 'Menu_tipousuarios'
+        db_table = 'MenuTipoUsuario'
         ordering = ['tipousuario', 'menu']
