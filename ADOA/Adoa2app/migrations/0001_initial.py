@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import Adoa2app.validator.VacioValidator
 
 
 class Migration(migrations.Migration):
@@ -24,7 +25,8 @@ class Migration(migrations.Migration):
             name='Asociacion',
             fields=[
                 ('actividad_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='Adoa2app.Actividad')),
-                ('enunciado', models.CharField(max_length=200)),
+                ('nombre', models.TextField()),
+                ('enunciado', models.TextField()),
             ],
             options={
                 'db_table': 'Asociacion',
@@ -35,9 +37,9 @@ class Migration(migrations.Migration):
             name='AsociacionItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('campo1', models.CharField(max_length=200)),
-                ('campo2', models.CharField(max_length=200)),
-                ('asociacion', models.ForeignKey(to='Adoa2app.Asociacion')),
+                ('campo1', models.TextField()),
+                ('campo2', models.TextField()),
+                ('Asociacion', models.ForeignKey(to='Adoa2app.Asociacion')),
             ],
             options={
                 'db_table': 'AsociacionItem',
@@ -48,7 +50,7 @@ class Migration(migrations.Migration):
             name='Evaluacion',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('enunciado', models.CharField(max_length=200)),
+                ('enunciado', models.TextField()),
             ],
             options={
                 'db_table': 'Evaluacion',
@@ -59,11 +61,14 @@ class Migration(migrations.Migration):
             name='EvaluacionItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('enunciado', models.CharField(max_length=200)),
-                ('respuestaCorrecta', models.CharField(max_length=200)),
-                ('respuestaIncorrecta1', models.CharField(max_length=200)),
-                ('respuestaIncorrecta2', models.CharField(max_length=200)),
-                ('evaluacion', models.ForeignKey(to='Adoa2app.Evaluacion')),
+                ('pregunta', models.TextField()),
+                ('respuestaCorrecta', models.TextField()),
+                ('respuestaIncorrecta1', models.TextField()),
+                ('respuestaIncorrecta2', models.TextField()),
+                ('ordenRespuestaCorrecta', models.IntegerField()),
+                ('ordenRespuestaIncorrecta1', models.IntegerField()),
+                ('ordenRespuestaIncorrecta2', models.IntegerField()),
+                ('Evaluacion', models.ForeignKey(to='Adoa2app.Evaluacion', null=True)),
             ],
             options={
                 'db_table': 'EvaluacionItem',
@@ -74,7 +79,8 @@ class Migration(migrations.Migration):
             name='Identificacion',
             fields=[
                 ('actividad_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='Adoa2app.Actividad')),
-                ('enunciado', models.CharField(max_length=200)),
+                ('nombre', models.TextField()),
+                ('enunciado', models.TextField()),
             ],
             options={
                 'db_table': 'Identificacion',
@@ -85,7 +91,7 @@ class Migration(migrations.Migration):
             name='IdentificacionItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('texto', models.CharField(max_length=200)),
+                ('concepto', models.TextField()),
                 ('respuesta', models.BooleanField()),
                 ('Identificacion', models.ForeignKey(to='Adoa2app.Identificacion')),
             ],
@@ -95,13 +101,40 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Menu',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('nombre', models.CharField(max_length=100)),
+                ('url', models.CharField(max_length=100, null=True, blank=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+                'ordering': ['nombre'],
+                'db_table': 'Menu',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='MenuTipoUsuario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('menu', models.ForeignKey(to='Adoa2app.Menu')),
+            ],
+            options={
+                'ordering': ['tipousuario', 'menu'],
+                'db_table': 'MenuTipoUsuario',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='ObjetoAprendizaje',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('titulo', models.CharField(max_length=300)),
-                ('descripcion', models.CharField(max_length=300)),
-                ('introduccion', models.CharField(max_length=2000)),
-                ('evaluacion', models.OneToOneField(null=True, to='Adoa2app.Evaluacion')),
+                ('titulo', models.CharField(max_length=100)),
+                ('descripcion', models.TextField()),
+                ('introduccion', models.TextField()),
+                ('Evaluacion', models.OneToOneField(null=True, to='Adoa2app.Evaluacion')),
             ],
             options={
                 'db_table': 'ObjetoAprendizaje',
@@ -112,7 +145,8 @@ class Migration(migrations.Migration):
             name='Ordenamiento',
             fields=[
                 ('actividad_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='Adoa2app.Actividad')),
-                ('enunciado', models.CharField(max_length=200)),
+                ('nombre', models.TextField()),
+                ('enunciado', models.TextField()),
             ],
             options={
                 'db_table': 'Ordenamiento',
@@ -123,7 +157,7 @@ class Migration(migrations.Migration):
             name='OrdenamientoItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('texto', models.CharField(max_length=200)),
+                ('texto', models.TextField()),
                 ('orden', models.IntegerField()),
                 ('Ordenamiento', models.ForeignKey(to='Adoa2app.Ordenamiento')),
             ],
@@ -137,7 +171,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nombre', models.CharField(max_length=100)),
-                ('actividadSugerida', models.CharField(max_length=2, choices=[(b'1', b'VerdaderoFalso'), (b'2', b'Asociacion'), (b'3', b'Video'), (b'4', b'Ordenamiento'), (b'5', b'Identificacion')])),
+                ('ActividadSugerida', models.CharField(max_length=2, choices=[(b'1', b'VerdaderoFalso'), (b'2', b'Asociacion'), (b'3', b'Video'), (b'4', b'Ordenamiento'), (b'5', b'Identificacion')])),
             ],
             options={
                 'db_table': 'PatronPedagogico',
@@ -148,7 +182,7 @@ class Migration(migrations.Migration):
             name='SeccionContenido',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('contenido', models.CharField(max_length=2000)),
+                ('contenido', models.TextField()),
                 ('ObjetoAprendizaje', models.ForeignKey(to='Adoa2app.ObjetoAprendizaje')),
             ],
             options={
@@ -161,7 +195,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nombre', models.CharField(max_length=100)),
-                ('patronPedagogico', models.ForeignKey(to='Adoa2app.PatronPedagogico')),
+                ('PatronPedagogico', models.ForeignKey(to='Adoa2app.PatronPedagogico')),
             ],
             options={
                 'db_table': 'SeccionNombre',
@@ -169,10 +203,56 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='TipoUsuario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('nombre', models.CharField(max_length=100, validators=[Adoa2app.validator.VacioValidator.VacioValidator])),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+            ],
+            options={
+                'db_table': 'TipoUsuario',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Token',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('token', models.CharField(max_length=50, null=True, blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Usuario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('nombre', models.CharField(max_length=100, validators=[Adoa2app.validator.VacioValidator.VacioValidator])),
+                ('apellido', models.CharField(max_length=100, validators=[Adoa2app.validator.VacioValidator.VacioValidator])),
+                ('dni', models.CharField(max_length=15)),
+                ('carrera', models.CharField(max_length=100)),
+                ('clave', models.CharField(max_length=100)),
+                ('email', models.EmailField(max_length=75)),
+                ('estado', models.BooleanField()),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('sexo', models.BooleanField()),
+                ('tipousuario', models.ForeignKey(blank=True, to='Adoa2app.TipoUsuario', null=True)),
+            ],
+            options={
+                'ordering': ['tipousuario', 'nombre'],
+                'db_table': 'Usuario',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='VerdaderoFalso',
             fields=[
                 ('actividad_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='Adoa2app.Actividad')),
-                ('enunciado', models.CharField(max_length=200)),
+                ('nombre', models.TextField()),
+                ('enunciado', models.TextField()),
             ],
             options={
                 'db_table': 'VerdaderoFalso',
@@ -183,9 +263,9 @@ class Migration(migrations.Migration):
             name='VerdaderoFalsoItem',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('afirmacion', models.CharField(max_length=200)),
+                ('afirmacion', models.TextField()),
                 ('respuesta', models.BooleanField()),
-                ('asociacion', models.ForeignKey(to='Adoa2app.VerdaderoFalso')),
+                ('VerdaderoFalso', models.ForeignKey(to='Adoa2app.VerdaderoFalso')),
             ],
             options={
                 'db_table': 'VerdaderoFalsoItem',
@@ -196,8 +276,9 @@ class Migration(migrations.Migration):
             name='Video',
             fields=[
                 ('actividad_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='Adoa2app.Actividad')),
-                ('descripcion', models.CharField(max_length=200)),
-                ('link', models.CharField(max_length=200)),
+                ('nombre', models.TextField()),
+                ('descripcion', models.TextField()),
+                ('link', models.CharField(max_length=300)),
             ],
             options={
                 'db_table': 'Video',
@@ -205,20 +286,44 @@ class Migration(migrations.Migration):
             bases=('Adoa2app.actividad',),
         ),
         migrations.AddField(
+            model_name='token',
+            name='usuario',
+            field=models.ForeignKey(blank=True, to='Adoa2app.Usuario', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
             model_name='seccioncontenido',
-            name='seccion',
+            name='SeccionNombre',
             field=models.ForeignKey(to='Adoa2app.SeccionNombre'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='objetoaprendizaje',
-            name='patronPedagogico',
+            name='PatronPedagogico',
             field=models.ForeignKey(to='Adoa2app.PatronPedagogico', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
+            model_name='objetoaprendizaje',
+            name='Usuario',
+            field=models.OneToOneField(default=1, to='Adoa2app.Usuario'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='menutipousuario',
+            name='tipousuario',
+            field=models.ForeignKey(to='Adoa2app.TipoUsuario'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='menu',
+            name='tipousuarios',
+            field=models.ManyToManyField(to='Adoa2app.TipoUsuario', null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
             model_name='actividad',
-            name='objetoAprendizaje',
+            name='ObjetoAprendizaje',
             field=models.ForeignKey(to='Adoa2app.ObjetoAprendizaje'),
             preserve_default=True,
         ),

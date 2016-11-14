@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
-from Adoa2app.usuario.models import Menu, MenuTipoUsuario
+from Adoa2app.models import Menu, MenuTipoUsuario
 
 #from db.models import Menu
 

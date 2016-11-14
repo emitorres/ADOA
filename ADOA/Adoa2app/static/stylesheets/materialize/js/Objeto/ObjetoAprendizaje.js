@@ -12,9 +12,18 @@ if($("#oaid").length){
     cargarListaPatrones();
     cargarDatosGuardados();
 }
+
 if($("#tablaObjetos").length){
-        cargarTablaObjetos();
+    tipo = parseInt($("#tablaObjetos").attr("name"));
+    switch (tipo){
+        case 1:
+            cargarMisObjetos();
+            break;
+        case 2:
+            cargarTodosLosObjetos();
+            break;
     }
+}
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
@@ -332,10 +341,10 @@ function cargarDatosGuardados(){
     
 }
 
-function cargarTablaObjetos(){
+function cargarMisObjetos(){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
         $.ajax({
-            url : "TraerObjetos/", // the endpoint
+            url : "/Objetos/TraerMisObjetos/", // the endpoint
             type : "POST", // http method
             data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
             success : function(data) {
@@ -346,9 +355,9 @@ function cargarTablaObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='/ExportarOA/"+objeto.pk+"'class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
-                        "<a href='!#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
+                        "<a href='#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -360,3 +369,72 @@ function cargarTablaObjetos(){
             }
         });
     }
+    
+function cargarTodosLosObjetos(){
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url : "/Objetos/TraerObjetos/", // the endpoint
+            type : "POST", // http method
+            data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+            success : function(data) {
+                data.forEach(function(objeto) {
+                    $("#bodyTablaObjetos").append(
+                    "<tr>"+
+                        "<td>"+objeto.pk+"</td>"+
+                        "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
+                        "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
+                        "<td>"+
+                        "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
+                        "<a href='#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
+                        "</td>"+
+                    "</tr>"
+                    );
+                });
+                $('#tablaObjetos').DataTable();
+            },
+            error : function(xhr,errmsg,err) {
+                Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
+            }
+        });
+    }    
+    
+function comprobarOA(id){
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url : "/ComprobarOA/" + id + "/", // the endpoint
+            type : "POST", // http method
+            data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+            success : function(json_string) {
+                var data = JSON.parse( json_string );
+                if (!data.Exportable){
+                    var info = data.Informacion ? 'Información: Completo' : 'Información: Incompleto';
+                    var intro = data.Introduccion ? 'Introducción: Completo' : 'Introducción: Incompleto';
+                    var cont = data.Contenido ? 'Contenido: Completo' : 'Contenido: Incompleto';
+                    var act = data.Actividad ? 'Actividad: Completo' : 'Actividad: Incompleto';
+                    var ev = data.Evaluacion ? 'Evaluación: Completo' : 'Evaluación: Incompleto';
+                    var estadoOA = "No se puede exportar el OA si no están todas las secciones completas: \n";
+                    estadoOA += "\n" + info;
+                    estadoOA += "\n" + intro;
+                    estadoOA += "\n" + cont;
+                    estadoOA += "\n" + act;
+                    estadoOA += "\n" + ev;
+                    alert (estadoOA);
+                }else{
+                    exportarOA(id);
+                }
+            }
+        })
+   }
+   
+function exportarOA(id){
+    var exportLink = document.createElement('a');
+    exportLink.href = "/ExportarOA/" + id + "/";
+    document.body.appendChild(exportLink);
+    exportLink.click();
+}
+
+function importarOA(id){
+    //TODO
+}

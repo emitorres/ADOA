@@ -60,12 +60,12 @@ INSERT INTO MenuTipoUsuario VALUES (12, 8, 2);
 
 
 -- Usuario administrador
-INSERT INTO Usuario VALUES (1, 1, 'Marcos', 'Amaro', '31332463', 'Sistemas', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.n.amaro@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', TRUE);
+INSERT INTO Usuario VALUES (1, 'Marcos', 'Amaro', '31332463', 'Sistemas', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.n.amaro@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', TRUE, 1);
 
 -- Docente editor
-INSERT INTO Usuario VALUES (2, 2, 'Carlos', 'García', '12345678', 'Nutrición', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.amaro@ymail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', TRUE);
+INSERT INTO Usuario VALUES (2, 'Carlos', 'García', '12345678', 'Nutrición', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.amaro@ymail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', TRUE, 2);
 
 -- Docente
-INSERT INTO Usuario VALUES (3, 3, 'Micaela', 'Gonzalez', '12345679', 'Audiovisión', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','adoa2.unla@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', FALSE);
+INSERT INTO Usuario VALUES (3, 'Micaela', 'Gonzalez', '12345679', 'Audiovisión', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','adoa2.unla@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', FALSE, 3);
 
 COMMIT;

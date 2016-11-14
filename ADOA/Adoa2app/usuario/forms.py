@@ -1,5 +1,5 @@
 from django import forms
-from Adoa2app.usuario.models import Usuario, TipoUsuario, Menu, MenuTipoUsuario
+from Adoa2app.models import Usuario, TipoUsuario, Menu, MenuTipoUsuario
 from passlib.hash import django_pbkdf2_sha256 as handler
 
 

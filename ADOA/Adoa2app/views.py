@@ -18,7 +18,7 @@ from django.shortcuts import render
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
-from Adoa2app.usuario.models import Usuario
+from Adoa2app.models import Usuario
 from Adoa2app.usuario.access import my_access_required
 
 class Index(TemplateView):
@@ -51,17 +51,11 @@ def EditarOA(request, objId):
     except ObjetoAprendizaje.DoesNotExist:
         raise Http404("Poll does not exist")
     id = request.session['usuario'].id
-    usuario = Usuario.objects.get(id= id)
     return render(request, 'CrearOA.html', {'id': id, 'objeto': objeto})
 
-def Objetos(request):
-    model = ObjetoAprendizaje
-    template_name = 'Objetos.html'
-    
+def Objetos(request, operacion):
     id = request.session['usuario'].id
-    usuario = Usuario.objects.get(id= id)
-    return render_to_response(template_name, locals(), context_instance = RequestContext(request))  
-
+    return render(request, 'Objetos.html', {'id' : id, 'operacion': operacion})
     
 def Paso1(request):
     if request.method == 'POST':
@@ -74,7 +68,8 @@ def Paso1(request):
             oapatron = PatronPedagogico.objects.get(pk=patron)
             evaluacion = Evaluacion()
             evaluacion.save()
-            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Evaluacion = evaluacion)
+            usuario = request.session['usuario']
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Evaluacion = evaluacion, Usuario = usuario)
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Creado!'
         else:
@@ -563,6 +558,29 @@ def EliminarActividad(request):
             content_type="application/json"
         )
         
+def TraerMisObjetos(request):
+    if request.method == 'POST':
+        
+        response_data = {}
+        #idUsuario = request.session['usuario']
+        objetos = ObjetoAprendizaje.objects.filter(
+        Usuario = request.session['usuario']
+        )
+        objetosJson = serializers.serialize('json', objetos)
+        
+        response_data['result'] = 'Objetos!'
+        response_data['objetos'] = objetosJson
+
+        return HttpResponse(
+            objetosJson,
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
 def TraerObjetos(request):
     if request.method == 'POST':
         
@@ -583,6 +601,7 @@ def TraerObjetos(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
         
 def CrearPregunta(request):
     if request.method == 'POST':
@@ -746,8 +765,6 @@ def TraerDatosObjeto(request):
 		
 def TraerTerminosEvaluacion(request):
     if request.method == 'POST':
-
-
         evaluacionId = request.POST['evaluacionid']
         evaluacion = Evaluacion.objects.get(pk=evaluacionId)
 
@@ -772,12 +789,10 @@ def ExportarOA(request, objId):
         import StringIO
         from django.conf import settings
         import sys
-        import os
-        from django.conf import settings
-
+        
         reload(sys)
-        sys.setdefaultencoding("ISO-8859-1")
         oa = ObjetoAprendizaje.objects.get(pk=objId)
+        sys.setdefaultencoding("ISO-8859-1")
         filename = oa.titulo.replace(' ', '_') + '.zip'
         s = StringIO.StringIO()
         #z = zipfile.ZipFile(s, 'w')
@@ -788,6 +803,7 @@ def ExportarOA(request, objId):
         zf.writestr("introduccion.html", crearIntroduccion(oa))
         zf.writestr("contenido.html", crearContenido(oa))
         zf.writestr("evaluacion.html", crearEvalucion(oa))
+        
         
         verdaderosFalsos = VerdaderoFalso.objects.filter(ObjetoAprendizaje=oa)
         identificaciones = Identificacion.objects.filter(ObjetoAprendizaje=oa)
@@ -807,32 +823,33 @@ def ExportarOA(request, objId):
             
 
         #----------------------ARCHIVOS ESTATICOS------------------------------
-
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
+        staticDir = settings.STATICFILES_DIRS[0];
+        
+        pathfile = staticDir + "/stylesheets/materialize/js/Objeto"
         abrirAch=open(pathfile+"/VisualizacionActividades.js","r" )
         zf.writestr("Actividades.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/Objeto"
+        pathfile = staticDir + "/stylesheets/materialize/js/Objeto"
         abrirAch=open(pathfile+"/VisualizacionEvaluacion.js","r" )
         zf.writestr("Evaluacion.js",abrirAch.read())
         
-        pathfile = "Adoa2app/static/stylesheets/materialize/js"
+        pathfile = staticDir + "/stylesheets/materialize/js"
         abrirAch=open(pathfile+"/jquery-2.1.1.min.js","r" )
         zf.writestr("jquery-2.1.1.min.js",abrirAch.read())
         
-        pathfile = "Adoa2app/static/stylesheets/materialize/css"
+        pathfile = staticDir + "/stylesheets/materialize/css"
         abrirAch=open(pathfile+"/materialize.min.css","r" )
         zf.writestr("css/materialize.min.css",abrirAch.read())
         
-        pathfile = "Adoa2app/static/stylesheets/materialize/js"
+        pathfile = staticDir + "/stylesheets/materialize/js"
         abrirAch=open(pathfile+"/materialize.min.js","r" )
         zf.writestr("materialize.min.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = staticDir + "/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCOFunctions.js","r" )
         zf.writestr("SCOFunctions.js",abrirAch.read())
 
-        pathfile = "Adoa2app/static/stylesheets/materialize/js/scorm"
+        pathfile = staticDir + "/stylesheets/materialize/js/scorm"
         abrirAch=open(pathfile+"/SCORM_API_wrapper.js","r" )
         zf.writestr("SCORM_API_wrapper.js",abrirAch.read())
         
@@ -877,9 +894,60 @@ def ExportarOA(request, objId):
         
         resp['Content-Disposition'] = 'attachment; filename=%s' % filename
         return resp
+
     except ObjetoAprendizaje.DoesNotExist:
         raise Http404("Poll does not exist")
     return ""
+
+def ComprobarOA(request, id):
+    try:
+        oa = ObjetoAprendizaje.objects.get(pk=id)
+        sePuedeExportar = esExportable(oa)
+        return JsonResponse(
+                            json.dumps(sePuedeExportar[1]),
+                            content_type="application/json",
+                            safe = False
+                            )
+    except ObjetoAprendizaje.DoesNotExist:
+        raise Http404("Poll does not exist")    
+    
+def esExportable (oa):
+    secciones = {'Exportable': True, 'Informacion': True, 'Introduccion' : True, 'Contenido' : True, 'Actividad' : True, 'Evaluacion' : True}
+    oaCompleto = oa.estaCompleto()
+    exportable = True
+    if oaCompleto[0] is False:
+        exportable = False
+        for seccion in oaCompleto[1]:
+            secciones[seccion] = False
+
+    actividad = Actividad()
+    actividad.ObjetoAprendizaje = oa
+    actividades = actividad.getAll();
+    listado = list(actividades)
+    actividadCompleta = True
+    kActiv = 0 #Cuento la cantidad de actividades
+    i = 0    
+    
+    while actividadCompleta and len(listado) > i:
+        lista = listado[i]
+        j = 0
+        while actividadCompleta and len(lista) > j:
+            item = lista[j]
+            kActiv+=1
+            if item.estaCompleto() is False:
+                actividadCompleta = False
+                secciones['Actividad'] = False
+                exportable = False
+            j+=1
+        i+=1   
+    
+    #Si no tiene actividades, se pone como incompleta
+    if secciones['Actividad'] and kActiv < 1:
+        secciones['Actividad'] = False
+    
+    secciones['Exportable'] = exportable
+        
+    return (exportable, secciones)
 
 def paginaMaestra(seccion,contenido,scriptExtra):
     cadena = '<html>\n\

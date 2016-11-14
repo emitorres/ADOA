@@ -2,7 +2,7 @@ from django import template
 from django.conf import settings
 from django.core.urlresolvers import reverse
 import datetime
-from Adoa2app.usuario.models import Usuario
+from Adoa2app.models import Usuario, Menu
 
 register = template.Library()
 

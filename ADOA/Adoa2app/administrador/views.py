@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
-from Adoa2app.usuario.models import TipoUsuario, Usuario, Menu,MenuTipoUsuario
+from Adoa2app.models import Usuario, TipoUsuario, Menu, MenuTipoUsuario
 from Adoa2app.usuario.forms import UsuarioForm, TipoUsuarioForm,MenuForm,MenuTipoUsuarioForm
 from django.forms.widgets import CheckboxSelectMultiple
 from Adoa2app.usuario.access import my_access_required
+
 @my_access_required
 def index_administrador(request):
 	return render_to_response('administrador/AdministradorBase.html', locals(), context_instance = RequestContext(request))

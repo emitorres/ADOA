@@ -14,3 +14,8 @@ from .PatronPedagogico import SeccionNombre
 from .VerdaderoFalso import VerdaderoFalso
 from .VerdaderoFalso import VerdaderoFalsoItem
 from .Video import Video
+from .Usuario import Usuario
+from .TipoUsuario import TipoUsuario
+from .Menu import Menu
+from .Token import Token
+from .MenuTipoUsuario import MenuTipoUsuario

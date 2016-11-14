@@ -2,33 +2,17 @@ from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from Adoa2app.usuario.forms import CambioPerfilForm, RegistroForm, IngresoForm,PerfilForm,PerfilIndexForm, RecuperarContrasenaForm,CambioPwdForm,CambioPwdForm2
-from Adoa2app.usuario.models import Usuario, TipoUsuario,token
+from Adoa2app.models import Usuario, TipoUsuario, Token
 from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
-from django.core.mail import send_mail
 from Adoa2app.usuario.access import my_login_required,my_access_required
-from django.contrib.auth.hashers import make_password
 from django.conf import settings
 from passlib.hash import django_pbkdf2_sha256 as handler
-from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,SeccionContenido
-
-
-from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
-
-
 from passlib.hash import pbkdf2_sha256
 import uuid
-
-
-import os
-import zipfile
-import cStringIO
-import zlib
-
 import sys
 reload(sys)
 
-import gzip
 
 def index_usuarioBase(request):
 	id = request.session['usuario'].id
@@ -80,7 +64,7 @@ def registro(request):
 			usuario1 = Usuario.objects.get(email = usuario)
 
 			tokenCadena = uuid.uuid4()
-			token1 = token(1,tokenCadena, usuario1.id)
+			token1 = Token(1,tokenCadena, usuario1.id)
 
 		
 			token1.save()
@@ -91,7 +75,7 @@ def registro(request):
 				subject = 'Verificacion de Email'
 
 				fromUsuario = settings.EMAIL_HOST_USER 
-				to = token.objects.get(usuario_id = usrLog.id)
+				to = Token.objects.get(usuario_id = usrLog.id)
 				toMail = [usrLog.email]
 
 				message = 'Hola ' +usrLog.nombre +' '+usrLog.apellido + ', bienvenido a ADOA 2.0 por favor haga click en el siguiente enlace para confirmar su email '+ traerUrlBase(request) + '/usuario/confirmar_cuenta/'+str(to.token) + '\n\n' + 'Usuario: ' + usrLog.email + '\n'+ 'Contrasena: '+ usrLog.dni
@@ -247,7 +231,7 @@ def recuperar_contrasena(request):
 			usuario1 = Usuario.objects.get(email = usuarioMail)
 
 			tokenCadena = uuid.uuid4()
-			token1 = token(1,tokenCadena, usuario1.id)
+			token1 = Token(1,tokenCadena, usuario1.id)
 
 			token1.save()
 			#clave = formulario.cleaned_data['clave']
@@ -256,7 +240,7 @@ def recuperar_contrasena(request):
 				subject = 'Recuperar Contrasena'
 
 				toMail = [usrLog.email]
-				toToken = token.objects.get(usuario_id = usrLog.id)
+				toToken = Token.objects.get(usuario_id = usrLog.id)
 				fromMail = settings.EMAIL_HOST_USER
 				message = traerUrlBase(request)+'/usuario/recuperar/cambio_clave/'+str(toToken.token)
 				mail = EmailMessage(subject, message, fromMail, toMail)
@@ -295,10 +279,10 @@ def cambiar_clave(request,registro):
 		usuario = Usuario()
 	"""
 
-	token2 = token.objects.all()
+	token2 = Token.objects.all()
 
 	if token2:
-		token1 = token.objects.get(token = registro)
+		token1 = Token.objects.get(token = registro)
 		usuario = Usuario.objects.get(id = token1.usuario_id)
 		emailuser = usuario.email
 
@@ -371,10 +355,10 @@ def cambio_clave(request,registro):
 
 def confirmar_cuenta(request,registro):
 
-	token2 = token.objects.all()
+	token2 = Token.objects.all()
 
 	if token2:
-		token1 = token.objects.get(token = registro)
+		token1 = Token.objects.get(token = registro)
 		usuario = Usuario.objects.get(id = token1.usuario_id)
 		emailuser = usuario.email
 		email_base, proveedor = emailuser.split("@")
