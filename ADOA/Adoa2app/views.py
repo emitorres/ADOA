@@ -965,7 +965,8 @@ def paginaMaestra(seccion,contenido,scriptExtra):
     <body onload="loadPage()" onunload="unloadPage()">\n\
         <script type="text/javascript">pipwerks.SCORM.data.set("cmi.completion_status","completed")</script>\n\
             <div id="pagina">\n\
-                <h1 class="titulo">'+seccion+'</h1>\n\
+                <blockquote><h4 class="titulo">'+seccion+'</h4></blockquote>\n\
+                <div class="divider"></div>\n\
                 <div class="cont">'+contenido+'\n\
                 </div>\n\
             </div>\n\
@@ -1089,75 +1090,75 @@ def crearContenido(objeto):
 
 #-----------------------------EARLY BIRD--------------------------------------------
     if (patron.id == 1):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 #-----------------------------/EARLY BIRD-------------------------------------------
 
 #-----------------------------SPIRAL------------------------------------------------
     if (patron.id == 2):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/SPIRAL----------------------------------------------
 
 #-----------------------------LAY OF THE LAND--------------------------------------
     if (patron.id == 3):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre+"</h4>"
+        contenido+="<h5>"+seccionCon[3].SeccionNombre+"</h5>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/LAY OF THE LAND--------------------------------------
 
 #-----------------------------TOY BOX-----------------------------------------------
     if (patron.id == 4):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/TOY BOX----------------------------------------------
 
 #-----------------------------TOOLBOX-----------------------------------------------
     if (patron.id == 5):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[1].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[1].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[2].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[2].contenido+"</div>"
 
-        contenido+="<h4>"+seccionCon[3].SeccionNombre.nombre+"</h4>"
+        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[3].contenido+"</div>"
 #-----------------------------/TOOL BOX----------------------------------------------
 
 #-----------------------------SIN PATRON---------------------------------------------
     if (patron.id == 6):
-        contenido="<h4>"+seccionCon[0].SeccionNombre.nombre+"</h4>"
+        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
         contenido+="<div>"+seccionCon[0].contenido+"</div>"
 #-----------------------------/SIN PATRON--------------------------------------------
 
@@ -1203,17 +1204,94 @@ def crearVerdaderoFalsoScorm(actividad):
 
 def crearIdentificacionScorm(actividad):
 
+
+    script = ''
+    
+    actividadItems = actividad.identificacionitem_set.all()
+    contenido= ""
+
+    contenido+="<div class='col s12'>"\
+        "<p><b>"+actividad.enunciado+"</b></p>"\
+    "</div>"
+
     contenido = "actividad"+str(actividad.id)
     script = ''
+    for item in actividadItems:
+        contenido+="<div class='row'>"\
+                        "<div class='col s6'>"\
+                            "<p>"+item.concepto+"</p>"\
+                        "</div>"\
+                        "<div class='input-field col s3'>"\
+                            "<select id='selectIdentificacion"+str(item.id)+"' class='selectIdentificacion' name='selectIdentificacion'>"\
+                                "<option value='' disabled='' selected=''>Seleccione si corresponde</option>"\
+                                "<option value='0' >No</option>"\
+                                "<option value='1' >Si</option>"\
+                            "</select>"\
+                            "<label>Corresponde</label>"\
+                        "</div>"\
+                        "<div class='col s3' id='resultado"+str(item.id)+"'>"\
+                        "</div>"\
+                    "</div>"
+        if item.respuesta == True:
+            contenido+="<input type='hidden' class='respuestaIdentificacion' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='1'>"
+        else:
+            contenido+="<input type='hidden' class='respuestaIdentificacion' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='0'>"
+        
+    contenido+="<div class='row col s12'>"\
+                    "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasIdentificacion()'>Correccion</a>"\
+                "</div>"
+    contenido+="<script>$('select').material_select();</script>"
 
-    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+    return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
 
 def crearOrdenamientoScorm(actividad):
 
+    script = ''
+    
+    actividadItems = actividad.ordenamientoitem_set.all()
+    contenido= ""
+
+    contenido+="<div class='col s12'>"\
+        "<p><b>"+actividad.enunciado+"</b></p>"\
+    "</div>"
+
     contenido = "actividad"+str(actividad.id)
     script = ''
 
-    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+    for item in actividadItems:
+        contenido+="<div class='row'>"\
+                        "<div class='col s6'>"\
+                            "<p>"+item.texto+"</p>"\
+                        "</div>"\
+                        "<div class='input-field col s3'>"\
+                            "<select id='selectOrdenamiento"+str(item.id)+"' class='selectOrdenamiento' name='selectOrdenamiento'>"\
+                                "<option value='' disabled='' selected=''>Seleccione el orden</option>"\
+                                "<option value='1'>1</option>"\
+                                "<option value='2'>2</option>"\
+                                "<option value='3'>3</option>"\
+                                "<option value='4'>4</option>"\
+                                "<option value='5'>5</option>"\
+                                "<option value='6'>6</option>"\
+                                "<option value='7'>7</option>"\
+                                "<option value='8'>8</option>"\
+                                "<option value='9'>9</option>"\
+                                "<option value='10'>10</option>"\
+                            "</select>"\
+                            "<label>Orden</label>"\
+                        "</div>"\
+                        "<input type='hidden' class='respuestaOrdenamiento' name='respuesta"+str(item.id)+"' data-id='"+str(item.id)+"' id='respuesta"+str(item.id)+"' value='"+str(item.orden)+"'>"\
+                        "<div class='col s3' id='resultado"+str(item.id)+"'>"\
+                        "</div>"\
+                    "</div>"
+                    
+        
+        
+    contenido+="<div class='row col s12'>"\
+                    "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"\
+                "</div>"
+    contenido+="<script>$('select').material_select();</script>"
+
+    return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
 
 def crearVideoScorm(actividad):
 
