@@ -22,6 +22,22 @@ class Identificacion(Actividad):
         
         return True
     
+    def clonar(self, oa):
+        identificacion = Identificacion()
+        identificacion.nombre = self.nombre
+        identificacion.enunciado = self.enunciado
+        identificacion.ObjetoAprendizaje = oa
+        identificacion.save()
+        
+        aItems = IdentificacionItem.objects.filter(identificacion = self)
+        for item in aItems:
+            itemClon = IdentificacionItem()
+            itemClon.concepto = item.concepto
+            itemClon.respuesta = item.respuesta
+            itemClon.Identificacion = identificacion
+            
+            itemClon.save()
+    
     class Meta:
         db_table = "Identificacion"
     

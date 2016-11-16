@@ -22,6 +22,23 @@ class Asociacion(Actividad):
         
         return True
     
+    def clonar(self, oa):
+        asociacion = Asociacion()
+        asociacion.nombre = self.nombre
+        asociacion.enunciado = self.enunciado
+        asociacion.ObjetoAprendizaje = oa
+        asociacion.save()
+        
+        aItems = AsociacionItem.objects.filter(Asociacion = self)
+        for item in aItems:
+            itemClon = AsociacionItem()
+            itemClon.campo1 = item.campo1
+            itemClon.campo2 = item.campo2
+            itemClon.Asociacion = asociacion
+            
+            itemClon.save()
+        
+    
     class Meta:
         db_table = "Asociacion"
     

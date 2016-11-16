@@ -1368,3 +1368,55 @@ def crearEvalucion(oa):
     "</div>"
     
     return paginaMaestra("Evaluacion",contenido.encode('utf-8'),script)
+
+
+def importarOA(request, objId):
+    response_data = {}
+    try:
+        usuario = request.session['usuario']
+        oaOriginal = ObjetoAprendizaje.objects.get(id = objId)
+        
+        oaImportado = ObjetoAprendizaje()
+        oaImportado.titulo = oaOriginal.titulo
+        oaImportado.descripcion = oaOriginal.descripcion
+        oaImportado.introduccion = oaOriginal.introduccion
+        oaImportado.PatronPedagogico = oaOriginal.PatronPedagogico
+        oaImportado.Usuario = usuario
+        evaluacion = Evaluacion()
+        evaluacion.save()
+        oaImportado.Evaluacion = evaluacion
+        oaImportado.save()
+        
+        evaluacionItems = EvaluacionItem.objects.filter(Evaluacion = oaOriginal.Evaluacion)
+        for evItem in evaluacionItems:
+            evaluacionItem = EvaluacionItem()
+            evaluacionItem.Evaluacion = evaluacion
+            evaluacionItem.pregunta  = evItem.pregunta
+            evaluacionItem.respuestaCorrecta = evItem.respuestaCorrecta
+            evaluacionItem.respuestaIncorrecta1 = evItem.respuestaIncorrecta1
+            evaluacionItem.respuestaIncorrecta2 = evItem.respuestaIncorrecta2
+            evaluacionItem.ordenRespuestaCorrecta = evItem.ordenRespuestaCorrecta
+            evaluacionItem.ordenRespuestaIncorrecta1 = evItem.ordenRespuestaIncorrecta1
+            evaluacionItem.ordenRespuestaIncorrecta2 = evItem.ordenRespuestaIncorrecta2
+            evaluacionItem.save()
+            
+        actividad = Actividad()
+        actividad.ObjetoAprendizaje = oaOriginal
+        actividades = actividad.getAll()
+        for lista in actividades:
+            for actividad in lista:    
+                actividad.clonar(oaImportado)
+                
+        response_data['result'] = 'Objeto de aprendizaje importado correctamente!'
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+        
+    except:
+        response_data['result'] = 'Error al importa el objeto de aprendizaje!'
+        
+    return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )    

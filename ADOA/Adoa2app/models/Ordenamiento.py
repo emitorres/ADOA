@@ -22,6 +22,22 @@ class Ordenamiento(Actividad):
         
         return True
     
+    def clonar(self, oa):
+        ordenamiento = Ordenamiento()
+        ordenamiento.nombre = self.nombre
+        ordenamiento.enunciado = self.enunciado
+        ordenamiento.ObjetoAprendizaje = oa
+        ordenamiento.save()
+        
+        aItems = OrdenamientoItem.objects.filter(Ordenamiento = self)
+        for item in aItems:
+            itemClon = OrdenamientoItem()
+            itemClon.texto = item.texto
+            itemClon.orden = item.orden
+            itemClon.Ordenamiento = ordenamiento
+            
+            itemClon.save()
+    
     class Meta:
         db_table = "Ordenamiento"
     

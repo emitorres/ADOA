@@ -386,8 +386,6 @@ function cargarTodosLosObjetos(){
                         "<td>"+
                         "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
                         "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
-                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
-                        "<a href='#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -436,5 +434,13 @@ function exportarOA(id){
 }
 
 function importarOA(id){
-    //TODO
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url : "/importarOA/" + id + "/", // the endpoint
+            type : "POST", // http method
+            data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+            success : function(data) {
+                Materialize.toast(data.result, 3000);
+            }
+        });
 }

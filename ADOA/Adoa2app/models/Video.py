@@ -16,5 +16,12 @@ class Video(Actividad):
         
         return True
     
+    def clonar(self, oa):
+        video = Video()
+        video.nombre = self.nombre
+        video.descripcion = self.descripcion
+        video.ObjetoAprendizaje = oa
+        video.save()
+    
     class Meta:
         db_table = "Video"

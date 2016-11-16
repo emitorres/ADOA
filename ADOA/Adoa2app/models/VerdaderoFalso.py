@@ -22,6 +22,22 @@ class VerdaderoFalso(Actividad):
         
         return True
     
+    def clonar(self, oa):
+        vof = VerdaderoFalso()
+        vof.nombre = self.nombre
+        vof.enunciado = self.enunciado
+        vof.ObjetoAprendizaje = oa
+        vof.save()
+        
+        aItems = VerdaderoFalsoItem.objects.filter(VerdaderoFalso = self)
+        for item in aItems:
+            itemClon = VerdaderoFalsoItem()
+            itemClon.afirmacion = item.afirmacion
+            itemClon.respuesta = item.respuesta
+            itemClon.VerdaderoFalso = vof
+            
+            itemClon.save()
+    
     class Meta:
         db_table = "VerdaderoFalso"
     
