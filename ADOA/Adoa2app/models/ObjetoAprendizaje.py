@@ -15,7 +15,7 @@ class ObjetoAprendizaje(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    Usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, null=False, default = 1)
+    Usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=False, default = 1)
     
     def estaCompleto (self):
         validator = VacioValidator()
