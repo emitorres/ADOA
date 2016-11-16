@@ -243,7 +243,7 @@ function cargarDatosGuardados(){
                         "<td>Ordenamiento</td>"+
                         "<td>"+
                             "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='verOrdenamiento"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                             "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
