@@ -825,6 +825,10 @@ def ExportarOA(request, objId):
         #----------------------ARCHIVOS ESTATICOS------------------------------
         staticDir = settings.STATICFILES_DIRS[0];
         
+        pathfile = staticDir + "/stylesheets/materialize/css"
+        abrirAch=open(pathfile+"/EstiloScorm.css","r" )
+        zf.writestr("css/EstiloScorm.css",abrirAch.read())
+        
         pathfile = staticDir + "/stylesheets/materialize/js/Objeto"
         abrirAch=open(pathfile+"/VisualizacionActividades.js","r" )
         zf.writestr("Actividades.js",abrirAch.read())
@@ -954,6 +958,7 @@ def paginaMaestra(seccion,contenido,scriptExtra):
     <head>\n\
         <meta charset="utf-8"> \
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css" media="screen" />\n\
+        <link rel="stylesheet" type="text/css" href="css/EstiloScorm.css" media="screen" />\n\
         <script type="text/javascript" src="SCORM_API_wrapper.js"></script>\n\
         <script type="text/javascript" src="SCOFunctions.js"></script>\n\
         <script type="text/javascript" src="jquery-2.1.1.min.js"></script>\n\
@@ -1063,6 +1068,7 @@ def manifestXml(oa):
         <!--Archivos comunes para todos los contenidos -->\
         <resource identifier="common_files" type="webcontent" adlcp:scormType="asset">\
             <file href="css/materialize.min.css"/>\
+            <file href="css/EstiloScorm.css"/>\
             <file href="jquery-2.1.1.min.js"/>\
             <file href="SCOFunctions.js"/>\
             <file href="Evaluacion.js"/>\
@@ -1214,7 +1220,6 @@ def crearIdentificacionScorm(actividad):
         "<p><b>"+actividad.enunciado+"</b></p>"\
     "</div>"
 
-    contenido = "actividad"+str(actividad.id)
     script = ''
     for item in actividadItems:
         contenido+="<div class='row'>"\
@@ -1255,7 +1260,6 @@ def crearOrdenamientoScorm(actividad):
         "<p><b>"+actividad.enunciado+"</b></p>"\
     "</div>"
 
-    contenido = "actividad"+str(actividad.id)
     script = ''
 
     for item in actividadItems:
@@ -1298,13 +1302,15 @@ def crearVideoScorm(actividad):
     contenido = ""
     script = ''
     
-    contenido += "<div class='offset-s2 col s8'>"\
+    contenido += "<div class='row'>"\
+            "<div class='offset-s2 col s8'>"\
                 "<div class='video-container'>"\
                     "<iframe  src='"+actividad.link+"' frameborder='0' allowfullscreen></iframe>"\
                 "</div>"\
             "</div>"\
             "<div class='col s12'>"\
                 "<p><b>"+actividad.descripcion+"</b></p>"\
+            "</div>"\
             "</div>"
 
     return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
