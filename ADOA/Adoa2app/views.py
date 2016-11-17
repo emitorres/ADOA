@@ -1333,41 +1333,117 @@ def crearEvalucion(oa):
                     "<b>"+pregunta.pregunta+"</b>"\
                 "</div>"\
                 "<div class='col s3' id='resultado"+str(pregunta.id)+"'>"\
-                "</div>"\
-                "<div class='col s12'>"\
-                    "<div class='col s9'>"\
-                        "<p id='respuesta1-"+str(pregunta.id)+"'>"+pregunta.respuestaCorrecta+"</p>"\
-                    "</div>"\
-                    "<div class='col s3'>"\
-                        "<p>"\
-                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' class='correcta' id='radiorespuesta1-"+str(pregunta.id)+"' />"\
-                            "<label for='radiorespuesta1-"+str(pregunta.id)+"'></label>"\
-                        "</p>"\
-                    "</div>"\
-                "</div>"\
-                "<div class='col s12'>"\
-                    "<div class='col s9'>"\
-                        "<p id='respuesta2-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta1+"</p>"\
-                    "</div>"\
-                    "<div class='col s3'>"\
-                        "<p>"\
-                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta2-"+str(pregunta.id)+"' />"\
-                            "<label for='radiorespuesta2-"+str(pregunta.id)+"'></label>"\
-                        "</p>"\
-                    "</div>"\
-                "</div>"\
-                "<div class='col s12'>"\
-                    "<div class='col s9'>"\
-                        "<p id='respuesta3-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta2+"</p>"\
-                    "</div>"\
-                    "<div class='col s3'>"\
-                        "<p >"\
-                            "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta3-"+str(pregunta.id)+"' />"\
-                            "<label for='radiorespuesta3-"+str(pregunta.id)+"'></label>"\
-                        "</p>"\
-                    "</div>"\
-                "</div>"\
-        "</div>"
+                "</div>"
+        if pregunta.ordenRespuestaCorrecta == 1:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta1-"+str(pregunta.id)+"'>"+pregunta.respuestaCorrecta+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' class='correcta' id='radiorespuesta1-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta1-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta1 == 1:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta2-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta1+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta2-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta2-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta2 == 1:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta3-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta2+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p >"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta3-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta3-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        if pregunta.ordenRespuestaCorrecta == 2:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta1-"+str(pregunta.id)+"'>"+pregunta.respuestaCorrecta+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' class='correcta' id='radiorespuesta1-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta1-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta1 == 2:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta2-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta1+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta2-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta2-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta2 == 2:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta3-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta2+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p >"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta3-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta3-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        if pregunta.ordenRespuestaCorrecta == 3:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta1-"+str(pregunta.id)+"'>"+pregunta.respuestaCorrecta+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' class='correcta' id='radiorespuesta1-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta1-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta1 == 3:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta2-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta1+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p>"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta2-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta2-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        elif pregunta.ordenRespuestaIncorrecta2 == 3:
+            contenido+="<div class='col s12'>"\
+                            "<div class='col s9'>"\
+                                "<p id='respuesta3-"+str(pregunta.id)+"'>"+pregunta.respuestaIncorrecta2+"</p>"\
+                            "</div>"\
+                            "<div class='col s3'>"\
+                                "<p >"\
+                                    "<input name='group1"+str(pregunta.id)+"' type='radio' data-id='"+str(pregunta.id)+"' id='radiorespuesta3-"+str(pregunta.id)+"' />"\
+                                    "<label for='radiorespuesta3-"+str(pregunta.id)+"'></label>"\
+                                "</p>"\
+                            "</div>"\
+                        "</div>"
+        
+        contenido+="</div>"
         
     contenido+="<div class='row col s12'>"\
         "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasEvaluacion()'>Correccion</a>"\
