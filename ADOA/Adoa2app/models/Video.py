@@ -20,6 +20,7 @@ class Video(Actividad):
         video = Video()
         video.nombre = self.nombre
         video.descripcion = self.descripcion
+        video.link = self.link
         video.ObjetoAprendizaje = oa
         video.save()
     

@@ -350,14 +350,14 @@ function cargarMisObjetos(){
             success : function(data) {
                 data.forEach(function(objeto) {
                     $("#bodyTablaObjetos").append(
-                    "<tr>"+
+                    "<tr id='miObjeto_" + objeto.pk +"'>"+
                         "<td>"+objeto.pk+"</td>"+
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
                         "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
-                        "<a href='#' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -440,6 +440,22 @@ function importarOA(id){
             type : "POST", // http method
             data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
             success : function(data) {
+                Materialize.toast(data.result, 3000);
+            }
+        });
+}
+
+function borrarOA(id){
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url : "/BorrarOA/" + id + "/", // the endpoint
+            type : "POST", // http method
+            data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+            success : function(data) {
+                if (data.code){
+                    var objetoBorrado = "#miObjeto_" + id;
+                    $(objetoBorrado).remove();
+                }
                 Materialize.toast(data.result, 3000);
             }
         });

@@ -32,18 +32,27 @@ def CrearOA(request):
     model = ObjetoAprendizaje
     template_name = 'CrearOA.html'
 
-    id = request.session['usuario'].id
-    usuario = Usuario.objects.get(id= id)
+    usuario = request.session['usuario']
     
     return render_to_response(template_name, locals(), context_instance = RequestContext(request))  
-"""
-def CrearOA(request):
 
-    id = request.session['usuario'].id
-    usuario = Usuario.objects.get(id= id)
+def BorrarOA(request, objId):
+    response_data = {}
+    try:
+        oa = ObjetoAprendizaje.objects.get(id = objId)
+        oa.delete()
+        
+        response_data['code'] = True
+        response_data['result'] = 'Objeto de Aprendizaje borrado!'
+    except:
+        response_data['code'] = False
+        response_data['result'] = 'Error al borrar el objeto!'
+            
+    return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
 
-    return render_to_response('CrearOA.html', locals(), context_instance = RequestContext(request))  
-"""
 @my_access_required
 def EditarOA(request, objId):
     try:
@@ -56,6 +65,15 @@ def EditarOA(request, objId):
 def Objetos(request, operacion):
     id = request.session['usuario'].id
     return render(request, 'Objetos.html', {'id' : id, 'operacion': operacion})
+
+#Creamos secciones vacias para el OA
+def crearSecciones(oa):
+    seccionNombre = SeccionNombre.objects.filter(PatronPedagogico = oa.PatronPedagogico)
+    for seccion in seccionNombre:
+        seccionContenido = SeccionContenido()
+        seccionContenido.ObjetoAprendizaje = oa
+        seccionContenido.SeccionNombre = seccion
+        seccionContenido.save()
     
 def Paso1(request):
     if request.method == 'POST':
@@ -66,22 +84,34 @@ def Paso1(request):
             oadescripcion = request.POST['descripcion']
             patron = request.POST['patron']
             oapatron = PatronPedagogico.objects.get(pk=patron)
-            evaluacion = Evaluacion()
-            evaluacion.save()
             usuario = request.session['usuario']
-            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Evaluacion = evaluacion, Usuario = usuario)
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Usuario = usuario)
             oa.save()
+            evaluacion = Evaluacion(ObjetoAprendizaje = oa)
+            evaluacion.save()
+            crearSecciones(oa)
             response_data['result'] = 'Objeto de Aprendizaje Creado!'
         else:
             oa = ObjetoAprendizaje.objects.get(pk=oaid)
             oa.titulo = request.POST['titulo']
             oa.descripcion = request.POST['descripcion']
             patron = request.POST['patron']
-            oa.PatronPedagogico = PatronPedagogico.objects.get(pk=patron)
+            
+            #Si cambia el patron, borramos las secciones guardadas y creamos nuevas vacias
+            if oa.PatronPedagogico.id != patron:
+                seccionContenido = SeccionContenido.objects.filter(ObjetoAprendizaje = oa)
+                listaSecciones = list(seccionContenido)
+                k = len(listaSecciones)
+                for i in range(0, k):
+                    listaSecciones[i].delete()
+                    
+                oa.PatronPedagogico = PatronPedagogico.objects.get(pk=patron)
+                crearSecciones(oa)
+                
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Editado!'
-            
-        response_data['evaluacionid'] = oa.Evaluacion.id
+             
+        response_data['evaluacionid'] = Evaluacion.objects.get(ObjetoAprendizaje = oa).id
         response_data['oaid'] = oa.id
 
         return HttpResponse(
@@ -121,20 +151,20 @@ def Paso2(request):
 
 def Paso3(request):
     if request.method == 'POST':
-        
         response_data = {}
         
         oaid = request.POST['oaid']
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
-        
         secciones = json.loads(request.POST.get('secciones'))
-        for seccion in secciones:
-            seccionNombre = SeccionNombre.objects.get(pk=seccion['id'])
-            seccionContenido = SeccionContenido(contenido = seccion['contenido'])
-            seccionContenido.ObjetoAprendizaje = oa
-            seccionContenido.SeccionNombre = seccionNombre
-            seccionContenido.save()
-
+        seccionesObjeto = SeccionContenido.objects.filter(ObjetoAprendizaje = oa)
+        
+        i = 0
+        for seccion in seccionesObjeto:
+            seccion.contenido = secciones[i]['contenido']
+            seccion.ObjetoAprendizaje = oa
+            seccion.save()
+            i+=1
+            
         response_data['result'] = 'Secciones Guardadas!'
         return HttpResponse(
             json.dumps(response_data),
@@ -721,12 +751,11 @@ def TraerDatosObjeto(request):
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         objetoJson = serializers.serialize('json', [oa])
         patronJson = serializers.serialize('json', [oa.PatronPedagogico])
+        evaluacionOA = Evaluacion.objects.get(ObjetoAprendizaje = oa)
         
-        
-        if oa.Evaluacion != None:
-            evaluacion = oa.Evaluacion
-            evaluacionItems = oa.Evaluacion.evaluacionitem_set.all()
-            evaluacionJson = serializers.serialize('json', [evaluacion])
+        if evaluacionOA is not None:
+            evaluacionItems = evaluacionOA.evaluacionitem_set.all()
+            evaluacionJson = serializers.serialize('json', [evaluacionOA])
             evaluacionItemsJson = serializers.serialize('json', evaluacionItems)
         else:
             evaluacion = []
@@ -1082,9 +1111,11 @@ def manifestXml(oa):
 
 def crearIntroduccion(objeto):
     contenido="<div>"+objeto.descripcion+"</div>"
+    contenido += "<div>" + objeto.introduccion + "</div>"
     return paginaMaestra("Introduccion",contenido.encode('utf-8'),"")
 
 def crearContenido(objeto):
+    contenido = ""
     
     patron = PatronPedagogico.objects.get(id = objeto.PatronPedagogico_id)
 
@@ -1092,82 +1123,12 @@ def crearContenido(objeto):
 
     ####Aca tengo todo
     seccionCon = SeccionContenido.objects.filter(SeccionNombre= seccionNom,ObjetoAprendizaje=objeto)
+
     ####Aca tengo todo
-
-#-----------------------------EARLY BIRD--------------------------------------------
-    if (patron.id == 1):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[1].contenido+"</div>"
-#-----------------------------/EARLY BIRD-------------------------------------------
-
-#-----------------------------SPIRAL------------------------------------------------
-    if (patron.id == 2):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[1].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[2].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[3].contenido+"</div>"
-#-----------------------------/SPIRAL----------------------------------------------
-
-#-----------------------------LAY OF THE LAND--------------------------------------
-    if (patron.id == 3):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[1].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[2].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[3].SeccionNombre+"</h5>"
-        contenido+="<div>"+seccionCon[3].contenido+"</div>"
-#-----------------------------/LAY OF THE LAND--------------------------------------
-
-#-----------------------------TOY BOX-----------------------------------------------
-    if (patron.id == 4):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[1].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[2].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[3].contenido+"</div>"
-#-----------------------------/TOY BOX----------------------------------------------
-
-#-----------------------------TOOLBOX-----------------------------------------------
-    if (patron.id == 5):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[1].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[1].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[2].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[2].contenido+"</div>"
-
-        contenido+="<h5>"+seccionCon[3].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[3].contenido+"</div>"
-#-----------------------------/TOOL BOX----------------------------------------------
-
-#-----------------------------SIN PATRON---------------------------------------------
-    if (patron.id == 6):
-        contenido="<h5>"+seccionCon[0].SeccionNombre.nombre+"</h5>"
-        contenido+="<div>"+seccionCon[0].contenido+"</div>"
-#-----------------------------/SIN PATRON--------------------------------------------
-
+    for seccion in seccionCon:
+        contenido+= "<h5>" + seccion.SeccionNombre.nombre + "</h5>"
+        contenido+= "<div>" + seccion.contenido + "</div>"
+        
     return paginaMaestra("Contenido",contenido.encode('utf-8'),"")
 
 def crearVerdaderoFalsoScorm(actividad):
@@ -1209,8 +1170,6 @@ def crearVerdaderoFalsoScorm(actividad):
     return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
 
 def crearIdentificacionScorm(actividad):
-
-
     script = ''
     
     actividadItems = actividad.identificacionitem_set.all()
@@ -1305,7 +1264,7 @@ def crearVideoScorm(actividad):
     contenido += "<div class='row'>"\
             "<div class='offset-s2 col s8'>"\
                 "<div class='video-container'>"\
-                    "<iframe  src='"+actividad.link+"' frameborder='0' allowfullscreen></iframe>"\
+                    + embeberVideo(actividad.link) +\
                 "</div>"\
             "</div>"\
             "<div class='col s12'>"\
@@ -1324,8 +1283,9 @@ def crearAsociacionScorm(actividad):
 
 def crearEvalucion(oa):
     script=''
-                
-    evaluacionItems = oa.Evaluacion.evaluacionitem_set.all()
+    
+    evaluacionOA = Evaluacion.objects.get(ObjetoAprendizaje = oa)            
+    evaluacionItems = evaluacionOA.evaluacionitem_set.all()
     contenido= ""
     for pregunta in evaluacionItems:
         contenido+="<div class='row col s10'>"\
@@ -1458,18 +1418,20 @@ def importarOA(request, objId):
         usuario = request.session['usuario']
         oaOriginal = ObjetoAprendizaje.objects.get(id = objId)
         
+        #Clona objeto de aprendizaje
         oaImportado = ObjetoAprendizaje()
         oaImportado.titulo = oaOriginal.titulo
         oaImportado.descripcion = oaOriginal.descripcion
         oaImportado.introduccion = oaOriginal.introduccion
         oaImportado.PatronPedagogico = oaOriginal.PatronPedagogico
         oaImportado.Usuario = usuario
-        evaluacion = Evaluacion()
-        evaluacion.save()
-        oaImportado.Evaluacion = evaluacion
         oaImportado.save()
+        evaluacion = Evaluacion(ObjetoAprendizaje = oaImportado)
+        evaluacion.save()
         
-        evaluacionItems = EvaluacionItem.objects.filter(Evaluacion = oaOriginal.Evaluacion)
+        #Clona la evaluacion
+        evaluacionOriginal = Evaluacion.objects.get(ObjetoAprendizaje = oaOriginal)
+        evaluacionItems = EvaluacionItem.objects.filter(Evaluacion = evaluacionOriginal)
         for evItem in evaluacionItems:
             evaluacionItem = EvaluacionItem()
             evaluacionItem.Evaluacion = evaluacion
@@ -1481,13 +1443,23 @@ def importarOA(request, objId):
             evaluacionItem.ordenRespuestaIncorrecta1 = evItem.ordenRespuestaIncorrecta1
             evaluacionItem.ordenRespuestaIncorrecta2 = evItem.ordenRespuestaIncorrecta2
             evaluacionItem.save()
-            
+        
+        #Clona las actividades    
         actividad = Actividad()
         actividad.ObjetoAprendizaje = oaOriginal
         actividades = actividad.getAll()
         for lista in actividades:
             for actividad in lista:    
                 actividad.clonar(oaImportado)
+        
+        
+        #Clona las secciones
+        seccionesOrigen = SeccionContenido.objects.filter(ObjetoAprendizaje = oaOriginal)
+        for seccion in seccionesOrigen:
+            seccionContenido = SeccionContenido(ObjetoAprendizaje = oaImportado)
+            seccionContenido.contenido = seccion.contenido
+            seccionContenido.SeccionNombre = seccion.SeccionNombre
+            seccionContenido.save() 
                 
         response_data['result'] = 'Objeto de aprendizaje importado correctamente!'
         return HttpResponse(
@@ -1496,9 +1468,60 @@ def importarOA(request, objId):
         )
         
     except:
-        response_data['result'] = 'Error al importa el objeto de aprendizaje!'
+        response_data['result'] = 'Error al importar el objeto de aprendizaje!'
         
     return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
         )    
+    
+def embeberVideo(link):
+    htmlGenerado = ""
+    parametrosVideo = []
+    url = 'url'
+    indice = 'indice'
+    regExp = 'regExp'
+    frame = 'frame'
+    match = '{match}'
+    #youtube
+    parametrosVideo.append({url: link, indice:1, regExp:r"^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$", frame:"<iframe allowfullscreen frameborder='0' src='//www.youtube.com/embed/" + match + "' width='640' height='360'></iframe>"})
+    #instagram
+    parametrosVideo.append({url: link, indice:0, regExp:r"(?:www\.|\/\/)instagram\.com\/p\/(.[a-zA-Z0-9_-]*)", frame:"<iframe allowfullscreen src = 'https://instagram.com/p/" + match + "/embed/' width='612' height='710' scrolling='true' allowtransparency='true'></iframe>"})
+    #vine
+    parametrosVideo.append({url: link, indice:0, regExp:r"\/\/vine\.co\/v\/([a-zA-Z0-9]+)", frame:"<iframe allowfullscreen frameborder='0' src = '" + match + "/embed/simple' width='600' height='600' class='vine-embed'></iframe>"})
+    #vimeo
+    parametrosVideo.append({url: link, indice:3, regExp:r"\/\/(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*", frame:"<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0' src = '//player.vimeo.com/video/" + match + "' width='640' height='360'></iframe>"})
+    #dailymotion
+    parametrosVideo.append({url: link, indice:2, regExp:r".+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?", frame:"<iframe allowfullscreen frameborder='0' src = '//www.dailymotion.com/embed/video/" + match + "' width='640' height='360'></iframe>"})
+    #youku
+    parametrosVideo.append({url: link, indice:1, regExp:r"\/\/v\.youku\.com\/v_show\/id_(\w+)=*\.html", frame:"<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0' src='//player.youku.com/embed/" + match + "' height='498' width='510'></iframe>"})
+    #.mp4, .ogg, .webm
+    parametrosVideo.append({url: link, indice:0, regExp:r"^.+.(mp4|m4v|ogg|ogv|webm)$", frame:"<video controls src='" + match + "' width='640' height='360'></video>"})
+    #default
+    parametrosVideo.append({url: link, indice:0, regExp:link, frame:"<iframe allowfullscreen src='" + match + "'></iframe>"})
+    
+    encontrado = False
+    i = 0
+    while encontrado is False and i < len(parametrosVideo):
+        parametro = parametrosVideo[i]
+        htmlGenerado = traerFrameVideo(parametro[url], parametro[regExp], parametro[indice], parametro[frame])
+        if htmlGenerado is not None:
+            encontrado = True
+        
+        i+=1    
+        
+    return htmlGenerado
+    
+def traerFrameVideo(url, regExp, indice, frame):
+    import re
+    busqueda = re.search(regExp, url)
+    match = None
+    frameVideo = None
+    
+    if busqueda is not None:
+        match = busqueda.group(indice)
+    
+    if match is not None and len(match) > 0:
+        frameVideo = frame.replace("{match}", match)
+    
+    return frameVideo    

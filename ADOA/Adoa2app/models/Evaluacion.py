@@ -1,8 +1,10 @@
 from django.db import models
+from .ObjetoAprendizaje import ObjetoAprendizaje
 from Adoa2app.validator.VacioValidator import VacioValidator
 
 class Evaluacion(models.Model):
     enunciado = models.TextField() 
+    ObjetoAprendizaje = models.OneToOneField(ObjetoAprendizaje, on_delete=models.CASCADE, null=False, default=1)
     
     def estaCompleto(self):
         #validator = VacioValidator()
@@ -21,7 +23,8 @@ class Evaluacion(models.Model):
     
     class Meta:
         db_table = "Evaluacion"
-    
+        
+
 class EvaluacionItem(models.Model):
     pregunta = models.TextField()
     respuestaCorrecta = models.TextField()
@@ -31,7 +34,7 @@ class EvaluacionItem(models.Model):
     ordenRespuestaIncorrecta1 = models.IntegerField()
     ordenRespuestaIncorrecta2 = models.IntegerField()
     Evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE,null=True)
-    
+
     def estaCompleto(self):
         validator = VacioValidator()
         

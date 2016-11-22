@@ -134,7 +134,6 @@ class Migration(migrations.Migration):
                 ('titulo', models.CharField(max_length=100)),
                 ('descripcion', models.TextField()),
                 ('introduccion', models.TextField()),
-                ('Evaluacion', models.OneToOneField(null=True, to='Adoa2app.Evaluacion')),
             ],
             options={
                 'db_table': 'ObjetoAprendizaje',
@@ -306,7 +305,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='objetoaprendizaje',
             name='Usuario',
-            field=models.OneToOneField(default=1, to='Adoa2app.Usuario'),
+            field=models.ForeignKey(default=1, to='Adoa2app.Usuario'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -319,6 +318,12 @@ class Migration(migrations.Migration):
             model_name='menu',
             name='tipousuarios',
             field=models.ManyToManyField(to='Adoa2app.TipoUsuario', null=True, blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='evaluacion',
+            name='ObjetoAprendizaje',
+            field=models.OneToOneField(default=1, to='Adoa2app.ObjetoAprendizaje'),
             preserve_default=True,
         ),
         migrations.AddField(
