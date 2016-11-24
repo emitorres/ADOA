@@ -15,11 +15,11 @@ class RegistroForm(forms.ModelForm):
 	class Meta:
 			model = Usuario
 			def save(self):
-			    # Sets username to email before saving
-			    user = super(RegistroForm, self).save(commit=False)
-			    user.nombre = user.dni
-			    user.save()
-			    return user	
+				# Sets username to email before saving
+				user = super(RegistroForm, self).save(commit=False)
+				user.nombre = user.dni
+				user.save()
+				return user	
 
 
 			fields = [

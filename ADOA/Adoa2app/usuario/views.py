@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
@@ -25,8 +26,8 @@ def usuario_index(request):
 def registro(request):
 	valido = False
 	ver_error = False
-	msg_ok = 'Operacion Exitosa'
-	msg_no = 'No se pudo realizar la operacion'
+	msg_ok = 'Operación Exitosa'
+	msg_no = 'No se pudo realizar la operación'
 	lista_err = []
 
 	try:
@@ -39,25 +40,12 @@ def registro(request):
 		valido = formulario.is_valid()
 		if valido:
 			user = formulario.save(commit=False)
-			#enc = pbkdf2_sha256.encrypt(user.dni, rounds=10,salt_size=32)
-			#user.clave = Usuario.objects.encriptar(user.dni)
 			user.clave = Usuario.objects.encriptarPass(user.dni)
 			user.estado = False
 			if user.sexo == 1:
 				user.sexo = 1
 			else:
 				user.sexo = 0
-			"""	
-			email = formulario.cleaned_data.get("email")
-			email_base, proveedor = email.split("@")
-			dominio, extension = proveedor.split(".")
-			if extension == "edu":
-				user.tipousuario = TipoUsuario.objects.get(id = 1)
-
-				user.save()
-			else:	
-					"""
-			
 
 			user.save()
 			usuario = formulario.cleaned_data['email']
@@ -72,13 +60,13 @@ def registro(request):
 			#clave = formulario.cleaned_data['clave']
 			usrLog = Usuario.objects.email_ok(usuarioMail)
 			if usrLog != None:
-				subject = 'Verificacion de Email'
+				subject = 'Verificación de Email'
 
 				fromUsuario = settings.EMAIL_HOST_USER 
 				to = Token.objects.get(usuario_id = usrLog.id)
 				toMail = [usrLog.email]
-
-				message = 'Hola ' +usrLog.nombre +' '+usrLog.apellido + ', bienvenido a ADOA 2.0 por favor haga click en el siguiente enlace para confirmar su email '+ traerUrlBase(request) + '/usuario/confirmar_cuenta/'+str(to.token) + '\n\n' + 'Usuario: ' + usrLog.email + '\n'+ 'Contrasena: '+ usrLog.dni
+				message = u'Hola %s %s, bienvenido a ADOA 2.0, por favor haga click en el siguiente enlace para confirmar su e-mail: %s/usuario/confirmar_cuenta/%s\n\nUsuario: %s\nContraseña: %s' %(usrLog.nombre, usrLog.apellido, traerUrlBase(request), str(to.token), usrLog.email, usrLog.dni)
+				#message = 'Hola ' +usrLog.nombre +' '+usrLog.apellido + ', bienvenido a ADOA 2.0 por favor haga click en el siguiente enlace para confirmar su email '+ traerUrlBase(request) + '/usuario/confirmar_cuenta/'+str(to.token) + '\n\n' + 'Usuario: ' + usrLog.email + '\n'+ 'Contraseña: '+ usrLog.dni
 				mail = EmailMessage(subject, message,fromUsuario,toMail)
 				mail.send()
 			#formulario.save()
@@ -86,10 +74,12 @@ def registro(request):
 			nombre = formulario.cleaned_data['nombre']
 		else:
 			ver_error = True
+			campo = {}
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id, field.label + ': ' + error))
+					
 	else:
 		formulario = RegistroForm(instance = usuario)
 	# locals() es un diccionario con todas las variables locales y sus valores
@@ -169,7 +159,7 @@ def perfil_index(request):
 	usuario = Usuario.objects.get(id= id)
 
 	
-	return render_to_response('usuario/Perfil.html', locals(), context_instance = RequestContext(request))	
+	return render_to_response('usuario/ConfiguracionBase.html', locals(), context_instance = RequestContext(request))	
 	
 @my_login_required
 def perfil_editar(request,registro):
@@ -312,11 +302,12 @@ def cambiar_clave(request,registro):
 	else:
 		return render_to_response('usuario/acceso_denegado.html', locals(), context_instance = RequestContext(request))			
 	return render_to_response('usuario/cambio_clave_mail.html', locals(), context_instance = RequestContext(request))
+
+
 @my_login_required
 def cambio_clave(request,registro):
 	# formulario - msg_no - ver_error - lista_err: se deben llamar asi, el include las referencian con ese nombre
-	id = request.session['usuario'].id
-	usuario = Usuario.objects.get(id= id)
+	usuario = request.session['usuario'].id
 
 	valido = False
 	ver_error = False
@@ -347,59 +338,38 @@ def cambio_clave(request,registro):
 	else:
 		formulario = CambioPwdForm2()
 
-	return render_to_response('usuario/cambio_clave.html', locals(), context_instance = RequestContext(request))
-
-
-
-
+	#return render_to_response('usuario/cambio_clave.html', locals(), context_instance = RequestContext(request))
+	return render(request, 'usuario/cambio_clave.html', {'id': registro, 'formulario' : formulario})
 
 def confirmar_cuenta(request,registro):
-
 	token2 = Token.objects.all()
-
 	if token2:
 		token1 = Token.objects.get(token = registro)
 		usuario = Usuario.objects.get(id = token1.usuario_id)
 		emailuser = usuario.email
-		email_base, proveedor = emailuser.split("@")
-		dominio, extension = proveedor.split(".")
-		if extension == "com":
-			usuario.tipousuario = TipoUsuario.objects.get(id = 3)
-			#usuario.clave = '456123'
-			usuario.estado = True
-			usuario.save()
-			token1.delete()
-
+		usuario.estado = True
+				
+		#Si es email de institución educativa, el rol es de docente editor	
 		expresion_regular = r"(\@edu\.)|(\@.*\.edu\.)"
-
-		flag = evaluar(expresion_regular,emailuser)
-
-		if flag:
+		if evaluar(expresion_regular,emailuser):
 			usuario.tipousuario = TipoUsuario.objects.get(id = 2)
-			usuario.estado = True
-			usuario.save()
-			token1.delete()
-		"""
-		if extension == "edu":
-			usuario.tipousuario = TipoUsuario.objects.get(id = 2)
-			#usuario.clave = '456123'
-			usuario.estado = True
-			usuario.save()
-			token1.delete()
-		"""
+		else: #no es de educativo, rol docente 'común'	
+			usuario.tipousuario = TipoUsuario.objects.get(id = 3)
+		usuario.save()
+		token1.delete()
+		
 		return render_to_response('usuario/ConfirmarCuenta.html', locals(), context_instance = RequestContext(request))
 	else:
 		return render_to_response('usuario/acceso_denegado.html', locals(), context_instance = RequestContext(request))			
 	
 
-import re 
+def evaluar(exp, cad): 
+	import re 
+	if re.search(exp, cad, re.IGNORECASE) is None:
+		return False
+	else:
+		return True
 
-def evaluar(exp, cad):
-    if re.search(exp, cad, re.IGNORECASE) is None:
-    	return False
-    else:
-    	return True
-    
 
 def confirmar_cuenta2(request):
 
