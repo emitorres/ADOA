@@ -14,7 +14,7 @@ if($("#oaid").length){
 }
 
 if($("#tablaObjetos").length){
-    tipo = parseInt($("#tablaObjetos").attr("name"));
+    var tipo = parseInt($("#tablaObjetos").attr("name"));
     switch (tipo){
         case 1:
             cargarMisObjetos();
@@ -47,10 +47,10 @@ $('#oa-paso1').on('submit', function(event){
             cargarSeccionesPatron(oaPatron);
             $(".tab").removeClass("disabled");
             
-            Materialize.toast(data.result, 3000)
+            Materialize.toast(data.result, 3000);
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al guardar el objeto', 3000)
+            Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
 });
@@ -118,7 +118,7 @@ function cargarListaPatrones(){
             $("#oapatron").material_select();
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
+            Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
         }
     });
 }
@@ -153,7 +153,7 @@ function cargarSeccionesPatron(patronId){
             });
         },
         error : function(xhr,errmsg,err) {
-            Materialize.toast('Error al cargar las secciones', 3000)
+            Materialize.toast('Error al cargar las secciones', 3000);
         }
     });
 }
@@ -331,10 +331,10 @@ function cargarDatosGuardados(){
                 $("#btnGuardarPaso3").html('Editar');
                 $(".tab").removeClass("disabled");
                 
-                Materialize.toast("Objeto cargado con exito", 3000)
+                Materialize.toast("Objeto cargado con exito", 3000);
             },
             error : function(xhr,errmsg,err) {
-                Materialize.toast('Error al cargar el objeto', 3000)
+                Materialize.toast('Error al cargar el objeto', 3000);
             }
         });
     }
@@ -365,7 +365,7 @@ function cargarMisObjetos(){
                 $('#tablaObjetos').DataTable();
             },
             error : function(xhr,errmsg,err) {
-                Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
+                Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
             }
         });
     }
@@ -393,7 +393,7 @@ function cargarTodosLosObjetos(){
                 $('#tablaObjetos').DataTable();
             },
             error : function(xhr,errmsg,err) {
-                Materialize.toast('Error al cargar los patrones pedagogicos', 3000)
+                Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
             }
         });
     }    
@@ -407,23 +407,37 @@ function comprobarOA(id){
             success : function(json_string) {
                 var data = JSON.parse( json_string );
                 if (!data.Exportable){
-                    var info = data.Informacion ? 'Información: Completo' : 'Información: Incompleto';
-                    var intro = data.Introduccion ? 'Introducción: Completo' : 'Introducción: Incompleto';
-                    var cont = data.Contenido ? 'Contenido: Completo' : 'Contenido: Incompleto';
-                    var act = data.Actividad ? 'Actividad: Completo' : 'Actividad: Incompleto';
-                    var ev = data.Evaluacion ? 'Evaluación: Completo' : 'Evaluación: Incompleto';
-                    var estadoOA = "No se puede exportar el OA si no están todas las secciones completas: \n";
-                    estadoOA += "\n" + info;
-                    estadoOA += "\n" + intro;
-                    estadoOA += "\n" + cont;
-                    estadoOA += "\n" + act;
-                    estadoOA += "\n" + ev;
-                    alert (estadoOA);
+                    var $estadoItems = $('<ul class="collection">');
+                    for (var atributo in data.attrOA){
+                        var $item = $('<li class="collection-item">').append(atributo);
+                        var $spanItem = $('<span>')
+                                    .attr('class', 'badge green')
+                                    .attr('data-badge-caption', 'Completo');
+                        if (data.attrOA[atributo] === false){
+                            $spanItem = $('<span>')
+                                        .attr('class', 'badge red')
+                                        .attr('data-badge-caption', 'Incompleto');
+                        }
+                        
+                        $item.append($spanItem);    
+                        $estadoItems.append($item);       
+                    }
+                 
+                    var $modalEstadoOAContenido = $('#modalEstadoOAContenido').html(''); 
+                    var $titulo = $('<div class="row">')
+                                .append('<p class="center"><b>No se puede exportar el OA si no están todas las secciones completas</b></p>');
+                    var $estado =$('<div class="row">')
+                                .append($estadoItems);
+                    $modalEstadoOAContenido
+                        .append($titulo)
+                        .append($estado);
+                    
+                    $('#modalEstadoOA').openModal();
                 }else{
                     exportarOA(id);
                 }
             }
-        })
+        });
    }
    
 function exportarOA(id){

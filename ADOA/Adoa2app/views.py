@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.views.generic.base import TemplateView
@@ -945,13 +946,16 @@ def ComprobarOA(request, id):
         raise Http404("Poll does not exist")    
     
 def esExportable (oa):
-    secciones = {'Exportable': True, 'Informacion': True, 'Introduccion' : True, 'Contenido' : True, 'Actividad' : True, 'Evaluacion' : True}
+    import collections
+    attrOA = collections.OrderedDict([('Información', True), ('Introducción',True), ('Contenido',True), ('Actividad', True), ('Evaluación', True)])
+    #attrOA = {'Informacion': True, 'Introduccion' : True, 'Contenido' : True, 'Actividad' : True, 'Evaluacion' : True}
+    secciones = {'Exportable': True, 'attrOA':attrOA}
     oaCompleto = oa.estaCompleto()
     exportable = True
     if oaCompleto[0] is False:
         exportable = False
         for seccion in oaCompleto[1]:
-            secciones[seccion] = False
+            secciones['attrOA'][seccion] = False
 
     actividad = Actividad()
     actividad.ObjetoAprendizaje = oa
@@ -969,14 +973,14 @@ def esExportable (oa):
             kActiv+=1
             if item.estaCompleto() is False:
                 actividadCompleta = False
-                secciones['Actividad'] = False
+                secciones['attrOA']['Actividad'] = False
                 exportable = False
             j+=1
         i+=1   
     
     #Si no tiene actividades, se pone como incompleta
-    if secciones['Actividad'] and kActiv < 1:
-        secciones['Actividad'] = False
+    if secciones['attrOA']['Actividad'] and kActiv < 1:
+        secciones['attrOA']['Actividad'] = False
     
     secciones['Exportable'] = exportable
         

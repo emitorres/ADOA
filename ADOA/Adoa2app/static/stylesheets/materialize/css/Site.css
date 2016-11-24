@@ -121,3 +121,17 @@ textarea{
     margin-top: 0rem !important;
 }
 
+.modal-estadoOA{
+    width: 50% !important;
+    height: 75% !important;
+    max-height: 75% !important;
+}
+
+span.badge {
+    color: #ffffff !important;
+    font-size: 1.05rem !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    width: 40% !important;
+    padding-right: 3px !important;
+}
