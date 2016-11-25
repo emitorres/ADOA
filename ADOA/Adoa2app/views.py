@@ -772,7 +772,8 @@ def TraerDatosObjeto(request):
         
         seccionesContenidoJson = serializers.serialize('json', oa.seccioncontenido_set.all())
         seccionesNombreJson = serializers.serialize('json', oa.PatronPedagogico.seccionnombre_set.all())
-
+        
+        usuarioJson = serializers.serialize('json', [oa.Usuario])
         return JsonResponse(
             {'objeto':objetoJson,
              'patron': patronJson,
@@ -784,7 +785,8 @@ def TraerDatosObjeto(request):
              'video': videosJson,
              'ordenamiento': ordenamientosJson,
              'seccionesNombre':seccionesNombreJson,
-             'seccionesContenido': seccionesContenidoJson},
+             'seccionesContenido': seccionesContenidoJson,
+             'usuario': usuarioJson},
             content_type="application/json"
         )
     else:
@@ -1528,4 +1530,4 @@ def traerFrameVideo(url, regExp, indice, frame):
     if match is not None and len(match) > 0:
         frameVideo = frame.replace("{match}", match)
     
-    return frameVideo    
+    return frameVideo

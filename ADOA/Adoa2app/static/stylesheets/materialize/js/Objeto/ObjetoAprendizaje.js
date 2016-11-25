@@ -1,3 +1,5 @@
+var evaluacionPrevisualizada = false;
+
 var toolbar = [
             ['style', ['style', 'bold', 'italic', 'underline', 'strikethrough', 'clear']],
             ['fonts', ['fontsize', 'fontname']],
@@ -355,6 +357,7 @@ function cargarMisObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
                         "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
                         "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
@@ -384,6 +387,7 @@ function cargarTodosLosObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
                         "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
                         "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "</td>"+
@@ -439,6 +443,154 @@ function comprobarOA(id){
             }
         });
    }
+
+function previsualizarOA(oaId){
+    cambiarTab('informacionTab', 'tab1');
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "/CrearOA/TraerDatosObjeto/", // the endpoint
+        type : "POST", // http method
+        data : { oaid : oaId, csrfmiddlewaretoken: csrf },
+        success : function(data) {
+            var objeto = JSON.parse(data.objeto);
+            var patron = JSON.parse(data.patron);
+            var evaluacion = JSON.parse(data.evaluacion);
+            var evaluacionItems = JSON.parse(data.evaluacionItems);
+            var verdaderofalsolista = JSON.parse(data.verdaderofalso);
+            var ordenamientolista = JSON.parse(data.ordenamiento);
+            var videolista = JSON.parse(data.video);
+            var identificacionlista = JSON.parse(data.identificacion);
+            var asociacionlista = JSON.parse(data.asociacion);
+            var seccionesNombre = JSON.parse(data.seccionesNombre);
+            var seccionesContenido = JSON.parse(data.seccionesContenido);
+            var usuario = JSON.parse(data.usuario);
+            
+            $("#evaluacionid").val(evaluacion[0].pk);
+            $("#listaactividades").html('');
+            $("#listapreguntas").html('');
+            $("#oaSecciones").html('');
+            $('#oaTitulo').text(objeto[0].fields.titulo);
+            $('#oaDescripcion').text(objeto[0].fields.descripcion);
+            $('#oaPatron').text(patron[0].fields.nombre);
+            $('#oaAutor').text(usuario[0].fields.nombre + " " + usuario[0].fields.apellido);
+            $('#oaIntroduccion').html(objeto[0].fields.introduccion);
+                    
+            seccionesNombre.forEach(function(seccion) {
+                $("#oaSecciones").append("<div class='col s11 tituloSeccion'>"+seccion.fields.nombre+"</div>"+
+                "<div class='row'>"+
+                    "<div class='input-field col s11'>"+
+                        "<div class='seccion' data-id='"+seccion.pk+"' id='seccion"+seccion.pk+"'>"+
+                        "</div>"+
+                    "</div>"+
+                "</div>");
+            });
+            
+            seccionesContenido.forEach(function(seccion) {
+                $("#seccion"+seccion.fields.SeccionNombre).html(seccion.fields.contenido)
+                .append("<div class='divider'></div>");
+            });
+            
+            verdaderofalsolista.forEach(function(actividad) {
+                $("#actividades").show();
+                var idActividad = actividad.pk;
+                var nombreActividad = actividad.fields.nombre;
+                $("#listaactividades").append(
+                "<tr id='actividad"+idActividad+"'>"+
+                    "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                    "<td>Verdadero o Falso</td>"+
+                    "<td>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                    "</td>"+
+                "</tr>"
+                );
+                
+            });
+            
+            ordenamientolista.forEach(function(actividad) {
+                $("#actividades").show();
+                var idActividad = actividad.pk;
+                var nombreActividad = actividad.fields.nombre;
+                $("#listaactividades").append(
+                "<tr id='actividad"+idActividad+"'>"+
+                    "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                    "<td>Ordenamiento</td>"+
+                    "<td>"+
+                        "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                    "</td>"+
+                "</tr>"
+                );
+            });
+            
+            identificacionlista.forEach(function(actividad) {
+                $("#actividades").show();
+                var idActividad = actividad.pk;
+                var nombreActividad = actividad.fields.nombre;
+                $("#listaactividades").append(
+                "<tr id='actividad"+idActividad+"'>"+
+                    "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                    "<td>Identificacion</td>"+
+                    "<td>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                    "</td>"+
+                "</tr>"
+                );
+            });
+            
+            asociacionlista.forEach(function(actividad) {
+                $("#actividades").show();
+                var idActividad = actividad.pk;
+                var nombreActividad = actividad.fields.nombre;
+                $("#listaactividades").append(
+                "<tr id='actividad"+idActividad+"'>"+
+                    "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                    "<td>Asociacion</td>"+
+                    "<td>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                    "</td>"+
+                "</tr>"
+                );
+            });
+            
+            videolista.forEach(function(actividad) {
+                $("#actividades").show();
+                var idActividad = actividad.pk;
+                var nombreActividad = actividad.fields.nombre;
+                $("#listaactividades").append(
+                "<tr id='actividad"+idActividad+"'>"+
+                    "<td>"+nombreActividad.substr(0, 50)+"</td>"+
+                    "<td>Video</td>"+
+                    "<td>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                    "</td>"+
+                "</tr>"
+                );
+            });
+            
+            verEvaluacion();
+            $('#modalPrevisualizacionOA').openModal({opacity: 0.2, in_duration: 250, out_duration: 100});
+        }   
+    });
+}
+
+function verPrevisualizacionEvaluacion(){
+        if (!evaluacionPrevisualizada){
+            $("#preguntasEvaluacion").html('');
+            $("#modalVerEvaluacionContenido").children().appendTo("#preguntasEvaluacion");
+            closeThisModal('#modalVerEvaluacion');
+            evaluacionPrevisualizada = true;
+        }
+}
+
+//Función para evitar que el modal quede con z-index bajo
+function closeThisModal(modal){
+    $(modal).closeModal({complete: function(){$(this).remove();}});
+}
+
+function cerrarPrevisualizacionOA(){
+    evaluacionPrevisualizada = false;
+    closeThisModal('#modalPrevisualizacionOA');
+    closeThisModal('#modalVerEvaluacion');
+}
    
 function exportarOA(id){
     var exportLink = document.createElement('a');
