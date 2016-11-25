@@ -49,7 +49,7 @@ class AsociacionItem(models.Model):
     
     def estaCompleto(self):
         validator = VacioValidator()
-        return validator.validar(self.nombre) and validator.validar(self.enunciado)
+        return validator.validar(self.campo1) and validator.validar(self.campo2)
     
     class Meta:
         db_table = "AsociacionItem"
