@@ -3,7 +3,7 @@ from django.db import models
 from .TipoUsuario import TipoUsuario
 from Adoa2app.usuario.managers import UsuarioManager
 from Adoa2app.validator.VacioValidator import VacioValidator
-from twisted.plugins.twisted_qtstub import errorMessage
+#from twisted.plugins.twisted_qtstub import errorMessage
 
 # ------------ Modelo Usuario ------------
 class Usuario(models.Model):#blank = false, null= false

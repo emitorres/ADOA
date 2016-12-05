@@ -6,6 +6,9 @@ from Adoa2app.models import Usuario
 
 def index(request):
 	return render(request, 'inicio/index.html')
+
+def acercaDe(request):
+	return render(request, 'inicio/acercaDe.html')
 @my_login_required
 
 def index_adoa(request):

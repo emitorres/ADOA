@@ -8,6 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+
+
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.conf.global_settings import STATICFILES_DIRS
@@ -73,7 +77,7 @@ DATABASES = {
         #'ENGINE': 'mysql.connector.django',
         'NAME': 'adoa2',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
     }
 }

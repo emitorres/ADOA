@@ -24,8 +24,20 @@ if($("#tablaObjetos").length){
         case 2:
             cargarTodosLosObjetos();
             break;
+    
     }
 }
+
+if($("#contenidoTarjeta").length){
+    var tipo = parseInt($("#contenidoTarjeta").attr("name"));
+    switch (tipo){
+        
+        case 1:
+            cargarObjetosSinTerminar();
+            break;
+    }
+}
+
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
@@ -389,7 +401,7 @@ function cargarTodosLosObjetos(){
                         "<td>"+
                         "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
                         "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
-                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -401,7 +413,84 @@ function cargarTodosLosObjetos(){
             }
         });
     }    
-    
+function cargarObjetosSinTerminar(){
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url : "/Inicio/mostrarObjetosSinTerminar/", // the endpoint
+            type : "POST", // http method
+            data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+            success : function(data) {
+            
+            data.forEach(function(objeto) {
+                //$("#oaPatron").append();
+               
+
+                    $("#contenidoTarjeta").append(
+                    /*
+                        "<div class='col s12 m6 l3'>"+
+                            "<div class='card'>"+
+                                "<div class='card-content black-text'>"+
+                                    "<p>"+'Nombre del Objeto: '+objeto.fields.titulo.substring(0,20)+"</p>"+
+                                    "<p>"+'Patron Utilizado: '+objeto.PatronPedagogico +"</p>"+
+                                    "<p>"+objeto.pk+"</p>"+
+                                "</div>"+
+                                "<div class='card-action'>"+
+                                    "<a class='' href='#' onclick='comprobarOA(" + objeto.pk +");'>Ver Estado</a>"+
+                                    "<a href='/EditarOA/"+objeto.pk+"'>Seguir Editando</a>"+   
+                                "</div>"+
+                            "</div>"+
+                    "</div>"
+                    */
+                    "<div class='col s12 m6 l3'>"+
+                        "<div class='card'>"+
+                            "<div class='card-image waves-effect waves-block waves-light'>"+
+                                "<img class='activator' src='/static/images/AdoaCard.png'>"+
+                        "</div>"+
+                        "<div class='card-content'>"+
+                            "<span class='card-title activator grey-text text-darken-4'>"+objeto.fields.titulo.substring(0,15)+"<i class='material-icons right'>more_vert</i></span>"+
+                              "<p>"+'Patron Utilizado: '+objeto.PatronPedagogico +"</p>"+
+                              "<p>"+objeto.pk+"</p>"+
+
+                        "</div>"+
+                        "<div class='card-reveal'>"+
+                            "<span class='card-title grey-text text-darken-4'>Opciones<i class='material-icons right' style='margin-bottom:50px'>close</i></span>"+
+                              //"<p>Here is some more information about this product that is only revealed once clicked on.</p>"+
+                            "<div class='row'>"+ 
+                                "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class=' col s12 m12 l12 btn waves-effect waves-light'style='margin-bottom:10px' >Ver Estado</a>"+
+                               "<a href='/EditarOA/"+objeto.pk+"' class=' col s12 m12 l12 btn waves-effect waves-light' style='margin-bottom:10px'>Seguir Editando</a>"+
+                                "<a href='#' onclick='borrarOA(" +objeto.pk+ ");'  class=' col s12 m12 l12 btn waves-effect waves-light'style='margin-bottom:10px'>Eliminar</a>"+
+                            "</div>"+
+                        "</div>"+
+                    "</div>"
+                   /* 
+                    "<tr>"+
+                        "<td>"+objeto.pk+"</td>"+
+                        "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
+                        "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
+                        "<td>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn waves-effect waves-light red btn-actividad' >Seguir Editando</a>"+
+                        "</td>"+
+                    "</tr>"*/
+                    );
+                });
+               /* $('#tablaObjetos').DataTable();*/
+            },
+            error : function(xhr,errmsg,err) {
+                Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
+            }
+        });
+    } 
+    /*
+            <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p></p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>    
+                    </div>  
+    */
 function comprobarOA(id){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
         $.ajax({

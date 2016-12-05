@@ -34,7 +34,10 @@
 
           <li>
           <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">Registrarse<i class="material-icons right">subject</i></a></li>
-        
+         <li>
+            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">Acerca De<i class="material-icons right">info</i>
+            </a>
+          </li>
         </ul>
 
         <ul class="side-nav" id="mobile-demo">
@@ -48,14 +51,32 @@
     </nav>
   </header>
 
+<div id="main"><!--MAIN PRINCIPAL-->
+    <div class="wrapper"><!--WRAPPER PRINCIPAL-->
 
-          			
-	<div class="container"><!--CONTAINER PRINCIPAL-->
-				{% block contenido %}
-{% endblock %}
+        <section id="content">
+
         
-	</div><!--CONTAINER PRINCIPAL-->
-		
+
+      
+            <div class="container"><!--CONTAINER PRINCIPAL-->
+
+                <div class="section" style="padding-top: 0px;" ><!--SECTION PRINCIPAL aca va toodoo-->
+        
+                    {% block contenido %}
+                        
+                    {% endblock %}
+   
+                    <div id="panel-oculto" style="display:none">sd</div>
+
+                </div><!--SECTION PRINCIPAL-->
+            </div><!--CONTAINER PRINCIPAL-->
+        </section>
+    </div><!--WRAPPER PRINCIPAL-->
+
+
+</div><!--MAIN PRINCIPAL-->
+
 
 </body>
 </html>

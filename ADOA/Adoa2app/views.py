@@ -67,6 +67,10 @@ def Objetos(request, operacion):
     id = request.session['usuario'].id
     return render(request, 'Objetos.html', {'id' : id, 'operacion': operacion})
 
+def Objetos2(request, operacion):
+    id = request.session['usuario'].id
+    return render(request, 'ObjetosInicio.html', {'id' : id, 'operacion': operacion})
+
 #Creamos secciones vacias para el OA
 def crearSecciones(oa):
     seccionNombre = SeccionNombre.objects.filter(PatronPedagogico = oa.PatronPedagogico)
@@ -633,7 +637,53 @@ def TraerObjetos(request):
             content_type="application/json"
         )
 
+def mostrarObjetosSinTerminar(request):
+    '''  
+    oa = ObjetoAprendizaje.objects.all()
+    model = ObjetoAprendizaje
+    template_name = 'ObjetosInicio.html'
+    lista = []
+
+    for registro in oa:
+        oaCompleto = esExportable(registro)
+        if oaCompleto[0]:
+            lista.append(registro)
         
+    usuario = request.session['usuario']
+    #lista = Usuario.objects.all()
+    return render_to_response(template_name, locals(), context_instance = RequestContext(request))
+    '''
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        #oa = ObjetoAprendizaje.objects.all()
+        oa = ObjetoAprendizaje.objects.filter(
+        Usuario = request.session['usuario']
+        )
+        model = ObjetoAprendizaje
+        objetos = []
+        
+        for registro in oa:
+            oaCompleto = esExportable(registro)
+            if not oaCompleto[0]:
+                objetos.append(registro)
+            
+        objetosJson = serializers.serialize('json', objetos)
+        response_data['result'] = 'Objetos!'
+        response_data['objetos'] = objetosJson
+
+        return HttpResponse(
+            objetosJson,
+          
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )     
+     
 def CrearPregunta(request):
     if request.method == 'POST':
         
@@ -946,6 +996,43 @@ def ComprobarOA(request, id):
                             )
     except ObjetoAprendizaje.DoesNotExist:
         raise Http404("Poll does not exist")    
+    
+def inicioOA(request):
+    '''
+    oa = ObjetoAprendizaje.objects.all()
+    model = ObjetoAprendizaje
+    template_name = 'ObjetosInicio.html'
+    lista = []
+
+    for registro in oa:
+        oaCompleto = esExportable(registro)
+        if oaCompleto[0]:
+            lista.append(registro)
+        
+    usuario = request.session['usuario']
+    #lista = Usuario.objects.all()
+    return render_to_response(template_name, locals(), context_instance = RequestContext(request))
+    '''
+    if request.method == 'POST':
+        
+        response_data = {}
+        
+        objetos = ObjetoAprendizaje.objects.all()
+        objetosJson = serializers.serialize('json', objetos)
+        
+        response_data['result'] = 'Objetos!'
+        response_data['objetos'] = objetosJson
+
+        return HttpResponse(
+            objetosJson,
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
     
 def esExportable (oa):
     import collections

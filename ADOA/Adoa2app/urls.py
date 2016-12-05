@@ -34,18 +34,21 @@ from .views import TraerDatosObjeto
 from .views import ExportarOA, importarOA
 from .views import TraerTerminosEvaluacion
 from .views import TraerMisObjetos
-from Adoa2app.views import EditarOA, ComprobarOA, BorrarOA
+from Adoa2app.views import EditarOA, ComprobarOA, BorrarOA,mostrarObjetosSinTerminar,Objetos2
 
 urlpatterns = [
     url(r'^Index/$', Index.as_view()),
     url(r'^LogOn/$', LogOn.as_view()),
     url(r'^CrearOA/$', CrearOA, name = 'CrearOA'),
     url(r'^BorrarOA/(\d+)/$', BorrarOA),
-    url(r'^ComprobarOA/(\d+)/$', ComprobarOA),
+   
+    url(r'^ComprobarOA/(\d+)/$',ComprobarOA,name = 'ComprobarOA'),
     url(r'^ExportarOA/(\d+)/$', ExportarOA),
     url(r'^importarOA/(\d+)/$', importarOA),
     url(r'^EditarOA/(\d+)/$', EditarOA),
     url(r'^Objetos/(\d+)/$', Objetos, name= 'Objetos'),
+    url(r'^Inicio/(\d+)/$', Objetos2, name= 'Objetos2'),
+    url(r'^Inicio/mostrarObjetosSinTerminar/$', mostrarObjetosSinTerminar),
     url(r'^Objetos/TraerMisObjetos/$', TraerMisObjetos),
     url(r'^Objetos/TraerObjetos/$', TraerObjetos),
     url(r'^CrearOA/Paso1/$', Paso1),

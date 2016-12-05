@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from .PatronPedagogico import PatronPedagogico
 from .PatronPedagogico import SeccionNombre
@@ -19,11 +20,11 @@ class ObjetoAprendizaje(models.Model):
            validator.validar(self.descripcion):
            
             if validator.validar(self.introduccion) is False:
-                incompleto.append('Introduccion')
+                incompleto.append('Introducción')
             
             evaluacion = Evaluacion.objects.get(ObjetoAprendizaje = self)   
             if evaluacion.estaCompleto() is False:
-                incompleto.append('Evaluacion')
+                incompleto.append('Evaluación')
             
             items = SeccionContenido.objects.filter(ObjetoAprendizaje = self)
             if items.count() > 0:
@@ -39,7 +40,7 @@ class ObjetoAprendizaje(models.Model):
             else:
                 incompleto.append('Contenido')
         else:
-            incompleto.append('Informacion')
+            incompleto.append('Información')
         
         return (len(incompleto) == 0, incompleto) 
         

@@ -138,8 +138,10 @@ def iniciarSesion(request):
 				request.session['usuario'] = usrLog
 				if request.session['usuario'].tipousuario.id == 1:
 					return redirect('administrador:index_administrador')
-				else:
-					return redirect('CrearOA')
+				if request.session['usuario'].tipousuario.id == 2:
+					return redirect('/Inicio/1')
+				if request.session['usuario'].tipousuario.id == 3:
+					return redirect('/Objetos/2')
 			else:
 				ver_error = True
 		else:
