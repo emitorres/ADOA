@@ -10,16 +10,25 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   	<script type="text/javascript" src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
 	<script type="text/javascript" src='{% static "stylesheets/materialize/js/adoa.js" %}'></script>
+      <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!--Import Google Raleway Font-->
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+    <!--/Import Google Raleway Font-->
+
+    <!--Import fuente.css-->
+    <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+    <!--/Import fuente.css-->
 
 	{% block title %} {% endblock %}
 </head>
 <body>
 
-<header>
-    <nav class="light-blue lighten-1">
+<header style="height:57px">
+    <nav class="light-blue lighten-1" style="height: 57px;">
       <div class="nav-wrapper">
-        <a href="index.html" class="brand-logo"> <h4>Adoa</h4></a>
+        <a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
         <ul class="right hide-on-med-and-down">
