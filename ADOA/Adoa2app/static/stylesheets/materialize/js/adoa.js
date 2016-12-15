@@ -55,6 +55,11 @@ function cerrarModal(id){
       }
 
 
-
+    function mostrarError(campo, error){
+        if (campo !== null){
+            campo.addClass('invalid');
+        }
+        Materialize.toast(error, 6000,'rounded');
+    }
 
    

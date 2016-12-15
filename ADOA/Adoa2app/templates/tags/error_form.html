@@ -5,10 +5,18 @@
 <script type="text/javascript">
     Materialize.toast('{{ msg_no }}', 6000,'rounded')
 </script>
-{% for registro in lista_err %}
+{% for mensaje in lista_err %}
     <!--<li style='color:red;'> {{ registro }} </li>-->
     <script type="text/javascript">
-        Materialize.toast('{{ registro }}', 6000,'rounded')
+        var error = $('<div>').html("{{mensaje.1}}").text();
+        var idCampo = '{{mensaje.0}}';
+        var campo = null;
+        if (idCampo !== undefined && idCampo !== null && idCampo !== ''){
+            campo = $('#' + idCampo);
+        }
+        mostrarError(campo, error);
+        //$campo.attr('class', 'invalid');
+        //Materialize.toast($error, 6000,'rounded')
     </script>
 {% endfor %}
 

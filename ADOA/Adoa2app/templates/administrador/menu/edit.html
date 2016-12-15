@@ -36,7 +36,6 @@
 
 {% else %}
 
-    {% include 'tags/error_form.html' %}
 
     <form action='.' method='POST'>
 
@@ -52,6 +51,7 @@
     </form>
     <br />
 
+    {% include 'tags/error_form.html' %}
 {% endif %}
 
 {% endblock %}

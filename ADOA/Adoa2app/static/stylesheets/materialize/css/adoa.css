@@ -22,8 +22,8 @@
 }
 
 .side-nav {
-    height: -moz-calc(100%);
-    padding-bottom: 60px;
+    height: calc(100% - 64px) !important;
+    padding-bottom: 0px !important; 
     background-color: #fff;
     z-index: 999;
     left:0 !important;

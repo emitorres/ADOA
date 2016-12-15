@@ -746,7 +746,7 @@ if ($) {
       var overlayID = _generateID();
       var $overlay = $('<div class="lean-overlay"></div>');
       lStack = (++_stack);
-
+        console.log(lStack);
       // Store a reference of the overlay
       $overlay.attr('id', overlayID).css('z-index', 1000 + lStack * 2);
       $modal.data('overlay-id', overlayID).css('z-index', 1000 + lStack * 2 + 1);
@@ -858,6 +858,7 @@ if ($) {
             }
             $overlay.remove();
             _stack--;
+            alert ("resta stack: " + _stack);
           }
         });
       }
@@ -875,6 +876,7 @@ if ($) {
               }
               $overlay.remove();
               _stack--;
+              alert("resta stack " + _stack);
             }
           }
         );

@@ -109,13 +109,13 @@ def cambioPerfil(request):
 			if ver_ok is True:
 				lista_ok.append('Email enviado correctamente. En breve sera atendida su solicitud')
 			else:
-				lista_err.append('No se pudo enviar el mail de recuperacion. Por favor, intente mas tarde')	
+				lista_err.append(('', 'No se pudo enviar el mail de recuperacion. Por favor, intente mas tarde'))	
 		else:
 			ver_error = True
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id, field.label + ': ' + error))
 	else:
 		formulario = CambioPerfilForm()
 
@@ -149,7 +149,7 @@ def iniciarSesion(request):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id, field.label + ': ' + error))
 	else:
 		formulario = IngresoForm()
 
@@ -191,7 +191,7 @@ def perfil_editar(request,registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = PerfilForm(instance = usuario)
 	# locals() es un diccionario con todas las variables locales y sus valores
@@ -241,14 +241,14 @@ def recuperar_contrasena(request):
 				if ver_ok is True:
 					lista_ok.append('Email enviado correctamente. Revise su correo electronico')
 				else:
-					lista_err.append('No se pudo enviar el mail de recuperacion. Por favor, intente mas tarde')
+					lista_err.append(('', 'No se pudo enviar el mail de recuperacion. Por favor, intente mas tarde'))
 				
 		else:
 			ver_error = True
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = RecuperarContrasenaForm()
 
@@ -298,7 +298,7 @@ def cambiar_clave(request,registro):
 				# Arma una lista con errores
 				for field in formulario:
 					for error in field.errors:
-						lista_err.append(field.label + ': ' + error)
+						lista_err.append((field.auto_id,field.label + ': ' + error))
 		else:
 			formulario = CambioPwdForm()
 	else:
@@ -336,12 +336,14 @@ def cambio_clave(request,registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = CambioPwdForm2()
-
+	v = locals()
+	v['id'] = registro
+	v['formulario'] = formulario
 	#return render_to_response('usuario/cambio_clave.html', locals(), context_instance = RequestContext(request))
-	return render(request, 'usuario/cambio_clave.html', {'id': registro, 'formulario' : formulario})
+	return render(request, 'usuario/cambio_clave.html', v)
 
 def confirmar_cuenta(request,registro):
 	token2 = Token.objects.all()

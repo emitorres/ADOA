@@ -154,3 +154,7 @@ span.badge {
     padding-left: 10px !important;
     border-bottom: solid green !important;
 }
+
+.note-image-dialog{
+    height:40% !important;
+}

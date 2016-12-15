@@ -24,7 +24,6 @@
           
           	 	<div class="divider"></div>
           	 	 <br>
-          	 	{% include 'tags/error_form.html' %}
 
           	 	<form action='.' method='POST'>
           	 		{% csrf_token %}
@@ -64,6 +63,7 @@
             	</button>
            	
 		</form>
+          	 	{% include 'tags/error_form.html' %}
 
 
 {% endif %}

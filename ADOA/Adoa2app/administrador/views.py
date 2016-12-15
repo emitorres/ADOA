@@ -42,7 +42,7 @@ def usuarios_edit(request, registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = UsuarioForm(instance = usuario)
 
@@ -79,7 +79,7 @@ def perfiles_edit(request, registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = TipoUsuarioForm(instance = tusuario)
 
@@ -117,7 +117,7 @@ def menu_edit(request, registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = MenuForm(instance = menu)
 
@@ -158,10 +158,10 @@ def menu_tipo_edit(request, registro):
 			if usrLog == None:
 				formulario.save()
 				ver_error = True
-				lista_err.append('Guardado con exito!')
+				lista_err.append(('','Guardado con exito!'))
 			else:
 				ver_error = True
-				lista_err.append('Este control ya se encuentra establecido')
+				lista_err.append(('','Este control ya se encuentra establecido'))
 
 			#nombre = str(formulario.cleaned_data['tipousuario']) + ' - ' + str(formulario.cleaned_data['menu'])
 		else:
@@ -169,7 +169,7 @@ def menu_tipo_edit(request, registro):
 			# Arma una lista con errores
 			for field in formulario:
 				for error in field.errors:
-					lista_err.append(field.label + ': ' + error)
+					lista_err.append((field.auto_id,field.label + ': ' + error))
 	else:
 		formulario = MenuTipoUsuarioForm(instance = acc)
 		

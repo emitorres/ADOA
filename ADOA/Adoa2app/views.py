@@ -661,20 +661,20 @@ def mostrarObjetosSinTerminar(request):
         oa = ObjetoAprendizaje.objects.filter(
         Usuario = request.session['usuario']
         )
-        model = ObjetoAprendizaje
         objetos = []
-        
+        patrones = []
         for registro in oa:
             oaCompleto = esExportable(registro)
             if not oaCompleto[0]:
                 objetos.append(registro)
+                patrones.append(registro.PatronPedagogico)
             
         objetosJson = serializers.serialize('json', objetos)
-        response_data['result'] = 'Objetos!'
+        patronesJson = serializers.serialize('json', patrones)
         response_data['objetos'] = objetosJson
-
-        return HttpResponse(
-            objetosJson,
+        response_data['patrones'] = patronesJson
+        return JsonResponse(
+            response_data,
           
             content_type="application/json"
         )

@@ -2559,8 +2559,8 @@ var dom = (function() {
           size: 'Font Size'
         },
         image: {
-          image: 'Imagen',
-          insert: 'Insertar imagen',
+          image: 'Picture',
+          insert: 'Insert pintura',
           resizeFull: 'Resize Full',
           resizeHalf: 'Resize Half',
           resizeQuarter: 'Resize Quarter',
@@ -2577,7 +2577,7 @@ var dom = (function() {
           selectFromFiles: 'Select from files',
           maximumFileSize: 'Maximum file size',
           maximumFileSizeError: 'Maximum file size exceeded.',
-          url: 'URL',
+          url: 'Image URL',
           remove: 'Remove Image'
         },
         link: {
@@ -2641,7 +2641,7 @@ var dom = (function() {
         },
         shortcut: {
           shortcuts: 'Keyboard shortcuts',
-          close: 'Cerrar',
+          close: 'Close',
           textFormatting: 'Text formatting',
           action: 'Action',
           paragraphFormatting: 'Paragraph formatting',
@@ -3764,6 +3764,7 @@ var dom = (function() {
         range.create().insertNode($image[0]);
         range.createFromNodeAfter($image[0]).select();
         afterCommand($editable);
+        console.debug("inserta imagen: " + sUrl);
       }).fail(function() {
         var $holder = dom.makeLayoutInfo($editable).holder();
         handler.bindCustomEvent(
@@ -5333,19 +5334,21 @@ var dom = (function() {
             $closeBtn = $imageDialog.find('.btnClose');
 
         $imageDialog.openModal();
-	$imageBtn.unbind('click'); //Borra el evento click y lo vuelve a crear
+
         $imageBtn.click(function(event) {
           event.preventDefault();
 
           deferred.resolve($imageUrl.val());
           $imageUrl.val('');
+           console.debug('Cierrame 2!!!');
           $imageDialog.closeModal({complete: function(){$(this).remove();}});
           deferred.resolve();
         });
         
-        $closeBtn.unbind('click'); //Borra el evento click y lo vuelve a crear
+        $closeBtn.unbind('click');
         $closeBtn.click(function(event) {
           event.preventDefault();
+            console.debug('Cierrame!!!');
           $imageDialog.closeModal({complete: function(){$(this).remove();}});
         });
 
@@ -5354,9 +5357,12 @@ var dom = (function() {
 
           if (event.type === 'paste') {
             url = event.originalEvent.clipboardData.getData('text');
+            console.debug("Activa paste");
           } else {
             url = $imageUrl.val();
+            console.debug("Activa else paste");
           }
+          console.debug("Valor url pic: " + url);
           toggleBtn($imageBtn, url);
         });
 
@@ -6500,10 +6506,10 @@ var dom = (function() {
 
     var tplShortcutText = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + B', text: lang.font.bold },
-        { kbd: 'âŒ˜ + I', text: lang.font.italic },
-        { kbd: 'âŒ˜ + U', text: lang.font.underline },
-        { kbd: 'âŒ˜ + \\', text: lang.font.clear }
+        { kbd: '⌘ + B', text: lang.font.bold },
+        { kbd: '⌘ + I', text: lang.font.italic },
+        { kbd: '⌘ + U', text: lang.font.underline },
+        { kbd: '⌘ + \\', text: lang.font.clear }
       ];
 
       return tplShortcut(lang.shortcut.textFormatting, keys);
@@ -6511,11 +6517,11 @@ var dom = (function() {
 
     var tplShortcutAction = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + Z', text: lang.history.undo },
-        { kbd: 'âŒ˜ + â‡§ + Z', text: lang.history.redo },
-        { kbd: 'âŒ˜ + ]', text: lang.paragraph.indent },
-        { kbd: 'âŒ˜ + [', text: lang.paragraph.outdent },
-        { kbd: 'âŒ˜ + ENTER', text: lang.hr.insert }
+        { kbd: '⌘ + Z', text: lang.history.undo },
+        { kbd: '⌘ + ⇧ + Z', text: lang.history.redo },
+        { kbd: '⌘ + ]', text: lang.paragraph.indent },
+        { kbd: '⌘ + [', text: lang.paragraph.outdent },
+        { kbd: '⌘ + ENTER', text: lang.hr.insert }
       ];
 
       return tplShortcut(lang.shortcut.action, keys);
@@ -6523,12 +6529,12 @@ var dom = (function() {
 
     var tplShortcutPara = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + â‡§ + L', text: lang.paragraph.left },
-        { kbd: 'âŒ˜ + â‡§ + E', text: lang.paragraph.center },
-        { kbd: 'âŒ˜ + â‡§ + R', text: lang.paragraph.right },
-        { kbd: 'âŒ˜ + â‡§ + J', text: lang.paragraph.justify },
-        { kbd: 'âŒ˜ + â‡§ + NUM7', text: lang.lists.ordered },
-        { kbd: 'âŒ˜ + â‡§ + NUM8', text: lang.lists.unordered }
+        { kbd: '⌘ + ⇧ + L', text: lang.paragraph.left },
+        { kbd: '⌘ + ⇧ + E', text: lang.paragraph.center },
+        { kbd: '⌘ + ⇧ + R', text: lang.paragraph.right },
+        { kbd: '⌘ + ⇧ + J', text: lang.paragraph.justify },
+        { kbd: '⌘ + ⇧ + NUM7', text: lang.lists.ordered },
+        { kbd: '⌘ + ⇧ + NUM8', text: lang.lists.unordered }
       ];
 
       return tplShortcut(lang.shortcut.paragraphFormatting, keys);
@@ -6536,13 +6542,13 @@ var dom = (function() {
 
     var tplShortcutStyle = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + NUM0', text: lang.style.normal },
-        { kbd: 'âŒ˜ + NUM1', text: lang.style.h1 },
-        { kbd: 'âŒ˜ + NUM2', text: lang.style.h2 },
-        { kbd: 'âŒ˜ + NUM3', text: lang.style.h3 },
-        { kbd: 'âŒ˜ + NUM4', text: lang.style.h4 },
-        { kbd: 'âŒ˜ + NUM5', text: lang.style.h5 },
-        { kbd: 'âŒ˜ + NUM6', text: lang.style.h6 }
+        { kbd: '⌘ + NUM0', text: lang.style.normal },
+        { kbd: '⌘ + NUM1', text: lang.style.h1 },
+        { kbd: '⌘ + NUM2', text: lang.style.h2 },
+        { kbd: '⌘ + NUM3', text: lang.style.h3 },
+        { kbd: '⌘ + NUM4', text: lang.style.h4 },
+        { kbd: '⌘ + NUM5', text: lang.style.h5 },
+        { kbd: '⌘ + NUM6', text: lang.style.h6 }
       ];
 
       return tplShortcut(lang.shortcut.documentStyle, keys);
@@ -6576,7 +6582,7 @@ var dom = (function() {
     };
 
     var replaceMacKeys = function(sHtml) {
-      return sHtml.replace(/âŒ˜/g, 'Ctrl').replace(/â‡§/g, 'Shift');
+      return sHtml.replace(/⌘/g, 'Ctrl').replace(/⇧/g, 'Shift');
     };
 
     var tplDialogInfo = {
@@ -6658,7 +6664,7 @@ var dom = (function() {
 
     var representShortcut = function(str) {
       if (agent.isMac) {
-        str = str.replace('CMD', 'âŒ˜').replace('SHIFT', 'â‡§');
+        str = str.replace('CMD', '⌘').replace('SHIFT', '⇧');
       }
 
       return str.replace('BACKSLASH', '\\')
@@ -6781,7 +6787,8 @@ var dom = (function() {
       $dialog.addClass('note-air-layout');
       $dialog.attr('id', 'note-dialog-' + id);
       $dialog.find('button.close, a.modal-close').click(function() {
-        $(this).closest('.modal').closeModal();
+        console.debug('Entra aca papu');
+        //$(this).closest('.modal').closeModal();
       });
       $dialog.appendTo(body);
     };
