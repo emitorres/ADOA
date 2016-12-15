@@ -1,0 +1,1 @@
+web: gunicorn Adoa2.wsgi --log-file -
