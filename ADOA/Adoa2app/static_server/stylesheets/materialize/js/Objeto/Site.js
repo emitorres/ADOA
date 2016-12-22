@@ -1,5 +1,23 @@
 // Initialize collapse button
 $(document).ready(function(){
+$('#alternar-panel-oculto').toggle( 
+        function(e){ 
+        $('#panel-oculto').hide();
+
+            $('#main').css({'padding-left': '0px'});
+            $(this).find('i').text('menu');
+            e.preventDefault();
+       
+        }, 
+        function(e){ 
+           $('#panel-oculto').show();
+            $('#main').css({'padding-left': '240px'});
+            $(this).find('i').text('menu');
+            e.preventDefault();
+          
+            
+        }
+    );
     $(".dropdown-button").dropdown();
     $(".button-collapse").sideNav();
     $('select').material_select();
@@ -8,6 +26,9 @@ $(document).ready(function(){
     $('.collapsible').collapsible({
           accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
         });
+    //$('.modal').modal();
+    $('.tooltipped').tooltip({delay: 50});
+    
 });
 
 

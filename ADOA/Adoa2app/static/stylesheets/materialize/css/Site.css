@@ -59,16 +59,27 @@ text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #
 }
 
 .tab, .tabs{
-    background-color: #f44336;
+    /*background-color: #f44336;*/
+    background-color:#448AFF;
     color: #ffffff;
 }
 
 .tabs .tab a {
     color: #ffffff;
 }
+.tabs .indicator{
+    background-color:#B3E5FC;
 
+    
+}
+
+.tabs .tab.disabled a{
+    color:#B3E5FC;
+    
+}
 .tabs .tab a:hover {
-    color: #f9c9cb;
+    /*color: #f9c9cb;*/
+    color:#B3E5FC;
 }
 
 .btn-actividad {
@@ -157,4 +168,10 @@ span.badge {
 
 .note-image-dialog{
     height:40% !important;
+}
+
+
+.btn-color{
+    background-color:#448AFF !important;
+    
 }

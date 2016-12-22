@@ -12,3 +12,6 @@ class Token(models.Model):
 
     def __unicode__(self):
         return u'%s - %s' % (self.token)
+       
+    class Meta:
+        db_table = "Token"

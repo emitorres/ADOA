@@ -44,36 +44,82 @@ elemento {
     height: 400px;
 
 }
+   nav {
+                color: #fff;
+                background-color: #00bcd4;
+                width: 100%;
+                line-height: 56px;
+            }
+            nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+                height: 57px;
+                line-height: 57px;
+            }
+
     </style>
 </head>
 
 <body>
-  <header>
-    <nav class="light-blue lighten-1">
-      <div class="nav-wrapper">
-        <a href="index.html" class="brand-logo"> <h4>Adoa</h4></a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <!-- Dropdown Trigger -->
-          <li>
-          <a href="{% url 'usuario:usuario_iniciarSesion' %}" class="waves-effect waves-light modal-trigger">
-              <i class="material-icons right">power_settings_new</i>
-              Iniciar Sesion
-          </a>
-
-          </li>
-
-
-
-
-          <li>
-            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">Registrarse<i class="material-icons right">subject</i>
-            </a>
-          </li>
-           <li>
-            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">Acerca De<i class="material-icons right">info</i>
-            </a>
-          </li>
+    <header style="height:57px">
+            <nav class="" style="height: 57px;background-color:#0288D1">
+                <div class="nav-wrapper">
+                    <a href="{% url 'principal:index' %}" class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li style="height: 57px;">
+                            <a href="{% url 'usuario:usuario_iniciarSesion' %}" class="waves-effect waves-light modal-trigger" style="height: 57px;">
+                                <i class="material-icons right">power_settings_new</i>
+                                Iniciar Sesion
+                            </a>
+                        </li>
+            
+                        <li style="height: 57px;">
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}" style="height: 57px;">
+                                <i class="material-icons right">subject</i>
+                                Registrarse
+                            </a>
+                        </li>
+                      
+                        <li style="height: 57px;">
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}" style="height: 57px;">
+                                <i class="material-icons right">info</i>
+                                Acerca De
+                            </a>
+                        </li>
+                        
+                        <li style="height: 57px;">
+                           <a href="http://www.unla.edu.ar" target="_BLANCK" style="padding-left:0px;padding-right:0px;height:57px"><img src="/static/images/unlalogo3.png"/></a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Menu Colapsible -->
+                    <ul class="side-nav" id="mobile-demo">
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_iniciarSesion' %}">
+                                <i class="material-icons right">power_settings_new</i>
+                                Iniciar Sesion    
+                            </a> 
+                        </li>
+                        
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">
+                                <i class="material-icons right">subject</i>
+                                Registrarse
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">
+                                <i class="material-icons right">info</i>
+                                Acerca De
+                            </a>
+                        </li>
+                        
+                         <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">
+                                <i class="material-icons right">account_balance</i>
+                                UNLa
+                            </a>
+                        </li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
           <!-- Dropdown Trigger -->
@@ -100,45 +146,122 @@ elemento {
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
-            <div class="caption center-align">
-             <p>El objetivo de ADOA consiste en organizar la información y hacerla accesible y útil de manera universal.</p>
-          </div>
-               
+                <div class="caption center-align">
+                <p style="font-family:Raleway Light;font-weight:bold;font-size:20px">El objetivo de ADOA consiste en organizar la información y hacerla accesible y útil de manera universal.</p>
+                    
+                        <div class="divider"></div>
+                        <br>
+                </div>
             </div>
         </div>
-
     </div>
-
-
+    
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6 l3">
+                <div class="caption center-align">
+                    <img class="responsive-img" src="/static/images/lanus.png">    
+                </div>
+            </div>
+            <div class="col s12 m6 l9">
+                <div class="caption left-align">
+                    <p>Proyecto propuesto por la Cátedra Proyecto de Software de la Universidad Nacional de Lanús.</p>
+                    
+                    <div class="row">
+                        <div class="col s12 m6 l3">
+                            <p style="font-weight:bold">Integrantes:</p>
+                        </div>
+                        
+                        <div class="col s12 m6 l3">
+                            <div class="card">
+                                <div class="card-content white center-align">
+                                    <p style="font-weight:bold">Marcos Amaro</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <div class="col s12 m6 l3">
+                            <div class="card">
+                                <div class="card-content white center-align">
+                                    <p style="font-weight:bold">Ezequiel Alvarez</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col s12 m6 l3">
+                            <div class="card">
+                                <div class="card-content white center-align">
+                                    <p style="font-weight:bold">Emiliano Torres</p>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <footer class="page-footer blue lighten-6">
-      <div class="container">
-        <div class="row">
-          <div class="col l6 s12">
-            <h5 class="white-text">Footer Content</h5>
-            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-          </div>
-          <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <div class="container">
-          © 2014 Copyright Text
-            {{user.username}}  
-          <a class="green-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-      </div>
-    </footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text">ADOA 2.0</h5>
+                            <p class="grey-text text-lighten-4">CONTACTO <strong>adoa2.unla@gmail.com</strong></p>
+                        </div>
+                        
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">Links de Interes:</h5>
+                            <ul>
+                                <li>
+                                    <a class="grey-text text-lighten-3 valign" href="https://www.youtube.com/channel/UCXvcDN6Cqf5qPenBGVXJOPg" target="_BLANK">
+                                        {% image_tag 'y.png' %}
+                                        YouTube
+                                    </a>
+                                </li>
+                        
+                                <li>    
+                                    <a class="grey-text text-lighten-3" href="https://www.youtube.com/channel/UCXvcDN6Cqf5qPenBGVXJOPg" target="_BLANK">
+                                        {% image_tag 'gmail.png' %}
+                                        Gmail
+                                    </a>
+                                        
+                                </li>
+                                
+                                <li>    
+                                    <a class="grey-text text-lighten-3" href="www.facebook.com.ar" target="_BLANK">
+                                        {% image_tag 'f.png' %}
+                                        Facebook
+                                    </a>
+                                </li>
+                                
+                                <li> 
+                                    <a class="grey-text text-lighten-3" href="http://www.unla.edu.ar" target="_BLANK"><img src="/static/images/logounla.png" alt="" class="circle responsive-img">
+                                        UNLa
+                                    </a>
+                                        
+                                </li>
+                                
+                                <li>
+                                    <a class="grey-text text-lighten-3" href="http://campus.unla.edu.ar" target="_BLANK">
+                                        {% image_tag 'university.png' %}
+                                        Campus Virtual UNLa
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-copyright">
+                    <div class="container">
+                        © 2016 Copyright ADOA 2.0
+                        {{user.username}}  
+                        <a class="green-text text-lighten-4 right" href="#!">More Links</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
 
-  </main>
 
 
 

@@ -295,6 +295,11 @@ nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
 .navbar-fixed nav {
     position: fixed;
 }
+
+.btn-color{
+    background-color:#448AFF !important;
+    
+}
 /*---------------------------CSS DE ADOABASE---------------------------------*/
 
 

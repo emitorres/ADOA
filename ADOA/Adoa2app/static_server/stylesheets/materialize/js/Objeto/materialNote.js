@@ -2559,8 +2559,8 @@ var dom = (function() {
           size: 'Font Size'
         },
         image: {
-          image: 'Imagen',
-          insert: 'Insertar imagen',
+          image: 'Picture',
+          insert: 'Insert Image',
           resizeFull: 'Resize Full',
           resizeHalf: 'Resize Half',
           resizeQuarter: 'Resize Quarter',
@@ -2577,7 +2577,7 @@ var dom = (function() {
           selectFromFiles: 'Select from files',
           maximumFileSize: 'Maximum file size',
           maximumFileSizeError: 'Maximum file size exceeded.',
-          url: 'URL',
+          url: 'Image URL',
           remove: 'Remove Image'
         },
         link: {
@@ -2641,7 +2641,7 @@ var dom = (function() {
         },
         shortcut: {
           shortcuts: 'Keyboard shortcuts',
-          close: 'Cerrar',
+          close: 'Close',
           textFormatting: 'Text formatting',
           action: 'Action',
           paragraphFormatting: 'Paragraph formatting',
@@ -5328,25 +5328,36 @@ var dom = (function() {
     this.showImageDialog = function($editable, $dialog) {
       return $.Deferred(function(deferred) {
         var $imageDialog = $dialog.find('.note-image-dialog');
-        var $imageUrl = $dialog.find('.note-image-url'),
+        var $imageInput = $dialog.find('.note-image-input'),
+            $imageUrl = $dialog.find('.note-image-url'),
             $imageBtn = $dialog.find('.note-image-btn'),
             $closeBtn = $imageDialog.find('.btnClose');
 
         $imageDialog.openModal();
-	$imageBtn.unbind('click'); //Borra el evento click y lo vuelve a crear
+        // Cloning imageInput to clear element.
+        $imageInput.replaceWith($imageInput.clone()
+            .on('change', function() {
+              deferred.resolve(this.files || this.value);
+              $imageUrl.val('');
+              $imageDialog.closeModal();
+              deferred.resolve();
+            })
+            .val('')
+        );
+
         $imageBtn.click(function(event) {
           event.preventDefault();
 
           deferred.resolve($imageUrl.val());
           $imageUrl.val('');
-          $imageDialog.closeModal({complete: function(){$(this).remove();}});
+          $imageDialog.closeModal();
           deferred.resolve();
         });
-        
-        $closeBtn.unbind('click'); //Borra el evento click y lo vuelve a crear
+
         $closeBtn.click(function(event) {
           event.preventDefault();
-          $imageDialog.closeModal({complete: function(){$(this).remove();}});
+
+          $imageDialog.closeModal();
         });
 
         $imageUrl.on('keyup paste', function(event) {
@@ -6500,10 +6511,10 @@ var dom = (function() {
 
     var tplShortcutText = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + B', text: lang.font.bold },
-        { kbd: 'âŒ˜ + I', text: lang.font.italic },
-        { kbd: 'âŒ˜ + U', text: lang.font.underline },
-        { kbd: 'âŒ˜ + \\', text: lang.font.clear }
+        { kbd: '⌘ + B', text: lang.font.bold },
+        { kbd: '⌘ + I', text: lang.font.italic },
+        { kbd: '⌘ + U', text: lang.font.underline },
+        { kbd: '⌘ + \\', text: lang.font.clear }
       ];
 
       return tplShortcut(lang.shortcut.textFormatting, keys);
@@ -6511,11 +6522,11 @@ var dom = (function() {
 
     var tplShortcutAction = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + Z', text: lang.history.undo },
-        { kbd: 'âŒ˜ + â‡§ + Z', text: lang.history.redo },
-        { kbd: 'âŒ˜ + ]', text: lang.paragraph.indent },
-        { kbd: 'âŒ˜ + [', text: lang.paragraph.outdent },
-        { kbd: 'âŒ˜ + ENTER', text: lang.hr.insert }
+        { kbd: '⌘ + Z', text: lang.history.undo },
+        { kbd: '⌘ + ⇧ + Z', text: lang.history.redo },
+        { kbd: '⌘ + ]', text: lang.paragraph.indent },
+        { kbd: '⌘ + [', text: lang.paragraph.outdent },
+        { kbd: '⌘ + ENTER', text: lang.hr.insert }
       ];
 
       return tplShortcut(lang.shortcut.action, keys);
@@ -6523,12 +6534,12 @@ var dom = (function() {
 
     var tplShortcutPara = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + â‡§ + L', text: lang.paragraph.left },
-        { kbd: 'âŒ˜ + â‡§ + E', text: lang.paragraph.center },
-        { kbd: 'âŒ˜ + â‡§ + R', text: lang.paragraph.right },
-        { kbd: 'âŒ˜ + â‡§ + J', text: lang.paragraph.justify },
-        { kbd: 'âŒ˜ + â‡§ + NUM7', text: lang.lists.ordered },
-        { kbd: 'âŒ˜ + â‡§ + NUM8', text: lang.lists.unordered }
+        { kbd: '⌘ + ⇧ + L', text: lang.paragraph.left },
+        { kbd: '⌘ + ⇧ + E', text: lang.paragraph.center },
+        { kbd: '⌘ + ⇧ + R', text: lang.paragraph.right },
+        { kbd: '⌘ + ⇧ + J', text: lang.paragraph.justify },
+        { kbd: '⌘ + ⇧ + NUM7', text: lang.lists.ordered },
+        { kbd: '⌘ + ⇧ + NUM8', text: lang.lists.unordered }
       ];
 
       return tplShortcut(lang.shortcut.paragraphFormatting, keys);
@@ -6536,13 +6547,13 @@ var dom = (function() {
 
     var tplShortcutStyle = function(lang) {
       var keys = [
-        { kbd: 'âŒ˜ + NUM0', text: lang.style.normal },
-        { kbd: 'âŒ˜ + NUM1', text: lang.style.h1 },
-        { kbd: 'âŒ˜ + NUM2', text: lang.style.h2 },
-        { kbd: 'âŒ˜ + NUM3', text: lang.style.h3 },
-        { kbd: 'âŒ˜ + NUM4', text: lang.style.h4 },
-        { kbd: 'âŒ˜ + NUM5', text: lang.style.h5 },
-        { kbd: 'âŒ˜ + NUM6', text: lang.style.h6 }
+        { kbd: '⌘ + NUM0', text: lang.style.normal },
+        { kbd: '⌘ + NUM1', text: lang.style.h1 },
+        { kbd: '⌘ + NUM2', text: lang.style.h2 },
+        { kbd: '⌘ + NUM3', text: lang.style.h3 },
+        { kbd: '⌘ + NUM4', text: lang.style.h4 },
+        { kbd: '⌘ + NUM5', text: lang.style.h5 },
+        { kbd: '⌘ + NUM6', text: lang.style.h6 }
       ];
 
       return tplShortcut(lang.shortcut.documentStyle, keys);
@@ -6576,7 +6587,7 @@ var dom = (function() {
     };
 
     var replaceMacKeys = function(sHtml) {
-      return sHtml.replace(/âŒ˜/g, 'Ctrl').replace(/â‡§/g, 'Shift');
+      return sHtml.replace(/⌘/g, 'Ctrl').replace(/⇧/g, 'Shift');
     };
 
     var tplDialogInfo = {
@@ -6591,6 +6602,19 @@ var dom = (function() {
         }
 
         var body = '<div class="row">' +
+                '<div class="col s12">' +
+                    '<div class="file-field input-field">' +
+                            '<div class="btn">' +
+                                '<span>' + lang.image.image + '</span>' +
+                                '<input class="note-image-input" name="files" type="file" />' +
+                            '</div>' +
+                        '<div class="file-path-wrapper">' +
+                            '<input class="file-path" type="text" />' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="row">' +
                 '<div class="input-field col s12">' +
                     '<input class="note-image-url" type="text" />' +
                     '<label>' + lang.image.url + '</label>' +
@@ -6658,7 +6682,7 @@ var dom = (function() {
 
     var representShortcut = function(str) {
       if (agent.isMac) {
-        str = str.replace('CMD', 'âŒ˜').replace('SHIFT', 'â‡§');
+        str = str.replace('CMD', '⌘').replace('SHIFT', '⇧');
       }
 
       return str.replace('BACKSLASH', '\\')
@@ -7409,39 +7433,4 @@ var dom = (function() {
       // set the HTML contents of note
       this.each(function(i, holder) {
         var layoutInfo = renderer.layoutInfoFromHolder($(holder));
-        var $editable = layoutInfo && layoutInfo.editable();
-        if ($editable) {
-          $editable.html(html);
-        }
-      });
-
-      return this;
-    },
-
-    /**
-     * @method
-     *
-     * destroy Editor Layout and detach Key and Mouse Event
-     *
-     * @member $.fn
-     * @return {this}
-     */
-    destroy: function() {
-      this.each(function(idx, holder) {
-        var $holder = $(holder);
-
-        if (!renderer.hasNoteEditor($holder)) {
-          return;
-        }
-
-        var info = renderer.layoutInfoFromHolder($holder);
-        var options = info.editor().data('options');
-
-        eventHandler.detach(info, options);
-        renderer.removeLayout($holder, info, options);
-      });
-
-      return this;
-    }
-  });
-}));
+        var $editable = layoutInfo &

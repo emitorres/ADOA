@@ -3,74 +3,152 @@
 
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "stylesheets/materialize/js/Objeto/Site.js" %}'></script>
 
-	<link rel="stylesheet" href='{% static "stylesheets/materialize/css/materialize.min.css" %}' />
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  	<script type="text/javascript" src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
-	<script type="text/javascript" src='{% static "stylesheets/materialize/js/adoa.js" %}'></script>
-      <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    
+    
+    
+    
+    
+    	<script type="text/javascript" src='{% static "stylesheets/materialize/js/adoa.js" %}'></script>
+          <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+        <!--Import Google Raleway Font-->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+        <!--/Import Google Raleway Font-->
+    
+        <!--Import fuente.css-->
+        <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+        <!--/Import fuente.css-->
+        
+          <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/materialize.min.css" media="screen,projection" />
+        <!--<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/Site.css" media="screen,projection" />-->
+        
+        <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/Site.css" %}' media="screen,projection" />
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset=" UTF-8" />
+        
+        <!--Import Google Raleway Font-->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+        <!--/Import Google Raleway Font-->
+        
+        <!--Import fuente.css-->
+        <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+        <!--/Import fuente.css-->
+        
+        
 
-    <!--Import Google Raleway Font-->
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
-    <!--/Import Google Raleway Font-->
-
-    <!--Import fuente.css-->
-    <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
-    <!--/Import fuente.css-->
-
-	{% block title %} {% endblock %}
-</head>
+        
+                <style type="text/css">
+            nav {
+                color: #fff;
+                background-color: #00bcd4;
+                width: 100%;
+                line-height: 56px;
+            }
+            nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+                height: 57px;
+                line-height: 57px;
+            }
+            
+            /*--------------------------------------------------------------------------------*/
+            body {font-family: 'Raleway', sans-serif;}
+              .thin {font-weight:100;font-family: 'Raleway', sans-serif;}
+              h1 { font-size:44px; font-weight:200;font-family: 'Raleway', sans-serif;}
+              h2 {font-size:33px; font-weight:300;font-family: 'Raleway', sans-serif;}
+              h3 {font-size:22px; font-weight:700;font-family: 'Raleway', sans-serif;}
+              h4, h5 {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .bold, strong  {font-weight:600;font-family: 'Raleway', sans-serif;}
+              .extrabold {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .ultrabold {font-weight:900;font-family: 'Raleway', sans-serif;}
+            /*--------------------------------------------------------------------------------*/
+        </style>
+    </head>
 <body>
 
-<header style="height:57px">
-    <nav class="light-blue lighten-1" style="height: 57px;">
-      <div class="nav-wrapper">
-        <a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <header style="height:57px">
+            <nav class="" style="height: 57px;background-color:#0288D1">
+                <div class="nav-wrapper">
+                    <a href="{% url 'principal:index' %}" class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li style="height: 57px;">
+                            <a href="{% url 'usuario:usuario_iniciarSesion' %}" class="waves-effect waves-light modal-trigger" style="height: 57px;">
+                                <i class="material-icons right">power_settings_new</i>
+                                Iniciar Sesion
+                            </a>
+                        </li>
+            
+                        <li style="height: 57px;">
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}" style="height: 57px;">
+                                <i class="material-icons right">subject</i>
+                                Registrarse
+                            </a>
+                        </li>
+                      
+                        <li style="height: 57px;">
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}" style="height: 57px;">
+                                <i class="material-icons right">info</i>
+                                Acerca De
+                            </a>
+                        </li>
+                        
+                        <li style="height: 57px;">
+                           <a href="http://www.unla.edu.ar" target="_BLANCK" style="padding-left:0px;padding-right:0px;height:57px"><img src="/static/images/unlalogo3.png"/></a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Menu Colapsible -->
+                    <ul class="side-nav" id="mobile-demo">
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_iniciarSesion' %}">
+                                <i class="material-icons right">power_settings_new</i>
+                                Iniciar Sesion    
+                            </a> 
+                        </li>
+                        
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">
+                                <i class="material-icons right">subject</i>
+                                Registrarse
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">
+                                <i class="material-icons right">info</i>
+                                Acerca De
+                            </a>
+                        </li>
+                        
+                         <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">
+                                <i class="material-icons right">account_balance</i>
+                                UNLa
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
-        <ul class="right hide-on-med-and-down">
-          <!-- Dropdown Trigger -->
-          	<li>
-		    	<a href="{% url 'usuario:usuario_iniciarSesion' %}" class="waves-effect waves-light modal-trigger">
-		        	<i class="material-icons right">power_settings_new</i>
-		        	Iniciar Sesion
-	         	</a>
 
-          	</li>
-
-          <li>
-          <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">Registrarse<i class="material-icons right">subject</i></a></li>
-         <li>
-            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">Acerca De<i class="material-icons right">info</i>
-            </a>
-          </li>
-        </ul>
-
-        <ul class="side-nav" id="mobile-demo">
-          <!-- Dropdown Trigger -->
-          <li><a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_registro' %}">Iniciar Sesion<i class="material-icons right">power_settings_new</i></a></li>
-
-          <li><a class="waves-effect waves-light modal-trigger" href="">Registrarse<i class="material-icons right">subject</i></a></li>
-          
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-<div id="main"><!--MAIN PRINCIPAL-->
-    <div class="wrapper"><!--WRAPPER PRINCIPAL-->
-
-        <section id="content">
 
         
 
       
             <div class="container"><!--CONTAINER PRINCIPAL-->
 
-                <div class="section" style="padding-top: 0px;" ><!--SECTION PRINCIPAL aca va toodoo-->
+                
         
                     {% block contenido %}
                         
@@ -78,13 +156,9 @@
    
                     <div id="panel-oculto" style="display:none">sd</div>
 
-                </div><!--SECTION PRINCIPAL-->
+                
             </div><!--CONTAINER PRINCIPAL-->
-        </section>
-    </div><!--WRAPPER PRINCIPAL-->
 
-
-</div><!--MAIN PRINCIPAL-->
 
 
 </body>

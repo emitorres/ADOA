@@ -2,6 +2,7 @@ function verEvaluacion(){
 
     var evaluacionId = $("#evaluacionid").val();
     $('#modalVerEvaluacionContenido').html('');
+    
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
         url : "/CrearOA/TraerTerminosEvaluacion/", // the endpoint

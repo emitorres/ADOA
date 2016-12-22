@@ -179,6 +179,7 @@ body {font-family: 'Raleway', sans-serif;}
 </head>
 
 <body>
+
     <header style="height:57px">
         <nav style="height: 57px;">
             <div class="navbar-fixed">
@@ -190,19 +191,25 @@ body {font-family: 'Raleway', sans-serif;}
                         </ul>
 
                         <a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
-                        
+         <ul class="left" >
+                            <!-- Dropdown Trigger -->
+        <li style="height:57px"><a style="height:57px" href="#" id="alternar-panel-oculto"><i class="material-icons">menu</i></a></li>
+
+                        </ul>
                         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
                         <ul class="right hide-on-med-and-down" >
                             <!-- Dropdown Trigger -->
                             <li style="height:57px"><a class="dropdown-button" data-activates="dropdown1" data-constrainwidth="false" style="height:57px"><i class="material-icons">face</i></a></li>
+
+                        </ul>
+                            
+        <ul class="side-nav" id="mobile-demo">
+                        <!-- Dropdown Trigger -->
+                            
+                         
                         </ul>
 
-                        <ul class="side-nav" id="mobile-demo">
-                            <!-- Dropdown Trigger -->
-                            <li>{% url_tag 'Cerrar Sesion' 'usuario:usuario_salir' %}</li>
-                            <li>{% url_tag 'Configuracion' 'usuario:index_usuarioBase' %}</li>
-                        </ul>
 
                     </div>
                 </nav>
@@ -214,10 +221,10 @@ body {font-family: 'Raleway', sans-serif;}
     <div class="wrapper"><!--WRAPPER PRINCIPAL-->
         <div class="sidebar1">
             <aside id="left-sidebar-nav">
-                <ul class="side-nav fixed" style="width: 240px; top:57px;">
+                <ul id="panel-oculto" class="side-nav fixed" style="width: 240px; top:57px;">
                     <li id ="menuli">
                         <a id="menua" class="subheader red-text" style="font-weight: bold">
-                            PROYECTO
+                            MENU
                         </a>
                     </li>
 
@@ -345,7 +352,6 @@ body {font-family: 'Raleway', sans-serif;}
 
 
                     {% endblock %}
-                    <div id="panel-oculto" style="display:none"></div>
                 </div><!--SECTION PRINCIPAL-->
              </div><!--CONTAINER PRINCIPAL-->
         </section>
@@ -353,6 +359,7 @@ body {font-family: 'Raleway', sans-serif;}
 </div><!--MAIN PRINCIPAL-->
 
 <!--Import jQuery before materialize.js-->
+
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
@@ -380,6 +387,12 @@ body {font-family: 'Raleway', sans-serif;}
 
 <script type="text/javascript" src='{% css_tag "materialize/js/jquery.blockUI.js" %}'></script>
       
+<!--Import Jquery-migrate 1.2.1-->
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!--/Import Jquery-migrate 1.2.1-->
+
+
+
 </body>
 
 </html>

@@ -1,11 +1,9 @@
-{% load tags_html %}
-
 {% load staticfiles %}
+{% load tags_html %}
 
 <!DOCTYPE html>
 
 <html>
-
     <head>
 
         <!--Import Google Icon Font-->
@@ -37,15 +35,28 @@
                 height: 57px;
                 line-height: 57px;
             }
+            
+            /*--------------------------------------------------------------------------------*/
+            body {font-family: 'Raleway', sans-serif;}
+              .thin {font-weight:100;font-family: 'Raleway', sans-serif;}
+              h1 { font-size:44px; font-weight:200;font-family: 'Raleway', sans-serif;}
+              h2 {font-size:33px; font-weight:300;font-family: 'Raleway', sans-serif;}
+              h3 {font-size:22px; font-weight:700;font-family: 'Raleway', sans-serif;}
+              h4, h5 {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .bold, strong  {font-weight:600;font-family: 'Raleway', sans-serif;}
+              .extrabold {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .ultrabold {font-weight:900;font-family: 'Raleway', sans-serif;}
+            /*--------------------------------------------------------------------------------*/
         </style>
 
     </head>
 
     <body>
+
         <header style="height:57px">
-            <nav class="light-blue lighten-1" style="height: 57px;">
+            <nav class="" style="height: 57px;background-color:#0288D1">
                 <div class="nav-wrapper">
-                    <a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
+                    <a href="{% url 'principal:index' %}" class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li style="height: 57px;">
@@ -68,9 +79,13 @@
                                 Acerca De
                             </a>
                         </li>
+                        
+                        <li style="height: 57px;">
+                           <a href="http://www.unla.edu.ar" target="_BLANCK" style="padding-left:0px;padding-right:0px;height:57px"><img src="/static/images/unlalogo3.png"/></a>
+                        </li>
                     </ul>
                     
-                    <!-- Menu Colapse -->
+                    <!-- Menu Colapsible -->
                     <ul class="side-nav" id="mobile-demo">
                         <li>
                             <a class="waves-effect waves-light modal-trigger" href="{% url 'usuario:usuario_iniciarSesion' %}">
@@ -91,7 +106,14 @@
                                 <i class="material-icons right">info</i>
                                 Acerca De
                             </a>
-                        </li> 
+                        </li>
+                        
+                         <li>
+                            <a class="waves-effect waves-light modal-trigger" href="{% url 'principal:acercaDe' %}">
+                                <i class="material-icons right">account_balance</i>
+                                UNLa
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -133,57 +155,110 @@
                     </li>   
                 </ul>
             </div>
-    
+           
             <div class="container">
                 <div class= "row center-align">
-                    <p style="font-family:Raleway Light;font-style:italic;font-weight:bold;font-size:30px">Ambiente de Desarrollo de Objetos de Aprendizaje</p>        
+                  <!-- <p style="font-family:Raleway Light;font-style:italic;font-weight:bold;font-size:30px"><strong>Ambiente de Desarrollo de Objetos de Aprendizaje</strong></p>        
+                 <img class="responsive-img" src="/static/images/adoaindex2.png" />-->
                 </div>
                 
                 <div class="row">
-                    <div class="col s12 m6 l4">
-                        <div class="card">
+                    <div class="col s12 m6 l6">
+                        <i class="material-icons left medium grey-text">power_settings_new</i>
+
                             <div class="card-content black-text">
-                                <span class="card-title">Que son los patrones pedagogicos?</span>
-                                <p>Un patrón pedagógico describe un problema que se presenta con frecuenciaen el proceso de enseñanza-aprendizaje, para proponer a continuación unasolución a ese problema que ha demostrado su efectividad en contextos...</p>
+                                <span class="card-title" style="text-transform:uppercase;color:#0FBC71;font-weight:bold">Que son los patrones pedagogicos?</span>
+                                <p>Un patrón pedagógico describe un problema que se presenta con frecuenciaen el proceso de enseñanza-aprendizaje, para proponer a continuación unasolución a ese problema que ha demostrado su efectividad...</p>
                                 <!--asemejables, de modo que esa solución puede ser adoptada ante problemas semejantes</p>-->
                             </div>
                             
                             <div class="card-action">
-                                <a class = "btn">Leer Más</a>
+                                <a href="#modalLogin" class = "btn right" style="background-color:#448AFF">Leer Más</a>
                             </div>
-                        </div>
+                        
                     </div>
                     
-                    <div class="col s12 m6 l4">
-                        <div class="card">
+                    <div class="col s12 m6 l6">
+                        <i class="material-icons left medium grey-text">extension</i>
+
                             <div class="card-content black-text">
-                                <span class="card-title">Que son los Objetos de Aprendizaje?</span>
+                                <span class="card-title" style="text-transform:uppercase;color:#0FBC71;font-weight:bold">Que son los Objetos de Aprendizaje?</span>
                                 <p class ="">Un OA es un tipo de material educativo digital, que se caracteriza, desde el punto de vista pedagógico, por orientarse a un objetivo específico de aprendizaje, y presentar mínimamente: una serie de contenidos...</p>
                                 <!--con el fin de abordar la temática relacionada con el objetivo, actividades que permita al alumno poner en práctica o problematizar el contenido presentado, y una autoevaluación que posibilite conocer al alumno si ha podido comprender esos contenidos vinculados al objetivo.</p>-->
                             </div>
                             
                             <div class="card-action">
-                                <a class = "btn">Leer Más</a>
+                                <a class = "btn right" style="background-color:#448AFF">Leer Más</a>
                             </div>
-                        </div>
+                        
                     </div>
-                    
-                    <div class="col s12 m6 l4">
-                        <div class="card">
+                </div>
+                 <div class="row">    
+                    <div class="col s12 m6 l6">
+                        <i class="material-icons left medium grey-text">turned_in</i>
+
                             <div class="card-content black-text">
-                                <span class="card-title">Que ofrece nuestra herramienta?</span>
+                                <span class="card-title" style="text-transform:uppercase;color:#0FBC71;font-weight:bold">Que ofrece nuestra herramienta?</span>
                                 <p>El objetivo principal del desarrollo de este proyecto es el de poder brindar un ambiente de desarrollo, el cual pueda ofrecerles a los docentes una manera más sencilla de crear, modificar y mantener los objetos de aprendizaje.</p>
                                 <!--Una vez  generados los objetos de aprendizaje, serán exportados en el formato SCORM, para ser visualizados en la plataforma educativa MOODLE.</p>-->
                             </div>
                             
                             <div class="card-action">
-                                <a class = "btn">Leer Más</a>
+                                <a class = "btn right" style="background-color:#448AFF">Leer Más</a>
                             </div>
-                        </div>
+                        
+                    </div>
+                    
+                    
+                     <div class="col s12 m6 l6">
+                        <i class="material-icons left medium grey-text">all_inclusive</i>
+
+                            <div class="card-content black-text">
+                               <span class="card-title" style="text-transform:uppercase;color:#0FBC71;font-weight:bold">Todo en uno</span>
+                                <p>El objetivo principal del desarrollo de este proyecto es el de poder brindar un ambiente de desarrollo, el cual pueda ofrecerles a los docentes una manera más sencilla de crear, modificar y mantener los objetos de aprendizaje.</p>
+                                <!--Una vez  generados los objetos de aprendizaje, serán exportados en el formato SCORM, para ser visualizados en la plataforma educativa MOODLE.</p>-->
+                            </div>
+                            
+                            <div class="card-action">
+                                <a class = "btn right" style="background-color:#448AFF">Leer Más</a>
+                            </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+            <!--
+            <div class ="row green" >
+                <div class="container">
+                    <div class="col s12 m12 l4">
+                    <i class="material-icons left large white-text">looks_one</i>
+                        <h1 class="white-text" style="font-weight:400">CREA</h1>
+                       
+                        <i class="material-icons left large white-text">create</i>
+                     
+                    </div>
+                    
+                    <div class="col s12 m12 l4" style="border-left:dashed 1px white">
+                    <i class="material-icons left large white-text">looks_two</i>
+                        <h1 class="white-text" style="font-weight:400">DISEÑA</h1>
+                        <i class="material-icons left large white-text">wb_incandescent</i>
+
+
+                    </div>
+                    <div class="col s12 m12 l4" style="border-left:dashed 1px white">
+                    <i class="material-icons left large white-text">looks_3</i>
+                        <h1 class="white-text" style="font-weight:400">EXPORTA</h1>
+                        <i class="material-icons left large white-text">file_download</i>
+
                     </div>
                 </div>
-            </div>
-            
+                    
+                
+            </div>-->
+<!--
+            <img class="responsive-img" src="/static/images/ciclo.png"/>-->
             <footer class="page-footer blue lighten-6">
                 <div class="container">
                     <div class="row">
@@ -246,46 +321,98 @@
         </main>
 
   <!-- Modal Structure -->
-  <div id="modalLogin" class="modal modal-login">
+  
+        <div id="modalLogin" class="modal modal-login">
+            <div class="modal-content">
+           
+                <form action='/usuario/iniciar_sesion/' class="login-form" method='POST'>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="input-field col s12 center">
+                            <h4>Iniciar sesión</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="row margin">
+                        <div class="input-field col s12 ">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="usuario" name="username" type="text" class="validate">
+                            <label for="ususario">Usuario</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <input id="password" name="password" type="password" class="validate">
+                            <label for="password">Constraseña</label>
+                        </div>
+                        <div class="input-field col s12 m12 l12  login-text">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Recordarme</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button type="submit" class="btn waves-effect waves-light col s12">Ingresar</button>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                            <p class="margin medium-small"><a class="waves-effect waves-light modal-trigger" onclick="cerrarModal('modalLogin')" href="#modalRegister">Registrarse</a></p>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                            <p class="margin right-align medium-small"><a href="page-forgot-password.html">Olvido la contraseña ?</a></p>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Iniciar Sesion!
+            <i class="material-icons right">send</i>
+          </button>
+                </form>
+                
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+            </div>
+        </div>
+  
+  <div id="modalLogin2" class="modal modal-login">
     <div class="modal-content">
-      <div class="col s12">
-        <form action="/accounts/auth/" class="login-form" method="POST">
-        {% csrf_token %}
-          <div class="row">
-            <div class="input-field col s12 center">
-              <h4>Iniciar sesión</h4>
-            </div>
-          </div>
-          <div class="row margin">
-            <div class="input-field col s12">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="usuario" name="username" type="text" class="validate">
-              <label for="ususario">Usuario</label>
-            </div>
-            <div class="input-field col s12">
-              <i class="material-icons prefix">lock_outline</i>
-              <input id="password" name="password" type="password" class="validate">
-              <label for="password">Constraseña</label>
-            </div>
-            <div class="input-field col s12 m12 l12  login-text">
-              <input type="checkbox" id="remember-me">
-              <label for="remember-me">Recordarme</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <button type="submit" class="btn waves-effect waves-light col s12">Ingresar</button>
-            </div>
-            <div class="input-field col s6 m6 l6">
-              <p class="margin medium-small"><a class="waves-effect waves-light modal-trigger" onclick="cerrarModal('modalLogin')" href="#modalRegister">Registrarse</a></p>
-            </div>
-            <div class="input-field col s6 m6 l6">
-              <p class="margin right-align medium-small"><a href="page-forgot-password.html">Olvido la contraseña ?</a></p>
-            </div>
-          </div>
-
-        </form>
-      </div>
+        <div class="col s12 l12 m12">
+            <form action="/accounts/auth/" class="login-form" method="POST">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <h4>Iniciar sesión</h4>
+                    </div>
+                </div>
+                
+                <div class="row margin">
+                    <div class="input-field col s12 ">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="usuario" name="username" type="text" class="validate">
+                        <label for="ususario">Usuario</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">lock_outline</i>
+                        <input id="password" name="password" type="password" class="validate">
+                        <label for="password">Constraseña</label>
+                    </div>
+                    <div class="input-field col s12 m12 l12  login-text">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Recordarme</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button type="submit" class="btn waves-effect waves-light col s12">Ingresar</button>
+                    </div>
+                    <div class="input-field col s6 m6 l6">
+                        <p class="margin medium-small"><a class="waves-effect waves-light modal-trigger" onclick="cerrarModal('modalLogin')" href="#modalRegister">Registrarse</a></p>
+                    </div>
+                    <div class="input-field col s6 m6 l6">
+                        <p class="margin right-align medium-small"><a href="page-forgot-password.html">Olvido la contraseña ?</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
 
@@ -338,7 +465,7 @@
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
-<script type="text/javascript" src='{% static "stylesheets/materialize/js/adoa.js" %}'></script>
+<script type="text/javascript" src='{% static "stylesheets/materialize/js/Objeto/Site.js" %}'></script>
 
 </body>
 
