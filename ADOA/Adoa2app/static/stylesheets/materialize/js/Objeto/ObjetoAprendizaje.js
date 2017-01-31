@@ -41,6 +41,14 @@ if($("#contenidoTarjeta").length){
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
+    if(!$('#oatitulo').hasClass('valid') || !$('#oadescripcion').hasClass('valid')){
+        Materialize.toast("Complete los campos correctamente", 3000);
+        return;
+    }
+    if($("#oapatron").val() === null){
+        Materialize.toast("Seleccione un patron", 3000);
+        return;
+    }
     var oaId = $("#oaid").val();
     var oaTitulo = $("#oatitulo").val();
     var oaDescripcion = $("#oadescripcion").val();

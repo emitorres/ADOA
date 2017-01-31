@@ -34,7 +34,7 @@
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea id="oadescripcion" length="300" name="oadescripcion" class="materialize-textarea"></textarea>
+                            <textarea id="oadescripcion" length="300" name="oadescripcion" class="materialize-textarea validate"></textarea>
                             <label id="labeldescripcion" for="Descripcion">Descripcion</label>
                         </div>
                     </div>
@@ -42,14 +42,14 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <select id="oapatron" name="oapatron">
-                                <option value="" disabled="" selected="">Seleccione el Patron</option>
+                                <option value="0" disabled="" selected="">Seleccione el Patron</option>
                             </select>
                             <label>Patron Pedagogico</label>
                         </div>
                     </div>
                     
                     <div class="row col s12"  style="padding-left: 0px;">
-                        <button id="btnGuardarPaso1" class="btn btn-color waves-effect waves-light left" type="submit"  name="action">Crear</button>
+                        <button id="btnGuardarPaso1" class="btn waves-effect waves-light red left" type="submit"  name="action">Crear</button>
                     </div>
                 </form>
             </div>
