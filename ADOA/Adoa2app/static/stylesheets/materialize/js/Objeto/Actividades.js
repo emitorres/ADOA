@@ -39,9 +39,9 @@ function crearVerdaderoFalso(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Verdadero o Falso</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -61,7 +61,7 @@ function modalEditarVerdaderoFalso(idActividad){
         "</div>"+
         "<div id='actividadContenido'></div>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoVerdaderoFalso()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoVerdaderoFalso()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarVerdaderoFalso("+idActividad+")");
@@ -92,7 +92,7 @@ function modalEditarVerdaderoFalso(idActividad){
                             "<label>Respuesta</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -128,7 +128,7 @@ function agregarTerminoVerdaderoFalso(){
                 "<label>Respuesta</label>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
@@ -182,9 +182,9 @@ function crearIdentificacion(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Identificacion</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -204,7 +204,7 @@ function modalEditarIdentificacion(idActividad){
         "</div>"+
         "<div id='actividadContenido'></div>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoIdentificacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoIdentificacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarIdentificacion("+idActividad+")");
@@ -235,7 +235,7 @@ function modalEditarIdentificacion(idActividad){
                             "<label>Respuesta</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -272,7 +272,7 @@ function agregarTerminoIdentificacion(){
                 "<label>Respuesta</label>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
         );
@@ -322,9 +322,9 @@ function crearOrdenamiento(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Ordenamiento</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -344,7 +344,7 @@ function modalEditarOrdenamiento(idActividad){
         "</div>"+
         "<div id='actividadContenido'></div>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarOrdenamiento("+idActividad+")");
@@ -383,7 +383,7 @@ function modalEditarOrdenamiento(idActividad){
                             "<label>Orden</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -423,7 +423,7 @@ function agregarTerminoOrdenamiento(){
                             "<label>Orden</label>"+
                         "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
@@ -473,9 +473,9 @@ function crearAsociacion(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Asociacion</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -495,7 +495,7 @@ function modalEditarAsociacion(idActividad){
         "</div>"+
         "<div id='actividadContenido'></div>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarAsociacion("+idActividad+")");
@@ -523,7 +523,7 @@ function modalEditarAsociacion(idActividad){
                             "</div>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -553,7 +553,7 @@ function agregarTerminoAsociacion(){
                 "</div>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
@@ -606,9 +606,9 @@ function crearVideo(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Video</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );

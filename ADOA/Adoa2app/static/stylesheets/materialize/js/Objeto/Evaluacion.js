@@ -70,8 +70,8 @@ function crearPregunta(){
              "<tr id='pregunta"+idPregunta+"'>"+
                 "<td>"+pregunta.substr(0, 140)+"</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );

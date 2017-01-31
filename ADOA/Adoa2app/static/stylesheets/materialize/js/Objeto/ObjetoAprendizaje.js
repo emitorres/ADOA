@@ -63,7 +63,7 @@ $('#oa-paso1').on('submit', function(event){
             $("#oaid").val(data.oaid);
             $("#evaluacionid").val(data.evaluacionid);
             $("#btnTab1").removeClass('disabled');
-            $("#btnGuardarPaso1").removeClass('red');
+            $("#btnGuardarPaso1").removeClass('light-blue lighten-1');
             $("#btnGuardarPaso1").addClass('green');
             $("#btnGuardarPaso1").html('Editar');
             cargarSeccionesPatron(oaPatron);
@@ -87,7 +87,7 @@ $('#btnGuardarPaso2').on('click', function(){
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             cambiarTab('contentTab3','tab3');
-            $("#btnGuardarPaso2").removeClass('red');
+            $("#btnGuardarPaso2").removeClass('light-blue lighten-1');
             $("#btnGuardarPaso2").addClass('green');
             $("#btnGuardarPaso2").html('Editar');
             Materialize.toast('Guardado con exito!!', 3000)
@@ -116,7 +116,7 @@ $('#btnGuardarPaso3').on('click', function(){
         data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             cambiarTab('contentTab4','tab4');   
-            $("#btnGuardarPaso3").removeClass('red');
+            $("#btnGuardarPaso3").removeClass('light-blue lighten-1');
             $("#btnGuardarPaso3").addClass('green');
             $("#btnGuardarPaso3").html('Editar');
             Materialize.toast(data.result, 3000)
@@ -246,9 +246,9 @@ function cargarDatosGuardados(){
                         "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                         "<td>Verdadero o Falso</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
-                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -264,9 +264,9 @@ function cargarDatosGuardados(){
                         "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                         "<td>Ordenamiento</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
-                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -281,9 +281,9 @@ function cargarDatosGuardados(){
                         "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                         "<td>Identificacion</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
-                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -298,9 +298,9 @@ function cargarDatosGuardados(){
                         "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                         "<td>Asociacion</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
-                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -315,9 +315,9 @@ function cargarDatosGuardados(){
                         "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                         "<td>Video</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
-                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                            "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -332,8 +332,8 @@ function cargarDatosGuardados(){
                     "<tr id='pregunta"+idPregunta+"'>"+
                         "<td>"+preguntatexto.substr(0, 140)+"</td>"+
                         "<td>"+
-                            "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                            "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                            "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                            "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -342,13 +342,13 @@ function cargarDatosGuardados(){
                 
                 
                 $("#btnTab1").removeClass('disabled');
-                $("#btnGuardarPaso1").removeClass('red');
+                $("#btnGuardarPaso1").removeClass('light-blue lighten-1');
                 $("#btnGuardarPaso1").addClass('green');
                 $("#btnGuardarPaso1").html('Editar');
-                $("#btnGuardarPaso2").removeClass('red');
+                $("#btnGuardarPaso2").removeClass('light-blue lighten-1');
                 $("#btnGuardarPaso2").addClass('green');
                 $("#btnGuardarPaso2").html('Editar');
-                $("#btnGuardarPaso3").removeClass('red');
+                $("#btnGuardarPaso3").removeClass('light-blue lighten-1');
                 $("#btnGuardarPaso3").addClass('green');
                 $("#btnGuardarPaso3").html('Editar');
                 $(".tab").removeClass("disabled");
@@ -377,10 +377,10 @@ function cargarMisObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
-                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
-                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
-                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>visibility</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -407,9 +407,9 @@ function cargarTodosLosObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
-                        "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
-                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>visibility</i></a>"+
+                        "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>input</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -558,7 +558,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Verdadero o Falso</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -574,7 +574,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Ordenamiento</td>"+
                     "<td>"+
-                        "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -589,7 +589,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Identificacion</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -604,7 +604,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Asociacion</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -619,7 +619,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Video</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );

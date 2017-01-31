@@ -45,7 +45,7 @@ function verVerdaderoFalso(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"+
                     "</div>"
                 );
             }
@@ -113,7 +113,7 @@ function verIdentificacion(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasIdentificacion()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasIdentificacion()'>Correccion</a>"+
                     "</div>"
                 );
             }
@@ -200,7 +200,7 @@ function verOrdenamiento(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"+
                     "</div>"
                 );
             }
