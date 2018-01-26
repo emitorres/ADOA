@@ -166,6 +166,10 @@ function guardarVerdaderoFalso(idActividad){
     });
 }
 
+function validarVerdaderoFalso(){
+    return true;
+}
+
 function crearIdentificacion(){
     var oaId = $("#oaid").val();
     var nombreActividad = $("#nombreactividad").val();
@@ -304,6 +308,10 @@ function guardarIdentificacion(idActividad){
             Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
+}
+
+function validarIdentificacion(){
+    return true;
 }
 
 function crearOrdenamiento(){
@@ -455,6 +463,10 @@ function guardarOrdenamiento(idActividad){
             Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
+}
+
+function validarOrdenamiento(){
+    return true;
 }
 
 function crearAsociacion(){
