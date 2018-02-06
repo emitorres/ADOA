@@ -34,6 +34,8 @@ class Asociacion(Actividad):
             itemClon = AsociacionItem()
             itemClon.campo1 = item.campo1
             itemClon.campo2 = item.campo2
+            itemClon.ordenCampo1 = item.ordenCampo1
+            itemClon.ordenCampo2 = item.ordenCampo2
             itemClon.Asociacion = asociacion
             
             itemClon.save()
@@ -43,7 +45,9 @@ class Asociacion(Actividad):
         db_table = "Asociacion"
     
 class AsociacionItem(models.Model):
+    ordenCampo1 = models.IntegerField()
     campo1 = models.TextField()
+    ordenCampo2 = models.IntegerField()
     campo2 = models.TextField()
     Asociacion = models.ForeignKey(Asociacion, on_delete=models.CASCADE)
     

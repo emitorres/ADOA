@@ -469,7 +469,7 @@ def GuardarAsociacion(request):
         
         terminos = json.loads(request.POST.get('terminos'))
         for termino in terminos:
-            asociacionItem = AsociacionItem(campo1 = termino['campo1'],campo2 = termino['campo2'])
+            asociacionItem = AsociacionItem(campo1 = termino['campo1'],campo2 = termino['campo2'],ordenCampo1 = termino['ordenCampo1'],ordenCampo2 = termino['ordenCampo2'])
             asociacionItem.Asociacion = asociacion
             asociacionItem.save()
         

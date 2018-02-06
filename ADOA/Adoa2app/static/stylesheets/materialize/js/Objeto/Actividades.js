@@ -1,6 +1,10 @@
 function crearActividad() {
     var idTipoActividad= $("#actividadesSelect").val();
-    
+    var nombreActividad = $("#nombreactividad").val();
+    if(nombreActividad ==""){
+        Materialize.toast('Ingrese un nombre para la actividad.', 3000);
+        return;
+    }
     switch(idTipoActividad) {
     case "1":
         crearVerdaderoFalso();
@@ -59,7 +63,9 @@ function modalEditarVerdaderoFalso(idActividad){
             "<textarea id='verdaderoFalsoEnunciado' name='verdaderoFalsoEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='verdaderoFalsoEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
             "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoVerdaderoFalso()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
@@ -206,7 +212,9 @@ function modalEditarIdentificacion(idActividad){
             "<textarea id='identificacionEnunciado' name='identificacionEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='identificacionEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
             "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoIdentificacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
@@ -350,7 +358,9 @@ function modalEditarOrdenamiento(idActividad){
             "<textarea id='ordenamientoEnunciado' name='ordenamientoEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='ordenamientoEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
             "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
@@ -429,7 +439,7 @@ function agregarTerminoOrdenamiento(){
                                 "<option value='10'>10</option>"+
                             "</select>"+
                             "<label>Orden</label>"+
-                        "</div>"+
+            "</div>"+
             "<div class='row col s2'>"+
                 "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
@@ -440,6 +450,7 @@ function agregarTerminoOrdenamiento(){
 
 function guardarOrdenamiento(idActividad){
     var terminos = [];
+    var terminosOrden = [];
     var enunciado = $("#ordenamientoEnunciado").val();
     $(".row.termino").each(function() {
         var texto = $(this).find( "textarea" ).val();
@@ -448,7 +459,18 @@ function guardarOrdenamiento(idActividad){
             "texto" : texto,
             "orden"  : orden
         });
+        terminosOrden.push(orden);
     });
+    if(checkArrayItemDuplicado(terminosOrden)){
+        Materialize.toast('No pueden repetirse los ordenes.', 3000);
+        event.preventDefault();
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden)){
+        Materialize.toast('No puede haber un numero de orden mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
@@ -505,7 +527,9 @@ function modalEditarAsociacion(idActividad){
             "<textarea id='asociacionEnunciado' name='asociacionEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='asociacionEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
             "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
@@ -526,11 +550,41 @@ function modalEditarAsociacion(idActividad){
                 terminos.forEach(function(termino) {
                     $("#actividadContenido").append(
                     "<div class='row termino'>"+
-                        "<div class='input-field col s5'>"+
+                        "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo1-"+termino.pk+"' class='ordencampo1' name='ordencampo1'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<div class='input-field col s4'>"+
                             "<div class='editor campo1' id='campo1-"+termino.pk+"'>"+
                             "</div>"+
                         "</div>"+
-                        "<div class='input-field col s5'>"+
+                        "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo2-"+termino.pk+"' class='ordencampo2' name='ordencampo2'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<div class='input-field col s4'>"+
                             "<div class='editor campo2' id='campo2-"+termino.pk+"'>"+
                             "</div>"+
                         "</div>"+
@@ -543,7 +597,10 @@ function modalEditarAsociacion(idActividad){
                     inicializarEditorPorId("campo2-"+termino.pk);
                     $("#campo1-"+termino.pk).code(termino.fields.campo1);
                     $("#campo2-"+termino.pk).code(termino.fields.campo2);
+                    $("#selectordencampo1-"+termino.pk).val(termino.fields.ordenCampo1);
+                    $("#selectordencampo2-"+termino.pk).val(termino.fields.ordenCampo2);
                 });
+                $('select').material_select();
             }
             $('#modalEditarActividad').openModal();
         },
@@ -556,11 +613,41 @@ function modalEditarAsociacion(idActividad){
 function agregarTerminoAsociacion(){
     $('#actividadContenido').append(
         "<div class='row termino'>"+
-            "<div class='input-field col s5'>"+
+            "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo1' class='ordencampo1' name='ordencampo1'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+            "</div>"+
+            "<div class='input-field col s4'>"+
                 "<div class='editor campo1'>"+
                 "</div>"+
             "</div>"+
-            "<div class='input-field col s5'>"+
+            "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo2' class='ordencampo2' name='ordencampo2'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+            "</div>"+
+            "<div class='input-field col s4'>"+
                 "<div class='editor campo2'>"+
                 "</div>"+
             "</div>"+
@@ -569,22 +656,48 @@ function agregarTerminoAsociacion(){
             "</div>"+
         "</div>"
     );
-    
+    $('select').material_select();
     inicializarEditorPorClase(".editor.campo1");
     inicializarEditorPorClase(".editor.campo2");
 }
 
 function guardarAsociacion(idActividad){
     var terminos = [];
+    var terminosOrden1 = [];
+    var terminosOrden2 = [];
     var enunciado = $("#asociacionEnunciado").val();
     $(".row.termino").each(function() {
         var campo1 = $(this).find( ".editor.campo1" ).code();
         var campo2 = $(this).find( ".editor.campo2" ).code();
+        var ordenCampo1 = $(this).find("select.ordencampo1").val();
+        var ordenCampo2 = $(this).find("select.ordencampo2").val();
         terminos.push({ 
             "campo1" : campo1,
-            "campo2"  : campo2
+            "campo2"  : campo2,
+            "ordenCampo1"  : ordenCampo1,
+            "ordenCampo2"  : ordenCampo2
         });
+        terminosOrden1.push(ordenCampo1);
+        terminosOrden2.push(ordenCampo2);
     });
+    if(checkArrayItemDuplicado(terminosOrden1)){
+        Materialize.toast('No pueden repetirse los ordenes del primer campo.', 3000);
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden1)){
+        Materialize.toast('No puede haber un numero de orden en el primer campo mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
+    if(checkArrayItemDuplicado(terminosOrden2)){
+        Materialize.toast('No pueden repetirse los ordenes del segundo campo.', 3000);
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden2)){
+        Materialize.toast('No puede haber un numero de orden en el segundo campo mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
@@ -638,6 +751,7 @@ function modalEditarVideo(idActividad){
             "<textarea id='videoDescripcion' name='videoDescripcion' class='materialize-textarea'></textarea>"+
             "<label class='active' for='videoDescripcion'>Descripcion</label>"+
         "</div>"+
+        "<br>"+
         "<div class='input-field col s7'>"+
           "<input id='videoUrl' class='videoUrl' type='text'>"+
           "<label for='videoUrl' class=''>Url</label>"+
@@ -703,4 +817,30 @@ function eliminarActividad(idActividad){
         }
     });
 }
+
+//devuelve true si hay items duplicados
+function checkArrayItemDuplicado(arr){
+  for (var i=0; i<arr.length;i++)
+  {
+    for (var x=0;x<arr.length;x++)
+    {
+      if(arr[i]==arr[x] && i != x)
+      {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkItemFueraDeRango(arr){
+  for (var i=0; i<arr.length;i++)
+  {
+    if(arr[i]>arr.length){
+        return true;
+    }
+  }
+  return false;
+}
+
 

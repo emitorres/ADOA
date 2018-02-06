@@ -320,3 +320,7 @@ nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
 .toast{
     background-color:#29b6f6 !important;
 }
+
+.toast, #toast-container {
+z-index: 11001 !important;
+}
