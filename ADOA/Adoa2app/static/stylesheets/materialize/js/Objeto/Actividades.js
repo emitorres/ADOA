@@ -5,21 +5,30 @@ function crearActividad() {
         Materialize.toast('Ingrese un nombre para la actividad.', 3000);
         return;
     }
+    if(!$("#nombreactividad").hasClass('valid')){
+        Materialize.toast("Complete el nombre de la actividad correctamente.", 3000);
+        return;
+    }
     switch(idTipoActividad) {
     case "1":
         crearVerdaderoFalso();
+        $("#nombreactividad").val("");
         break;
     case "2":
         crearAsociacion();
+        $("#nombreactividad").val("");
         break;
     case "3":
         crearVideo();
+        $("#nombreactividad").val("");
         break;
     case "4":
         crearOrdenamiento();
+        $("#nombreactividad").val("");
         break;
     case "5":
         crearIdentificacion();
+        $("#nombreactividad").val("");
         break;
     default:
         Materialize.toast('Ninguna Actividad Seleccionada', 3000);
@@ -164,6 +173,7 @@ function guardarVerdaderoFalso(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -310,6 +320,7 @@ function guardarIdentificacion(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -479,6 +490,7 @@ function guardarOrdenamiento(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -706,6 +718,7 @@ function guardarAsociacion(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -792,6 +805,7 @@ function guardarVideo(idActividad){
         data : { actividadId : idActividad,descripcion : descripcion, link : link, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
