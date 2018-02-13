@@ -60,7 +60,7 @@ text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #
 
 .tab, .tabs{
     /*background-color: #f44336;*/
-    background-color:#29b6f6;
+    background-color:#448AFF;
     color: #ffffff;
 }
 
@@ -172,7 +172,7 @@ span.badge {
 
 
 .btn-color{
-    background-color:#29b6f6 !important;
+    background-color:#448AFF !important;
 }
 
 .toast{

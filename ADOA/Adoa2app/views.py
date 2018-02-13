@@ -6,6 +6,8 @@ from Adoa2app.models.ObjetoAprendizaje import ObjetoAprendizaje,\
     SeccionContenido
 import json
 from Adoa2app.models.PatronPedagogico import PatronPedagogico, SeccionNombre
+from Adoa2app.models.Categoria import Categoria
+
 from django.core import serializers
 from Adoa2app.models import VerdaderoFalso, Identificacion, Ordenamiento,\
     Asociacion, Video, Actividad, Evaluacion
@@ -20,6 +22,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
 from Adoa2app.models import Usuario
+
 from Adoa2app.usuario.access import my_access_required
 
 class Index(TemplateView):
@@ -87,10 +90,16 @@ def Paso1(request):
         if oaid==0:
             oatitulo = request.POST['titulo']
             oadescripcion = request.POST['descripcion']
+
             patron = request.POST['patron']
             oapatron = PatronPedagogico.objects.get(pk=patron)
+
             usuario = request.session['usuario']
-            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Usuario = usuario)
+
+            categoria = request.POST['categoria']
+            oacategoria = Categoria.objects.get(pk=categoria)
+
+            oa = ObjetoAprendizaje(titulo = oatitulo, descripcion = oadescripcion, PatronPedagogico = oapatron, Usuario = usuario, Categoria = oacategoria)
             oa.save()
             evaluacion = Evaluacion(ObjetoAprendizaje = oa)
             evaluacion.save()
@@ -101,6 +110,7 @@ def Paso1(request):
             oa.titulo = request.POST['titulo']
             oa.descripcion = request.POST['descripcion']
             patron = request.POST['patron']
+            categoria = request.POST['categoria']
             
             #Si cambia el patron, borramos las secciones guardadas y creamos nuevas vacias
             if oa.PatronPedagogico.id != patron:
@@ -111,6 +121,7 @@ def Paso1(request):
                     listaSecciones[i].delete()
                     
                 oa.PatronPedagogico = PatronPedagogico.objects.get(pk=patron)
+                oa.Categoria = Categoria.objects.get(pk=categoria)
                 crearSecciones(oa)
                 
             oa.save()
@@ -196,7 +207,23 @@ def TraerPatrones(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+def TraerCategorias(request):
+    if request.method == 'POST':
         
+        categorias = Categoria.objects.all()
+        categoriasJson = serializers.serialize('json', categorias)
+
+        return HttpResponse(
+            categoriasJson,
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+               
 def TraerSeccionesPatron(request):
     if request.method == 'POST':
         
@@ -638,21 +665,7 @@ def TraerObjetos(request):
         )
 
 def mostrarObjetosSinTerminar(request):
-    '''  
-    oa = ObjetoAprendizaje.objects.all()
-    model = ObjetoAprendizaje
-    template_name = 'ObjetosInicio.html'
-    lista = []
 
-    for registro in oa:
-        oaCompleto = esExportable(registro)
-        if oaCompleto[0]:
-            lista.append(registro)
-        
-    usuario = request.session['usuario']
-    #lista = Usuario.objects.all()
-    return render_to_response(template_name, locals(), context_instance = RequestContext(request))
-    '''
     if request.method == 'POST':
         
         response_data = {}
@@ -663,16 +676,23 @@ def mostrarObjetosSinTerminar(request):
         )
         objetos = []
         patrones = []
+        categorias = []
+
         for registro in oa:
             oaCompleto = esExportable(registro)
             if not oaCompleto[0]:
                 objetos.append(registro)
                 patrones.append(registro.PatronPedagogico)
+                categorias.append(registro.Categoria)
             
         objetosJson = serializers.serialize('json', objetos)
         patronesJson = serializers.serialize('json', patrones)
+        categoriasJson = serializers.serialize('json', categorias)
         response_data['objetos'] = objetosJson
+
         response_data['patrones'] = patronesJson
+
+        response_data['categorias'] = categoriasJson
         return JsonResponse(
             response_data,
           
@@ -802,6 +822,7 @@ def TraerDatosObjeto(request):
         oa = ObjetoAprendizaje.objects.get(pk=oaid)
         objetoJson = serializers.serialize('json', [oa])
         patronJson = serializers.serialize('json', [oa.PatronPedagogico])
+        categoriaJson = serializers.serialize('json', [oa.Categoria])
         evaluacionOA = Evaluacion.objects.get(ObjetoAprendizaje = oa)
         
         if evaluacionOA is not None:
@@ -827,6 +848,7 @@ def TraerDatosObjeto(request):
         return JsonResponse(
             {'objeto':objetoJson,
              'patron': patronJson,
+             'categoria': categoriaJson,
              'evaluacion':evaluacionJson,
              'evaluacionItems':evaluacionItemsJson,
              'verdaderofalso': verdaderosFalsosJson,

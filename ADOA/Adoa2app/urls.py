@@ -34,6 +34,7 @@ from .views import TraerDatosObjeto
 from .views import ExportarOA, importarOA
 from .views import TraerTerminosEvaluacion
 from .views import TraerMisObjetos
+from .views import TraerCategorias
 from Adoa2app.views import EditarOA, ComprobarOA, BorrarOA,mostrarObjetosSinTerminar,Objetos2
 
 urlpatterns = [
@@ -55,6 +56,7 @@ urlpatterns = [
     url(r'^CrearOA/Paso2/$', Paso2),
     url(r'^CrearOA/Paso3/$', Paso3),
     url(r'^CrearOA/TraerPatrones/$', TraerPatrones),
+    url(r'^CrearOA/TraerCategorias/$', TraerCategorias),
     url(r'^CrearOA/TraerSeccionesPatron/$', TraerSeccionesPatron),
     url(r'^CrearOA/CrearVerdaderoFalso/$', CrearVerdaderoFalso),
     url(r'^CrearOA/GuardarVerdaderoFalso/$', GuardarVerdaderoFalso),
