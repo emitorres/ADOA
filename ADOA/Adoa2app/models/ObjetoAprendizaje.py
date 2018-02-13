@@ -3,6 +3,7 @@ from django.db import models
 from .PatronPedagogico import PatronPedagogico
 from .PatronPedagogico import SeccionNombre
 from .Usuario import Usuario
+from .Categoria import Categoria
 from Adoa2app.validator.VacioValidator import VacioValidator
 
 class ObjetoAprendizaje(models.Model):
@@ -11,7 +12,8 @@ class ObjetoAprendizaje(models.Model):
     introduccion = models.TextField()
     PatronPedagogico = models.ForeignKey(PatronPedagogico, on_delete=models.CASCADE,null=True)
     Usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=False, default = 1)
-    
+    Categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=False, default = 1)
+
     def estaCompleto (self):
         from .Evaluacion import Evaluacion
         validator = VacioValidator()
