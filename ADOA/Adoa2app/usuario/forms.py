@@ -227,6 +227,18 @@ class RecuperarContrasenaForm(forms.ModelForm):
 
 				'email':forms.TextInput(),
 			}
+	
+	def is_valid(self):
+		email = self.data['email']
+		if email is False:
+			return False
+		else:
+			try:
+				Usuario.objects.get(email = email);
+			except:
+				return False
+		return True
+	
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 		try:

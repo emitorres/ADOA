@@ -219,7 +219,7 @@ def recuperar_contrasena(request):
 		formulario = RecuperarContrasenaForm(request.POST)
 		valido = formulario.is_valid()
 		if valido:	
-			usuarioMail = formulario.cleaned_data['email']
+			usuarioMail = formulario.data['email']
 			usuario1 = Usuario.objects.get(email = usuarioMail)
 
 			tokenCadena = uuid.uuid4()

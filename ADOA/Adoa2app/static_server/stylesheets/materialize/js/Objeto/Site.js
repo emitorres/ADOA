@@ -43,13 +43,15 @@ var toolbar = [
             ['height', ['lineheight']],
         ];
 
-$('.editor').materialnote({
-    toolbar: toolbar,
-    height: 300,
-    minHeight: 100,
-    defaultBackColor: '#fff'
-});
-
+//Comprobamos que existan elementos para que no tire error al querer invocar a materialnote
+if ($('.editor').length){
+    $('.editor').materialnote({
+        toolbar: toolbar,
+        height: 300,
+        minHeight: 100,
+        defaultBackColor: '#fff'
+    });
+}
 function cerrarModal(id){
     $('#'+id).closeModal();
 }

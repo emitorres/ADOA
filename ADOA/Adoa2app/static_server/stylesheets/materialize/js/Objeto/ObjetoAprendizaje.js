@@ -12,6 +12,7 @@ var toolbar = [
         ];
 if($("#oaid").length){
     cargarListaPatrones();
+    cargarListaImagenes();
     cargarDatosGuardados();
 }
 
@@ -41,21 +42,30 @@ if($("#contenidoTarjeta").length){
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
+    if(!$('#oatitulo').hasClass('valid') || !$('#oadescripcion').hasClass('valid')){
+        Materialize.toast("Complete los campos correctamente", 3000);
+        return;
+    }
+    if($("#oapatron").val() === null){
+        Materialize.toast("Seleccione un patron", 3000);
+        return;
+    }
     var oaId = $("#oaid").val();
     var oaTitulo = $("#oatitulo").val();
     var oaDescripcion = $("#oadescripcion").val();
     var oaPatron = $("#oapatron").val();
+    var oaCategoria = $("#oacategoria").val();
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
         url : "/CrearOA/Paso1/", // the endpoint
         type : "POST", // http method
-        data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        data : { oaid : oaId,titulo : oaTitulo, descripcion : oaDescripcion, patron : oaPatron, categoria : oaCategoria, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             cambiarTab('contentTab2','tab2');
             $("#oaid").val(data.oaid);
             $("#evaluacionid").val(data.evaluacionid);
             $("#btnTab1").removeClass('disabled');
-            $("#btnGuardarPaso1").removeClass('red');
+            $("#btnGuardarPaso1").removeClass('btn-color');
             $("#btnGuardarPaso1").addClass('green');
             $("#btnGuardarPaso1").html('Editar');
             cargarSeccionesPatron(oaPatron);
@@ -79,7 +89,7 @@ $('#btnGuardarPaso2').on('click', function(){
         data : { oaid : oaId, introduccion : oaIntroduccion, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             cambiarTab('contentTab3','tab3');
-            $("#btnGuardarPaso2").removeClass('red');
+            $("#btnGuardarPaso2").removeClass('btn-color');
             $("#btnGuardarPaso2").addClass('green');
             $("#btnGuardarPaso2").html('Editar');
             Materialize.toast('Guardado con exito!!', 3000)
@@ -108,7 +118,7 @@ $('#btnGuardarPaso3').on('click', function(){
         data : { oaid : oaId, secciones : JSON.stringify(secciones), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             cambiarTab('contentTab4','tab4');   
-            $("#btnGuardarPaso3").removeClass('red');
+            $("#btnGuardarPaso3").removeClass('btn-color');
             $("#btnGuardarPaso3").addClass('green');
             $("#btnGuardarPaso3").html('Editar');
             Materialize.toast(data.result, 3000)
@@ -133,6 +143,24 @@ function cargarListaPatrones(){
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
+        }
+    });
+}
+
+function cargarListaImagenes(){
+    var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+    $.ajax({
+        url : "/CrearOA/TraerCategorias/", // the endpoint
+        type : "POST", // http method
+        data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
+        success : function(data) {
+            data.forEach(function(categoria) {
+                $("#oacategoria").append("<option value='"+categoria.pk+"'>"+categoria.fields.categoria+"</option>");
+            });
+            $("#oacategoria").material_select();
+        },
+        error : function(xhr,errmsg,err) {
+            Materialize.toast('Error al cargar los patrones categorias', 3000);
         }
     });
 }
@@ -185,6 +213,7 @@ function cargarDatosGuardados(){
             success : function(data) {
                 var objeto = JSON.parse(data.objeto);
                 var patron = JSON.parse(data.patron);
+                var categoria = JSON.parse(data.categoria);
                 var evaluacion = JSON.parse(data.evaluacion);
                 var evaluacionItems = JSON.parse(data.evaluacionItems);
                 var verdaderofalsolista = JSON.parse(data.verdaderofalso);
@@ -203,7 +232,10 @@ function cargarDatosGuardados(){
                 $("#labeldescripcion").addClass("active");
     
                 $("#introduccion-oa").code(objeto[0].fields.introduccion);
-                
+
+                $("#oacategoria").val(categoria[0].pk);
+                $("#oacategoria").material_select();
+
                 $("#oapatron").val(patron[0].pk);
                 $("#oapatron").material_select();
                 
@@ -334,13 +366,13 @@ function cargarDatosGuardados(){
                 
                 
                 $("#btnTab1").removeClass('disabled');
-                $("#btnGuardarPaso1").removeClass('red');
+                $("#btnGuardarPaso1").removeClass('btn-color');
                 $("#btnGuardarPaso1").addClass('green');
                 $("#btnGuardarPaso1").html('Editar');
-                $("#btnGuardarPaso2").removeClass('red');
+                $("#btnGuardarPaso2").removeClass('btn-color');
                 $("#btnGuardarPaso2").addClass('green');
                 $("#btnGuardarPaso2").html('Editar');
-                $("#btnGuardarPaso3").removeClass('red');
+                $("#btnGuardarPaso3").removeClass('btn-color');
                 $("#btnGuardarPaso3").addClass('green');
                 $("#btnGuardarPaso3").html('Editar');
                 $(".tab").removeClass("disabled");
@@ -369,10 +401,10 @@ function cargarMisObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
-                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
-                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
-                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>delete</i></a>"+
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>visibility</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='/EditarOA/"+objeto.pk+"' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>mode_edit</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>delete</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -399,9 +431,10 @@ function cargarTodosLosObjetos(){
                         "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
                         "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
                         "<td>"+
-                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>visibility</i></a>"+
-                        "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>input</i></a>"+
-                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light red btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        
+                        "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad'><i class='material-icons'>visibility</i></a>"+
+                        "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>input</i></a>"+
+                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
@@ -420,33 +453,59 @@ function cargarObjetosSinTerminar(){
             type : "POST", // http method
             data : { csrfmiddlewaretoken: csrf }, // data sent with the post request
             success : function(data) {
-            var objetos = JSON.parse(data.objetos);
-            var patrones = JSON.parse(data.patrones);
-            var i = 0;
-            objetos.forEach(function(objeto) {
+                             
+                var objetos = JSON.parse(data.objetos);
+                var patrones = JSON.parse(data.patrones);
+                var categorias = JSON.parse(data.categorias)
+                var i = 0;
+                var j = 0;
+                objetos.forEach(function(objeto) {    
+
                     $("#contenidoTarjeta").append(
+                   
                     "<div class='col s12 m6 l3'>"+
                         "<div class='card'>"+
                             "<div class='card-image waves-effect waves-block waves-light'>"+
-                                "<img class='activator' src='/static/images/AdoaCard.png'>"+
+                                "<img id='oafoto' name='oafoto' class='activator' src=" + "'"+ categorias[i].fields.fotoUrl+"'"+     ">"+
+                               /* "<img class='activator' src='/static/images/museo2.png'>"+*/
+
                         "</div>"+
                         "<div class='card-content'>"+
                             "<span class='card-title activator grey-text text-darken-4'>"+objeto.fields.titulo.substring(0,15)+"<i class='material-icons right'>more_vert</i></span>"+
                               "<p>"+'Patron Utilizado: '+patrones[i].fields.nombre +"</p>"+
+                              "<p>"+'Categoria: '+categorias[i].fields.categoria+"</p>"+
 
                         "</div>"+
                         "<div class='card-reveal'>"+
                             "<span class='card-title grey-text text-darken-4'>Opciones<i class='material-icons right' style='margin-bottom:50px'>close</i></span>"+
                             "<div class='row'>"+ 
-                                "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class=' col s12 m12 l12 btn waves-effect waves-light'style='margin-bottom:10px' >Ver Estado</a>"+
-                               "<a href='/EditarOA/"+objeto.pk+"' class=' col s12 m12 l12 btn waves-effect waves-light' style='margin-bottom:10px'>Seguir Editando</a>"+
-                                "<a href='#' onclick='borrarOA(" +objeto.pk+ ");'  class=' col s12 m12 l12 btn waves-effect waves-light'style='margin-bottom:10px'>Eliminar</a>"+
+                                "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class=' col s12 m12 l12 btn btn-color waves-effect waves-light'style='margin-bottom:10px' >Ver Estado</a>"+
+                               "<a href='/EditarOA/"+objeto.pk+"' class=' col s12 m12 l12 btn btn-color waves-effect waves-light' style='margin-bottom:10px'>Seguir Editando</a>"+
+                                "<a href='#' onclick='borrarOA(" +objeto.pk+ ");'  class=' col s12 m12 l12 btn btn-color waves-effect waves-light'style='margin-bottom:10px'>Eliminar</a>"+
                             "</div>"+
                         "</div>"+
                     "</div>"
+                 
                     );
-                    i++;
+                i++;
+                j++;
                 });
+                if (j==0){
+                    $("#contenidoTarjeta").append(
+                    
+                        "<div class='col s12 m8 offset-m2'>"+
+                            "<div class=''>"+
+                               
+                                    "<img class='responsive-img' src='/static/images/sinterminar.png'>"+
+                               
+                
+                            "</div>"+
+                        "</div>"
+                    
+                );
+                }
+                
+            
             },
             error : function(xhr,errmsg,err) {
                 Materialize.toast('Error al cargar los patrones pedagogicos', 3000);
@@ -550,7 +609,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Verdadero o Falso</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -566,7 +625,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Ordenamiento</td>"+
                     "<td>"+
-                        "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='verOrdenamiento"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -581,7 +640,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Identificacion</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -596,7 +655,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Asociacion</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
@@ -611,7 +670,7 @@ function previsualizarOA(oaId){
                     "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                     "<td>Video</td>"+
                     "<td>"+
-                        "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>visibility</i></button>"+
+                        "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>visibility</i></button>"+
                     "</td>"+
                 "</tr>"
                 );
