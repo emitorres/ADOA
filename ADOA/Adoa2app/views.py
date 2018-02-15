@@ -22,7 +22,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
 from Adoa2app.models import Usuario
-
+from operator import itemgetter, attrgetter, methodcaller
 from Adoa2app.usuario.access import my_access_required
 
 class Index(TemplateView):
@@ -1391,10 +1391,73 @@ def crearVideoScorm(actividad):
 
 def crearAsociacionScorm(actividad):
 
-    contenido = "actividad"+str(actividad.id)
     script = ''
+    
+    actividadItems = actividad.asociacionitem_set.all()
+    contenido= ""
 
-    return paginaMaestra("actividad"+str(actividad.id), contenido,script)
+    contenido+="<div class='col s12'>"\
+        "<p><b>"+actividad.enunciado+"</b></p>"\
+    "</div>"
+
+    script = ''
+    contador = 0
+    listaCampoOrden1 = []
+    listaCampoOrden2 = []
+    ordenada = []
+    ordenada2 = []
+
+    for item in actividadItems:
+        listaCampoOrden1.append(AsociacionItem(campo1 = item.campo1,campo2 = "",ordenCampo1 = item.ordenCampo1,ordenCampo2 = ""));
+        listaCampoOrden2.append(AsociacionItem(campo1 = "",campo2 = item.campo2,ordenCampo1 = "",ordenCampo2 = item.ordenCampo2));
+
+    ordenada = sorted(listaCampoOrden1, key=attrgetter('ordenCampo1'))
+    ordenada2 = sorted(listaCampoOrden2, key=attrgetter('ordenCampo2'))  
+        
+    
+    for item in actividadItems:
+        contador = contador + 1
+        contenido+="<div class='row'>"\
+                    "<div class='col s12'>"\
+                        "<div id='campo1-"+str(contador)+"' class='col s4'>"\
+                            "<h3>Item "+str(ordenada[contador-1].ordenCampo1)+"</h3>"\
+                            +ordenada[contador-1].campo1+\
+                        "</div>"\
+                        "<div id='contenedor-"+str(contador)+"' class='col s3'>"\
+                            "<div class='input-field col s10'>"\
+                                "<select id='selectAsociacion"+str(contador)+"' class='selectAsociacion' name='selectAsociacion'>"\
+                                    "<option value='' disabled='' selected=''>Opciones</option>"\
+                                    "<option value='1'>Item 1</option>"\
+                                    "<option value='2'>Item 2</option>"\
+                                    "<option value='3'>Item 3</option>"\
+                                    "<option value='4'>Item 4</option>"\
+                                    "<option value='5'>Item 5</option>"\
+                                    "<option value='6'>Item 6</option>"\
+                                    "<option value='7'>Item 7</option>"\
+                                    "<option value='8'>Item 8</option>"\
+                                    "<option value='9'>Item 9</option>"\
+                                    "<option value='10'>Item 10</option>"\
+                                "</select>"\
+                                "<label>Asociar a</label>"\
+                            "</div>"\
+                            "<div id='resultado"+str(contador)+"' col s10'>"\
+                            "</div>"\
+                            "<input type='hidden' class='respuestaAsociacion' name='respuesta"+str(ordenada[contador-1].ordenCampo1)+"' data-id='"+str(ordenada[contador-1].ordenCampo1)+"' id='respuesta"+str(ordenada[contador-1].ordenCampo1)+"' value='"+str(ordenada2[contador-1].ordenCampo2)+"'>"\
+                        "</div>"\
+                        "<div id='campo2-"+str(contador)+"' class='col s4'>"\
+                            "<h3>Item "+str(ordenada2[contador-1].ordenCampo2)+"</h3>"\
+                            +ordenada2[contador-1].campo2+\
+                        "</div>"\
+                        "</div>"\
+                    "</div>"
+        
+        
+    contenido+="<div class='row col s12'>"\
+                    "<a class='btn waves-effect waves-light left red' onclick='validarRespuestasAsociacion()'>Correccion</a>"\
+                "</div>"
+    contenido+="<script>$('select').material_select();</script>"
+
+    return paginaMaestra(actividad.nombre, contenido.encode('utf-8'),script)
 
 def crearEvalucion(oa):
     script=''
