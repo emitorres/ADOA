@@ -42,6 +42,7 @@ if($("#contenidoTarjeta").length){
 
 $('#oa-paso1').on('submit', function(event){
     event.preventDefault();
+    $('.validate').each(function(){window.validate_field($(this));}); //Llamamos explicitamente a la validacion de los campos
     if(!$('#oatitulo').hasClass('valid') || !$('#oadescripcion').hasClass('valid')){
         Materialize.toast("Complete los campos correctamente", 3000);
         return;
@@ -434,7 +435,7 @@ function cargarTodosLosObjetos(){
                         
                         "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad'><i class='material-icons'>visibility</i></a>"+
                         "<a href='#' onclick='importarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>input</i></a>"+
-                        "<a href='#' onclick='borrarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
+                        "<a href='#' onclick='comprobarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
                         "</td>"+
                     "</tr>"
                     );
