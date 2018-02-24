@@ -69,6 +69,7 @@ INSERT INTO "Categoria" VALUES ('5', '/static/images/biologia2.png', 'Biología'
 INSERT INTO "Categoria" VALUES ('6', '/static/images/quimica2.png', 'Química');
 INSERT INTO "Categoria" VALUES ('7', '/static/images/biblioteca2.png', 'Literatura');
 INSERT INTO "Categoria" VALUES ('8', '/static/images/fisica2.png', 'Física');
+INSERT INTO "Categoria" VALUES ('9', '/static/images/otros2.png', 'Otros');
 
 
 -- Usuario administrador

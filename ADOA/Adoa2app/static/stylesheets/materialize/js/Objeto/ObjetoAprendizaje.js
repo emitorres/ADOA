@@ -399,8 +399,8 @@ function cargarMisObjetos(){
                     $("#bodyTablaObjetos").append(
                     "<tr id='miObjeto_" + objeto.pk +"'>"+
                         "<td>"+objeto.pk+"</td>"+
-                        "<td>"+objeto.fields.titulo.substring(0, 20)+"</td>"+
-                        "<td>"+objeto.fields.descripcion.substring(0, 40)+"</td>"+
+                        "<td>"+objeto.fields.titulo.substring(0, 40)+"</td>"+
+                        "<td>"+objeto.fields.descripcion.substring(0, 60)+"</td>"+
                         "<td>"+
                         "<a href='#' onclick='previsualizarOA(" +objeto.pk+ ");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>visibility</i></a>"+
                         "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class='btn-floating waves-effect waves-light btn-color btn-actividad' ><i class='material-icons'>play_for_work</i></a>"+
