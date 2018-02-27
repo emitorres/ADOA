@@ -52,24 +52,21 @@
 	<header id="header" class="page-topbar">
 		<nav>
 			<div class="navbar-fixed">
-			<nav> 	
+				<nav> 	
 
-	    		<div class="nav-wrapper">
+	    			<div class="nav-wrapper">
 
-      				<a href="#" class="brand-logo">
-					<!--<img src="logo3.png">-->
-					{% image_tag 'adoa.png' %}
-      				</a>
+      				<a class="brand-logo" style="margin-left:10px;bottom:-4px"><h4>Adoa</h4></a>
+
 
       				<ul id="dropdown1" class="dropdown-content" style="margin-top: 64px">
- 								<li><a href='{% url 'usuario:perfil_index' %}'>Editar Perfil</a>
-
- 								</li>
-							  <li>{% url_tag 'Cerrar Sesion' 'usuario:usuario_salir' %}    </li>
+ 						<li><a href='{% url 'usuario:perfil_index' %}'>Editar Perfil</a></li>
+							  
+						<li>{% url_tag 'Cerrar Sesion' 'usuario:usuario_salir' %}    </li>
 					</ul>
+
 	      			<ul id="nav-mobile" class="right hide-on-med-and-down">
-	      				<li>
-	        			<a href="#" id="alternar-panel-oculto"><i class="material-icons">menu</i></a></li>
+	      				
 
 	        			<li><a class="dropdown-button" href="#!" data-activates="dropdown1" data-constrainwidth="false" ><i class="material-icons">settings</i></a></li>
 	        			
@@ -78,12 +75,7 @@
 	      				<!--.show-on-medium-and-down           hide-on-med-and-down-->
 	      			<div class="header-search-wrapper hide-on-med-and-down">
                        			<!--<i class="material-icons">search</i>-->
-                       	<form>
-                       		<div class="input-field" style="height: 30px">
-	                        	<input name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize" type="search" style="padding-left: 80px;">
-	                        	<label class="" for="search"><i class="material-icons">search</i></label>
-							</div>
-						</form>
+                       
                     </div>
 	      					
 	    		</div>
@@ -115,19 +107,21 @@
 	    		</li>
 
 	    		<li><a class="subheader red-text" style="font-weight: bold">USUARIOS</a></li>
-    			<li><a href='{% url 'administrador:administrador_usuarios_index' %}'><i class="material-icons blue-text">list</i>Lista de Usuarios</a></li>
+    			<li><a href='{% url 'administrador:administrador_usuarios_index' %}'><i class="material-icons blue-text">supervisor_account</i>Lista de Usuarios</a></li>
+    			<li><div class="divider"></div></li>
 
     			<li><a class="subheader red-text" style="font-weight: bold">PERFILES</a></li>
-    			<li><a href='{% url 'administrador:administrador_perfiles_index' %}'><i class="material-icons blue-text">list</i>Lista de Perfiles</a></li>
+    			<li><a href='{% url 'administrador:administrador_perfiles_index' %}'><i class="material-icons blue-text">verified_user</i>Lista de Perfiles</a></li>
     			<li><div class="divider"></div></li>
-    			<li><a class="subheader red-text" style="font-weight: bold">PATRONES</a></li>
-    			<li><a class="waves-effect" href="#!"><i class="material-icons orange-text">mode_edit</i>Editar Objeto</a></li>
-    			<li><a class="waves-effect" href="#!"><i class="material-icons red-text">file_upload</i>Importar Objeto</a></li>
-    			<li><div class="divider"></div></li>
+    			
     			<li><a class="subheader red-text" style="font-weight: bold">PERMISOS</a></li>
-    			<li><a class="waves-effect" href='{% url 'administrador:administrador_permisos_index' %}'><i class="material-icons violet-text">list</i>Lista de Accesos</a></li>
-
-
+    			<li><a class="waves-effect" href='{% url 'administrador:administrador_permisos_index' %}'><i class="material-icons blue-text">lock</i>Lista de Accesos</a></li>
+    			<!--
+    			<li><a class="subheader red-text" style="font-weight: bold">PROYECTO</a></li>
+    			<li><a class="waves-effect" href="/CrearOA"><i class="material-icons blue-text">note_add</i>Crear OA</a></li>
+    			<li><a class="waves-effect" href="/Objetos/2"><i class="material-icons blue-text">list</i>Todos los Objetos</a></li>
+    			<li><a class="waves-effect" href="/Objetos/1"><i class="material-icons blue-text">work</i>Mis Objetos</a></li>
+				-->
   			</ul>
   			
 		</aside>
@@ -140,7 +134,7 @@
 							<div class="col s12 m12 l12">
 								<h5 class="breadcrumbs-title">Adoa 2.0</h5>
 								<ol class="breadcrumbs">
-                  					<li><a style="color: #00bcd4;text-decoration:none" href="{% url 'principal:index_adoa' %}">Inicio</a></li>
+                  					<li><a style="color: #00bcd4;text-decoration:none" href="{% url 'administrador:index_administrador' %}">Inicio</a></li>
                 				</ol>
 							</div>
 						</div>
@@ -152,7 +146,7 @@
 				<div class="section"><!--SECTION PRINCIPAL aca va toodoo-->
 				
 				{% block informacion %}
-					<p class="caption">Widgets allow users to turn personal content into dynamic web apps that can be shared on websites where the code can be installed.</p>
+					<p class="caption"></p>
 	            	<div class="divider"></div>
 				{% endblock %}
 		
@@ -160,7 +154,8 @@
 
                 {% endblock %}
 
-                <div><div id="panel-oculto" style="display:none">sd</div>
+                <div>
+                <div id="panel-oculto" style="display:none">sd</div>
 
 				</div><!--SECTION PRINCIPAL-->
 			</div><!--CONTAINER PRINCIPAL-->

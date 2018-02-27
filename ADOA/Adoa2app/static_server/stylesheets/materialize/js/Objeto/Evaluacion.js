@@ -55,6 +55,17 @@ function crearPregunta(){
     var ordenrespuestacorrecta = $("#selectordenrespuestacorrecta").val();
     var ordenrespuestaincorrecta1 = $("#selectordenrespuestaincorrecta1").val();
     var ordenrespuestaincorrecta2 = $("#selectordenrespuestaincorrecta2").val();
+    
+    var ordenPreguntas=[];
+    ordenPreguntas.push(ordenrespuestacorrecta);
+    ordenPreguntas.push(ordenrespuestaincorrecta1);
+    ordenPreguntas.push(ordenrespuestaincorrecta2);
+    
+    if(checkArrayItemDuplicado(ordenPreguntas)){
+        Materialize.toast('No pueden repetirse los ordenes de las preguntas.', 4000);
+        event.preventDefault();
+        return;
+    }
 
     var evaluacionId = $("#evaluacionid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
@@ -70,11 +81,12 @@ function crearPregunta(){
              "<tr id='pregunta"+idPregunta+"'>"+
                 "<td>"+pregunta.substr(0, 140)+"</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button onclick='eliminarPregunta("+idPregunta+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
+            cerrarModal('modalEditarPregunta');
             $("#btnVerEvaluacion").show();
             Materialize.toast(data.result, 3000)
         },
@@ -172,6 +184,17 @@ function guardarPregunta(idPregunta){
     var ordenrespuestacorrecta = $("#selectordenrespuestacorrecta").val();
     var ordenrespuestaincorrecta1 = $("#selectordenrespuestaincorrecta1").val();
     var ordenrespuestaincorrecta2 = $("#selectordenrespuestaincorrecta2").val();
+    
+    var ordenPreguntas=[];
+    ordenPreguntas.push(ordenrespuestacorrecta);
+    ordenPreguntas.push(ordenrespuestaincorrecta1);
+    ordenPreguntas.push(ordenrespuestaincorrecta2);
+    
+    if(checkArrayItemDuplicado(ordenPreguntas)){
+        Materialize.toast('No pueden repetirse los ordenes de las preguntas.', 4000);
+        event.preventDefault();
+        return;
+    }
 
     var evaluacionId = $("#evaluacionid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
@@ -182,6 +205,7 @@ function guardarPregunta(idPregunta){
                 ordenrespuestacorrecta: ordenrespuestacorrecta,ordenrespuestaincorrecta1: ordenrespuestaincorrecta1,ordenrespuestaincorrecta2: ordenrespuestaincorrecta2, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $('#preguntaspan'+idPregunta).html(pregunta.substr(0, 140));
+            cerrarModal('modalEditarPregunta');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {

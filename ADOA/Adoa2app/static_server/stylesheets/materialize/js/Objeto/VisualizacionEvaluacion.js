@@ -71,7 +71,7 @@ function verEvaluacion(){
                 });
                 $("#modalVerEvaluacionContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasEvaluacion()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasEvaluacion()'>Correccion</a>"+
                     "</div>"
                 );
             }

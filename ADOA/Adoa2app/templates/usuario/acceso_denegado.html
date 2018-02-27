@@ -1,20 +1,113 @@
-
-
+{% load staticfiles %}
 {% load tags_html %}
 
-{% block contenido %}
+<!DOCTYPE html>
 
-<h1 align='center'>Acceso denegado</h1>
-<br />
+<html>
+    <head>
 
-<h3 align='center'>
-	Aplicacion - ADOA <br /> <br /> <br />
-	{% image_tag 'django.gif' %}
-</h3>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/materialize.min.css" media="screen,projection" />
+        <!--<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/Site.css" media="screen,projection" />-->
+        
+        <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/Site.css" %}' media="screen,projection" />
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset=" UTF-8" />
+        
+        <!--Import Google Raleway Font-->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
+        <!--/Import Google Raleway Font-->
+        
+        <!--Import fuente.css-->
+        <link type="text/css" rel="stylesheet" href='{% css_tag "materialize/css/fuente.css" %}' media="screen,projection"/>
+        <!--/Import fuente.css-->
+        <style type="text/css">
+            nav {
+                color: #fff;
+                background-color: #00bcd4;
+                width: 100%;
+                line-height: 56px;
+            }
+            nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+                height: 57px;
+                line-height: 57px;
+            }
+            
+            /*--------------------------------------------------------------------------------*/
+            body {font-family: 'Raleway', sans-serif;}
+              .thin {font-weight:100;font-family: 'Raleway', sans-serif;}
+              h1 { font-size:44px; font-weight:200;font-family: 'Raleway', sans-serif;}
+              h2 {font-size:33px; font-weight:300;font-family: 'Raleway', sans-serif;}
+              h3 {font-size:22px; font-weight:700;font-family: 'Raleway', sans-serif;}
+              h4, h5 {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .bold, strong  {font-weight:600;font-family: 'Raleway', sans-serif;}
+              .extrabold {font-weight:800;font-family: 'Raleway', sans-serif;}
+              .ultrabold {font-weight:900;font-family: 'Raleway', sans-serif;}
+            /*--------------------------------------------------------------------------------*/
+        </style>
 
-<pre align='center'>
+    </head>
+
+    <body>
+<div class="container">
+	 <div class= "row center-align">
+	 <h1 class="center-align" style="font-size: 90px; font-weight:bold;color:#616567">Oops! 403</h1>
+	 <h1 class="center-align" style="font-size: 50px; font-weight:bold;color:#616567">Perdon! Acceso denegado :(</h1>
+	 </div>
+</div>
+                    <div class="container">
+                <div class= "row center-align">
+                  <!-- <p style="font-family:Raleway Light;font-style:italic;font-weight:bold;font-size:30px"><strong>Ambiente de Desarrollo de Objetos de Aprendizaje</strong></p>        
+                 <img class="responsive-img" src="/static/images/adoaindex2.png" />-->
+                </div>
+                
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="center promo promo-example">
+
+                    <!--<div class="col s12 m6 l6 offset-m6">-->
+                        <i class="material-icons center large light-blue-text">error</i>
+                        	
+                            <div class="card-content black-text">
+                                <span class="card-title" style="text-transform:uppercase;color:#616567;font-weight:bold;font-size:25px">¿Qué ocurrió?</span>
+                                <p>Esta página puede no estar disponible o usted no tiene acceso para acceder</p>                          
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+					<div class="col s12 m6">
+                        <div class="center promo promo-example">
+
+                    <!--<div class="col s12 m6 l6 offset-m6">-->
+                        <i class="material-icons center large light-blue-text">lightbulb_outline</i>
+
+                           <div class="card-content black-text">
+                                <span class="card-title" style="text-transform:uppercase;color:#616567;font-weight:bold;font-size:25px">¿Qué puedo hacer?</span>
+                                <p>Para obtener acceso comuniquese con el administrador. Desde el menu configuración del perfil, podrá solicitar acceso.</p>                          
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+               <div class="container">
+               	<div class="row center-align">
+               		<a href="/Objetos/2/" class="btn waves-effect waves-light light-blue lighten-1">Volver</a>
+
+               	</div>
+               </div>
 
 
-</pre>
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src='{% static "stylesheets/materialize/js/materialize.min.js" %}'></script>
+<script type="text/javascript" src='{% static "stylesheets/materialize/js/Objeto/Site.js" %}'></script>
 
-{% endblock %}
+</body>
+
+</html>

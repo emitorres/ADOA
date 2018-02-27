@@ -12,6 +12,8 @@ from passlib.hash import django_pbkdf2_sha256 as handler
 from passlib.hash import pbkdf2_sha256
 import uuid
 import sys
+import json
+
 reload(sys)
 
 
@@ -382,8 +384,20 @@ def confirmar_cuenta2(request):
 	
 def eliminar_usuario(request, registro):
 	usuario = Usuario.objects.get(id = registro)
-	usuario.delete()
-	return HttpResponseRedirect('/adoa/')
+	valido = False
+	ver_error = False
+	lista_err = []
+
+	if usuario:
+		
+		ver_error = True
+		lista_err.append(('','Usuario Eliminado'))
+		usuario.delete()
+		return redirect('administrador:administrador_usuarios_index')
+
+	return render_to_response('administrador/ListaUsuarios.html', locals(), context_instance = RequestContext(request))	
+	#return HttpResponseRedirect('/administrador/usuarios')
+	
 
 def traerUrlBase(request):
 	dominio = request.get_host()

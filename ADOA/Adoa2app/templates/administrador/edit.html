@@ -29,26 +29,27 @@
 
 <h5>Editar Usuarios</h5>
 
-{% if valido %}
 
-    <h4> {% image_tag "ok.gif" %} {{ msg_ok }} </h4>
-    <pre> Nombre: {{ nombre }} </pre>
-    {% url_button 'Listado' 'administrador:administrador_usuarios_index' %}
-
-{% else %}
 
     <form action='.' method='POST'>
 
     {% csrf_token %}
       
- {{ formulario.as_p }}
+<div class="row">
+         <div class="col s6">
+ Tipo Usuario: {{ formulario.as_p }}
+            
+        </div>
+</div>
 
-      <button>Actualizar</button>
+      <button type="submit"class="btn waves-effect waves-light light-blue lighten-1">Actualizar</button>
+      <a class="btn waves-effect waves-light light-blue lighten-1" type="submit" name="action" href='{% url 'administrador:administrador_usuarios_index' %}'>Cancelar
+                </a>
     </form>
     <br />
 
 
-    {% include 'tags/error_form.html' %}
-{% endif %}
+{% include 'tags/error_form.html' %}
+{% include 'tags/success_form.html' %}
 
 {% endblock %}

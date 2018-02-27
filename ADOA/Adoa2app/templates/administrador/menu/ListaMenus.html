@@ -53,5 +53,6 @@
 
 <br />
 <a class="blue btn" href='{% url 'administrador:administrador_menu_edit' 0 %}'><i class="material-icons">playlist_add</i>Nuevo</a>
-
+{% include 'tags/error_form.html' %}
+{% include 'tags/success_form.html' %}
 {% endblock %}

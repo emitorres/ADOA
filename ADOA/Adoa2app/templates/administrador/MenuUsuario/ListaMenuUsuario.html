@@ -19,12 +19,17 @@
 {% endblock %}
 
 {% block informacion %}
-    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <p class="caption">Listado de todos los accesos del sistema.</p>
     <div class="divider"></div>
 {% endblock %}
 {% block contenido %}
 
-<h2>{% image_tag 'usuario.png' %} Listado de Accesos </h2>
+<div class="row">
+	<div class="col s12 m12 l12">
+		<h5>Listado de Accesos</h5>
+		<a class="btn waves-effect waves-light light-blue lighten-1" href='{% url 'administrador:administrador_menu_tipo_edit' 0 %}'>Agregar</a>
+	</div>
+</div>
 
 <table class='webgrid'>
 	<tr class='webgrid-header'>
@@ -39,13 +44,14 @@
 		<td> {{ registro.tipousuario }} </td>
 		<td> {{ registro.menu }} </td>
 		<td><a class= "green btn" href='{% url 'administrador:administrador_menu_tipo_edit' registro.id %}'><i class="material-icons">mode_edit</i></a>
-		<a class= "red btn" href='{% url 'administrador:administrador_menu_tipo_edit' registro.id %}'><i class="material-icons">delete</i></a></td>
+		<a class= "red btn" href='{% url 'administrador:administrador_eliminar_acceso' registro.id %}'><i class="material-icons">delete</i></a></td>
 
 	</tr>
 	{% endfor %}
 </table>
 
 <br />
-<a href='{% url 'administrador:administrador_menu_tipo_edit' 0 %}'> {% image_tag 'crear.gif' %} </a>
+{% include 'tags/error_form.html' %}
+{% include 'tags/success_form.html' %}
 
 {% endblock %}

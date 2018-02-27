@@ -21,14 +21,16 @@
 
 
 {% block informacion %}
-    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <p class="caption">Listado de todos los perfiles del sistema.</p>
     <div class="divider"></div>
 {% endblock %}
 
 {% block contenido %}
-
-<h2>{% image_tag 'tipos.png' %} Listado de Tipos de Usuarios </h2>
-
+<div class="row">
+	<div class="col s12 m12 l12">
+		<h5>Listado de Perfiles</h5>
+	</div>
+</div>
 <table class='webgrid'>
 	<tr class='webgrid-header'>
 		<th>ID</th>
@@ -46,8 +48,7 @@
 		<td> {{ registro.created|filtro_fecha }} </td>
 		<td> {{ registro.updated|filtro_fecha }} </td>
 		<td><a class= "green btn" href='{% url 'administrador:administrador_perfiles_edit' registro.id %}'><i class="material-icons">mode_edit</i></a>
-		<a class= "red btn" href='{% url 'administrador:administrador_perfiles_edit' registro.id %}'><i class="material-icons">delete</i></a></td>
-
+		
 		
 
 
@@ -55,8 +56,5 @@
 	{% endfor %}
 </table>
 
-<br />
-
-<a href='{% url 'administrador:administrador_perfiles_edit' 0 %}'> {% image_tag 'crear.gif' %} </a>
 
 {% endblock %}

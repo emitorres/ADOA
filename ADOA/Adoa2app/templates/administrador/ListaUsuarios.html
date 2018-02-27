@@ -36,7 +36,7 @@
 	<tr>
 		<th>ID</th>
 		<th>Nombre</th>
-		<th>Apepllido</th>
+		<th>Apellido</th>
 		<th>Tipo</th>
 		<th>Opciones</th>
 		
@@ -60,6 +60,6 @@
 </div>
 </div>
 <br />
-<a href='{% url 'administrador:administrador_usuarios_edit' 0 %}'> {% image_tag 'crear.gif' %} </a>
-
+{% include 'tags/error_form.html' %}
+{% include 'tags/success_form.html' %}
 {% endblock %}

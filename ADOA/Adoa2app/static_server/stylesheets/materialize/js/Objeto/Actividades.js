@@ -1,21 +1,34 @@
 function crearActividad() {
     var idTipoActividad= $("#actividadesSelect").val();
-    
+    var nombreActividad = $("#nombreactividad").val();
+    if(nombreActividad ==""){
+        Materialize.toast('Ingrese un nombre para la actividad.', 3000);
+        return;
+    }
+    if(!$("#nombreactividad").hasClass('valid')){
+        Materialize.toast("Complete el nombre de la actividad correctamente.", 3000);
+        return;
+    }
     switch(idTipoActividad) {
     case "1":
         crearVerdaderoFalso();
+        $("#nombreactividad").val("");
         break;
     case "2":
         crearAsociacion();
+        $("#nombreactividad").val("");
         break;
     case "3":
         crearVideo();
+        $("#nombreactividad").val("");
         break;
     case "4":
         crearOrdenamiento();
+        $("#nombreactividad").val("");
         break;
     case "5":
         crearIdentificacion();
+        $("#nombreactividad").val("");
         break;
     default:
         Materialize.toast('Ninguna Actividad Seleccionada', 3000);
@@ -39,9 +52,9 @@ function crearVerdaderoFalso(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Verdadero o Falso</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVerdaderoFalso("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -59,9 +72,11 @@ function modalEditarVerdaderoFalso(idActividad){
             "<textarea id='verdaderoFalsoEnunciado' name='verdaderoFalsoEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='verdaderoFalsoEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoVerdaderoFalso()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoVerdaderoFalso()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarVerdaderoFalso("+idActividad+")");
@@ -92,7 +107,7 @@ function modalEditarVerdaderoFalso(idActividad){
                             "<label>Respuesta</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -128,7 +143,7 @@ function agregarTerminoVerdaderoFalso(){
                 "<label>Respuesta</label>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
@@ -158,12 +173,17 @@ function guardarVerdaderoFalso(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
+}
+
+function validarVerdaderoFalso(){
+    return true;
 }
 
 function crearIdentificacion(){
@@ -182,9 +202,9 @@ function crearIdentificacion(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Identificacion</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verIdentificacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -202,9 +222,11 @@ function modalEditarIdentificacion(idActividad){
             "<textarea id='identificacionEnunciado' name='identificacionEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='identificacionEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoIdentificacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoIdentificacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarIdentificacion("+idActividad+")");
@@ -235,7 +257,7 @@ function modalEditarIdentificacion(idActividad){
                             "<label>Respuesta</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -272,7 +294,7 @@ function agregarTerminoIdentificacion(){
                 "<label>Respuesta</label>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
         );
@@ -298,12 +320,17 @@ function guardarIdentificacion(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
+}
+
+function validarIdentificacion(){
+    return true;
 }
 
 function crearOrdenamiento(){
@@ -322,9 +349,9 @@ function crearOrdenamiento(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Ordenamiento</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verOrdenamiento("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -342,9 +369,11 @@ function modalEditarOrdenamiento(idActividad){
             "<textarea id='ordenamientoEnunciado' name='ordenamientoEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='ordenamientoEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoOrdenamiento()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarOrdenamiento("+idActividad+")");
@@ -383,7 +412,7 @@ function modalEditarOrdenamiento(idActividad){
                             "<label>Orden</label>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -421,9 +450,9 @@ function agregarTerminoOrdenamiento(){
                                 "<option value='10'>10</option>"+
                             "</select>"+
                             "<label>Orden</label>"+
-                        "</div>"+
+            "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
@@ -432,6 +461,7 @@ function agregarTerminoOrdenamiento(){
 
 function guardarOrdenamiento(idActividad){
     var terminos = [];
+    var terminosOrden = [];
     var enunciado = $("#ordenamientoEnunciado").val();
     $(".row.termino").each(function() {
         var texto = $(this).find( "textarea" ).val();
@@ -440,7 +470,18 @@ function guardarOrdenamiento(idActividad){
             "texto" : texto,
             "orden"  : orden
         });
+        terminosOrden.push(orden);
     });
+    if(checkArrayItemDuplicado(terminosOrden)){
+        Materialize.toast('No pueden repetirse los ordenes.', 3000);
+        event.preventDefault();
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden)){
+        Materialize.toast('No puede haber un numero de orden mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
@@ -449,12 +490,17 @@ function guardarOrdenamiento(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al guardar el objeto', 3000);
         }
     });
+}
+
+function validarOrdenamiento(){
+    return true;
 }
 
 function crearAsociacion(){
@@ -473,9 +519,9 @@ function crearAsociacion(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Asociacion</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verAsociacion("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -493,9 +539,11 @@ function modalEditarAsociacion(idActividad){
             "<textarea id='asociacionEnunciado' name='asociacionEnunciado' class='materialize-textarea'></textarea>"+
             "<label class='active' for='asociacionEnunciado'>Enunciado</label>"+
         "</div>"+
+        "<br>"+
         "<div id='actividadContenido'></div>"+
+        "<br>"+
         "<div class='row col s12'>"+
-            "<button id='btnAgregarTermino' class='btn waves-effect waves-light red left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
+            "<button id='btnAgregarTermino' class='btn waves-effect waves-light light-blue lighten-1 left' onclick='agregarTerminoAsociacion()'><i class='material-icons left'></i>Agregar Termino</button>"+
         "</div>"
     );
     $("#btnGuardarActividad").attr("onclick","guardarAsociacion("+idActividad+")");
@@ -514,16 +562,46 @@ function modalEditarAsociacion(idActividad){
                 terminos.forEach(function(termino) {
                     $("#actividadContenido").append(
                     "<div class='row termino'>"+
-                        "<div class='input-field col s5'>"+
+                        "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo1-"+termino.pk+"' class='ordencampo1' name='ordencampo1'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<div class='input-field col s4'>"+
                             "<div class='editor campo1' id='campo1-"+termino.pk+"'>"+
                             "</div>"+
                         "</div>"+
-                        "<div class='input-field col s5'>"+
+                        "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo2-"+termino.pk+"' class='ordencampo2' name='ordencampo2'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+                        "</div>"+
+                        "<div class='input-field col s4'>"+
                             "<div class='editor campo2' id='campo2-"+termino.pk+"'>"+
                             "</div>"+
                         "</div>"+
                         "<div class='row col s2'>"+
-                            "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                            "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
                         "</div>"+
                     "</div>"
                     );
@@ -531,7 +609,10 @@ function modalEditarAsociacion(idActividad){
                     inicializarEditorPorId("campo2-"+termino.pk);
                     $("#campo1-"+termino.pk).code(termino.fields.campo1);
                     $("#campo2-"+termino.pk).code(termino.fields.campo2);
+                    $("#selectordencampo1-"+termino.pk).val(termino.fields.ordenCampo1);
+                    $("#selectordencampo2-"+termino.pk).val(termino.fields.ordenCampo2);
                 });
+                $('select').material_select();
             }
             $('#modalEditarActividad').openModal();
         },
@@ -544,35 +625,91 @@ function modalEditarAsociacion(idActividad){
 function agregarTerminoAsociacion(){
     $('#actividadContenido').append(
         "<div class='row termino'>"+
-            "<div class='input-field col s5'>"+
+            "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo1' class='ordencampo1' name='ordencampo1'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+            "</div>"+
+            "<div class='input-field col s4'>"+
                 "<div class='editor campo1'>"+
                 "</div>"+
             "</div>"+
-            "<div class='input-field col s5'>"+
+            "<div class='input-field col s1'>"+
+                            "<select id='selectordencampo2' class='ordencampo2' name='ordencampo2'>"+
+                                "<option value='1'>1</option>"+
+                                "<option value='2'>2</option>"+
+                                "<option value='3'>3</option>"+
+                                "<option value='4'>4</option>"+
+                                "<option value='5'>5</option>"+
+                                "<option value='6'>6</option>"+
+                                "<option value='7'>7</option>"+
+                                "<option value='8'>8</option>"+
+                                "<option value='9'>9</option>"+
+                                "<option value='10'>10</option>"+
+                            "</select>"+
+                            "<label>Orden</label>"+
+            "</div>"+
+            "<div class='input-field col s4'>"+
                 "<div class='editor campo2'>"+
                 "</div>"+
             "</div>"+
             "<div class='row col s2'>"+
-                "<a class='btn-floating btn-large waves-effect waves-light red right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
+                "<a class='btn-floating btn-large waves-effect waves-light light-blue lighten-1 right' onclick='eliminarTermino(this)'><i class='material-icons'>delete</i></a>"+
             "</div>"+
         "</div>"
     );
-    
+    $('select').material_select();
     inicializarEditorPorClase(".editor.campo1");
     inicializarEditorPorClase(".editor.campo2");
 }
 
 function guardarAsociacion(idActividad){
     var terminos = [];
+    var terminosOrden1 = [];
+    var terminosOrden2 = [];
     var enunciado = $("#asociacionEnunciado").val();
     $(".row.termino").each(function() {
         var campo1 = $(this).find( ".editor.campo1" ).code();
         var campo2 = $(this).find( ".editor.campo2" ).code();
+        var ordenCampo1 = $(this).find("select.ordencampo1").val();
+        var ordenCampo2 = $(this).find("select.ordencampo2").val();
         terminos.push({ 
             "campo1" : campo1,
-            "campo2"  : campo2
+            "campo2"  : campo2,
+            "ordenCampo1"  : ordenCampo1,
+            "ordenCampo2"  : ordenCampo2
         });
+        terminosOrden1.push(ordenCampo1);
+        terminosOrden2.push(ordenCampo2);
     });
+    if(checkArrayItemDuplicado(terminosOrden1)){
+        Materialize.toast('No pueden repetirse los ordenes del primer campo.', 3000);
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden1)){
+        Materialize.toast('No puede haber un numero de orden en el primer campo mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
+    if(checkArrayItemDuplicado(terminosOrden2)){
+        Materialize.toast('No pueden repetirse los ordenes del segundo campo.', 3000);
+        return;
+    }
+    if(checkItemFueraDeRango(terminosOrden2)){
+        Materialize.toast('No puede haber un numero de orden en el segundo campo mas alto que la cantidad de terminos.', 5000);
+        event.preventDefault();
+        return;
+    }
     var oaId = $("#oaid").val();
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
@@ -581,6 +718,7 @@ function guardarAsociacion(idActividad){
         data : { actividadId : idActividad,enunciado : enunciado, terminos : JSON.stringify(terminos), csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -606,9 +744,9 @@ function crearVideo(){
                 "<td>"+nombreActividad.substr(0, 50)+"</td>"+
                 "<td>Video</td>"+
                 "<td>"+
-                    "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
-                    "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
-                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light red btn-actividad left'><i class='material-icons'>delete</i></button>"+
+                    "<button onclick='modalEditarVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>mode_edit</i></button>"+
+                    "<button id='btnVerActividad"+idActividad+"' onclick='verVideo("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left' disabled><i class='material-icons'>visibility</i></button>"+
+                    "<button onclick='eliminarActividad("+idActividad+")' class='btn-floating waves-effect waves-light light-blue lighten-1 btn-actividad left'><i class='material-icons'>delete</i></button>"+
                 "</td>"+
               "</tr>"
             );
@@ -626,6 +764,7 @@ function modalEditarVideo(idActividad){
             "<textarea id='videoDescripcion' name='videoDescripcion' class='materialize-textarea'></textarea>"+
             "<label class='active' for='videoDescripcion'>Descripcion</label>"+
         "</div>"+
+        "<br>"+
         "<div class='input-field col s7'>"+
           "<input id='videoUrl' class='videoUrl' type='text'>"+
           "<label for='videoUrl' class=''>Url</label>"+
@@ -666,6 +805,7 @@ function guardarVideo(idActividad){
         data : { actividadId : idActividad,descripcion : descripcion, link : link, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
             $("#btnVerActividad"+idActividad).removeAttr('disabled');
+            cerrarModal('modalEditarActividad');
             Materialize.toast(data.result, 3000)
         },
         error : function(xhr,errmsg,err) {
@@ -691,4 +831,30 @@ function eliminarActividad(idActividad){
         }
     });
 }
+
+//devuelve true si hay items duplicados
+function checkArrayItemDuplicado(arr){
+  for (var i=0; i<arr.length;i++)
+  {
+    for (var x=0;x<arr.length;x++)
+    {
+      if(arr[i]==arr[x] && i != x)
+      {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkItemFueraDeRango(arr){
+  for (var i=0; i<arr.length;i++)
+  {
+    if(arr[i]>arr.length){
+        return true;
+    }
+  }
+  return false;
+}
+
 

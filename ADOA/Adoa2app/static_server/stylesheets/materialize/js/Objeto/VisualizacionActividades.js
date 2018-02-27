@@ -45,7 +45,7 @@ function verVerdaderoFalso(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasVerdaderoFalso()'>Correccion</a>"+
                     "</div>"
                 );
             }
@@ -113,7 +113,7 @@ function verIdentificacion(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasIdentificacion()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasIdentificacion()'>Correccion</a>"+
                     "</div>"
                 );
             }
@@ -138,17 +138,82 @@ function validarRespuestasIdentificacion(){
 }
 
 function verAsociacion(idActividad){
+    $('#modalVerActividadContenido').html('');
     var csrf = $( "#oa-paso3" ).children('input[name=csrfmiddlewaretoken]').val();
     $.ajax({
         url : "/CrearOA/TraerTerminosAsociacion/", // the endpoint
         type : "POST", // http method
         data : { actividadId : idActividad, csrfmiddlewaretoken: csrf }, // data sent with the post request
         success : function(data) {
-            
+           $('#modalVerActividadContenido').append(
+            "<div class='col s12'>"+
+                "<p><b>"+data.enunciado+"</b></p>"+
+            "</div>"
+            );
+            if(data.terminos != '[]'){
+                var terminos = JSON.parse(data.terminos);
+                terminos.forEach(function(termino,index) {
+                    var terminoActual = index+1;
+                    $("#modalVerActividadContenido").append(
+                        "<div class='col s12'>"+
+                            "<div id='campo1-"+terminoActual+"' class='col s4'>"+
+                            "</div>"+
+                            "<div id='contenedor-"+terminoActual+"' class='col s3'>"+
+                                "<div class='input-field col s10'>"+
+                                    "<select id='selectAsociacion"+terminoActual+"' class='selectAsociacion' name='selectAsociacion'>"+
+                                        "<option value='' disabled='' selected=''>Opciones</option>"+
+                                        "<option value='1'>Item 1</option>"+
+                                        "<option value='2'>Item 2</option>"+
+                                        "<option value='3'>Item 3</option>"+
+                                        "<option value='4'>Item 4</option>"+
+                                        "<option value='5'>Item 5</option>"+
+                                        "<option value='6'>Item 6</option>"+
+                                        "<option value='7'>Item 7</option>"+
+                                        "<option value='8'>Item 8</option>"+
+                                        "<option value='9'>Item 9</option>"+
+                                        "<option value='10'>Item 10</option>"+
+                                    "</select>"+
+                                    "<label>Asociar a</label>"+
+                                "</div>"+
+                                "<div id='resultado"+terminoActual+"' col s10'>"+
+                                "</div>"+
+                            "</div>"+
+                            "<div id='campo2-"+terminoActual+"' class='col s4'>"+
+                            "</div>"+
+                        "</div>"
+                    );
+                });
+                
+                terminos.forEach(function(termino,index) {
+                    $("#campo1-"+termino.fields.ordenCampo1).html("<h3>Item "+termino.fields.ordenCampo1+"</h3>");
+                    $("#campo1-"+termino.fields.ordenCampo1).html(termino.fields.campo1);
+                    $("#contenedor-"+termino.fields.ordenCampo1)
+                    .append("<input type='hidden' class='respuestaAsociacion' name='respuesta"+termino.fields.ordenCampo1+"' data-id='"+termino.fields.ordenCampo1+"' id='respuesta"+termino.fields.ordenCampo1+"' value='"+termino.fields.ordenCampo2+"'>");
+                    $("#campo2-"+termino.fields.ordenCampo2).html("<h3>Item "+termino.fields.ordenCampo2+"</h3>");
+                    $("#campo2-"+termino.fields.ordenCampo2).append(termino.fields.campo2);
+                });
+                $("#modalVerActividadContenido").append(
+                    "<div class='row col s12'>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasAsociacion()'>Correccion</a>"+
+                    "</div>"
+                );
+            }
+            $('select').material_select();
             $('#modalVerActividad').openModal();
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar las secciones', 3000)
+        }
+    });
+}
+
+function validarRespuestasAsociacion(){
+    $(".respuestaAsociacion").each(function() {
+        var id = $(this).data("id");
+        if($("#selectAsociacion"+id).val() == $("#respuesta"+id).val()){
+            $("#resultado"+id).html("<div class='chip chip-actividad green'> CORRECTO </div>");
+        }else{
+            $("#resultado"+id).html("<div class='chip chip-actividad red'> INCORRECTO </div>");
         }
     });
 }
@@ -200,7 +265,7 @@ function verOrdenamiento(idActividad){
                 });
                 $("#modalVerActividadContenido").append(
                     "<div class='row col s12'>"+
-                        "<a class='btn waves-effect waves-light right red' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"+
+                        "<a class='btn waves-effect waves-light right light-blue lighten-1' onclick='validarRespuestasOrdenamiento()'>Correccion</a>"+
                     "</div>"
                 );
             }

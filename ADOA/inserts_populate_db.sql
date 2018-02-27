@@ -67,7 +67,7 @@ INSERT INTO Categoria VALUES ('5', '/static/images/biologia2.png', 'Biología');
 INSERT INTO Categoria VALUES ('6', '/static/images/quimica2.png', 'Química');
 INSERT INTO Categoria VALUES ('7', '/static/images/biblioteca2.png', 'Literatura');
 INSERT INTO Categoria VALUES ('8', '/static/images/fisica2.png', 'Física');
-INSERT INTO "Categoria" VALUES ('9', '/static/images/otros2.png', 'Otros');
+INSERT INTO Categoria VALUES ('9', '/static/images/otros2.png', 'Otros');
 
 -- Usuario administrador
 INSERT INTO Usuario VALUES (1, 'Marcos', 'Amaro', '31332463', 'Sistemas', 'pbkdf2_sha256$10000$tVOHTWJkvxWi$MUIwLvb+A+Xtmm3z8Ux04AEMz+WLtLbUyMpCrWac9qs=','marcos.n.amaro@gmail.com',TRUE,'2016-10-20 03:38:55.0','2016-10-25 03:51:35.0', TRUE, 1);

@@ -24,6 +24,7 @@ from django.template import RequestContext
 from Adoa2app.models import Usuario
 from operator import itemgetter, attrgetter, methodcaller
 from Adoa2app.usuario.access import my_access_required
+from Adoa2app.usuario.access import my_login_required,my_access_required
 
 class Index(TemplateView):
     template_name = 'Index.html'
@@ -69,7 +70,7 @@ def EditarOA(request, objId):
 def Objetos(request, operacion):
     id = request.session['usuario'].id
     return render(request, 'Objetos.html', {'id' : id, 'operacion': operacion})
-
+@my_access_required
 def Objetos2(request, operacion):
     id = request.session['usuario'].id
     return render(request, 'ObjetosInicio.html', {'id' : id, 'operacion': operacion})
@@ -663,7 +664,7 @@ def TraerObjetos(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
-
+@my_access_required    
 def mostrarObjetosSinTerminar(request):
 
     if request.method == 'POST':

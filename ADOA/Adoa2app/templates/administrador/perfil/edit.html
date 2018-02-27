@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block informacion %}
-    <p class="caption">Listado de todos los usuarios del sistema.</p>
+    <p class="caption">A continuacion podra modificar el perfil de los usuarios al sistema.</p>
     <div class="divider"></div>
 {% endblock %}
 
@@ -28,30 +28,26 @@
 {% block contenido %}
 
 <h5>Perfiles</h5>
+<br><br>
 
-{% if valido %}
-
-    <h4> {% image_tag "ok.gif" %} {{ msg_ok }} </h4>
-    <pre> Nombre: {{ nombre }} </pre>
-    {% url_button 'Listado' 'administrador:administrador_perfiles_index' %}
-
-{% else %}
 
     <form action=',' method='POST'>
 
         {% csrf_token %}
 
-        <pre>
-        Nombre : {{ formulario.nombre }}
-        </pre>
-
-        <input type='submit' value='Enviar'>
-        {% url_button 'Cancelar' 'administrador:administrador_perfiles_index' %}
+       <div class="row">
+                        <div class="input-field col s6 m6 l6">
+                            <label for="{{formulario.apellido.name}}">{{formulario.nombre.label}}</label>
+                            {{formulario.nombre}}         
+                        </div>
+                    </div>
+        <button type="submit"class="btn waves-effect waves-light light-blue lighten-1">Actualizar</button>
+        <a class="btn waves-effect waves-light light-blue lighten-1" type="submit" name="action" href='{% url 'administrador:administrador_perfiles_index' %}'>Cancelar</a>
 
     </form>
     <br />
     {% include 'tags/error_form.html' %}
 
-{% endif %}
+
 
 {% endblock %}

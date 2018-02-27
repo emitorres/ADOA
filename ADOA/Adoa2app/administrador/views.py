@@ -14,7 +14,7 @@ def index_administrador(request):
 def usuarios_index(request):
 	lista = Usuario.objects.all()
 	return render_to_response('administrador/ListaUsuarios.html', locals(), context_instance = RequestContext(request))
-
+        
 @my_access_required
 def usuarios_edit(request, registro):
 	# formulario - msg_no - ver_error - lista_err: se deben llamar asi, el include las referencian con ese nombre
@@ -22,7 +22,7 @@ def usuarios_edit(request, registro):
 	valido = False
 	ver_error = False
 	msg_ok = 'Operacion Exitosa'
-	msg_no = 'No se pudo realizar la operacion'
+	#msg_no = 'No se pudo realizar la operacion'
 	lista_err = []
 	
 	try:
@@ -37,6 +37,8 @@ def usuarios_edit(request, registro):
 		valido = formulario.is_valid()
 		if valido:
 			formulario.save()
+			ver_error = True
+			lista_err.append(('','Guardado con exito!'))
 		else:
 			ver_error = True
 			# Arma una lista con errores
@@ -48,19 +50,20 @@ def usuarios_edit(request, registro):
 
 	# locals() es un diccionario con todas las variables locales y sus valores
 	return render_to_response('administrador/edit.html', locals(), context_instance = RequestContext(request))
-@my_access_required
 
+
+@my_access_required
 def perfiles_index(request):
 	lista = TipoUsuario.objects.all()
 	return render_to_response('administrador/perfil/ListaPerfiles.html', locals(), context_instance = RequestContext(request))
-@my_access_required
 
+@my_access_required
 def perfiles_edit(request, registro):
 	# formulario - msg_no - ver_error - lista_err: se deben llamar asi, el include las referencian con ese nombre
 	valido = False
 	ver_error = False
 	msg_ok = 'Operacion Exitosa'
-	msg_no = 'No se pudo realizar la operacion'
+	#msg_no = 'No se pudo realizar la operacion'
 	lista_err = []
 
 	try:
@@ -72,6 +75,8 @@ def perfiles_edit(request, registro):
 		formulario = TipoUsuarioForm(request.POST, instance = tusuario)
 		valido = formulario.is_valid()
 		if valido:
+			ver_error = True
+			lista_err.append(('','Guardado con exito!'))
 			formulario.save()
 			nombre = formulario.cleaned_data['nombre']
 		else:
@@ -95,7 +100,7 @@ def menu_edit(request, registro):
 	valido = False
 	ver_error = False
 	msg_ok = 'Operacion Exitosa'
-	msg_no = 'No se pudo realizar la operacion'
+	#msg_no = 'No se pudo realizar la operacion'
 	lista_err = []
 
 	# Redefine el campo ManyToMany (por defecto lista multiple) a lista de checkbox
@@ -123,6 +128,20 @@ def menu_edit(request, registro):
 
 	# locals() es un diccionario con todas las variables locales y sus valores
 	return render_to_response('administrador/menu/edit.html', locals(), context_instance = RequestContext(request))	
+def eliminar_acceso(request, registro):
+	acceso = MenuTipoUsuario.objects.get(id = registro)
+	valido = False
+	ver_error = False
+	lista_err = []
+
+	if acceso:
+		
+		ver_error = True
+		lista_err.append(('','Acceso Eliminado'))
+		acceso.delete()
+		return redirect('administrador:administrador_permisos_index')
+
+	return render_to_response('administrador/MenuUsuario/ListaMenuUsuario.html', locals(), context_instance = RequestContext(request))	
 
 def menu_tipo_index(request):
 	lista = MenuTipoUsuario.objects.all()
@@ -133,7 +152,7 @@ def menu_tipo_edit(request, registro):
 	valido = False
 	ver_error = False
 	msg_ok = 'Operacion Exitosa'
-	msg_no = 'No se pudo realizar la operacion'
+	#msg_no = 'No se pudo realizar la operacion'
 	lista_err = []
 
 	try:
