@@ -43,7 +43,8 @@ INSERT INTO "Menu" VALUES (5,'Edición perfiles', 'perfiles_edit', now(), now())
 INSERT INTO "Menu" VALUES (6,'Usuario base','index_usuarioBase', now(), now());
 INSERT INTO "Menu" VALUES (7,'Crear objeto','CrearOA', now(), now());
 INSERT INTO "Menu" VALUES (8,'Edición OA', 'EditarOA', now(), now());
-INSERT INTO "Menu" VALUES (9,'Inicio', 'objetos2', now(), now());
+INSERT INTO "Menu" VALUES (9,'Inicio', 'Objetos2', now(), now());
+INSERT INTO "Menu" VALUES (10,'Objetos sin terminar', 'mostrarObjetosSinTerminar', now(), now());
 
 -- "MenuTipoUsuario"
 INSERT INTO "MenuTipoUsuario" VALUES (1, 1, 1);
@@ -58,6 +59,8 @@ INSERT INTO "MenuTipoUsuario" VALUES (9, 7, 1);
 INSERT INTO "MenuTipoUsuario" VALUES (10, 7, 2);
 INSERT INTO "MenuTipoUsuario" VALUES (11, 8, 1);
 INSERT INTO "MenuTipoUsuario" VALUES (12, 8, 2);
+INSERT INTO "MenuTipoUsuario" VALUES (13, 9, 2);
+INSERT INTO "MenuTipoUsuario" VALUES (14, 10, 2);
 -- TEST INSERT INTO "MenuTipoUsuario" VALUES (13, 7, 3);
 -- TEST INSERT INTO "MenuTipoUsuario" VALUES (14, 8, 3);
 
