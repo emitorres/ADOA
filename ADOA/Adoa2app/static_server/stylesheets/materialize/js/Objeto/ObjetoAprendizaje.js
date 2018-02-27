@@ -473,8 +473,8 @@ function cargarObjetosSinTerminar(){
                         "</div>"+
                         "<div class='card-content'>"+
                             "<span class='card-title activator grey-text text-darken-4'>"+objeto.fields.titulo.substring(0,15)+"<i class='material-icons right'>more_vert</i></span>"+
-                              "<p>"+'Patron Utilizado: '+patrones[i].fields.nombre +"</p>"+
-                              "<p>"+'Categoria: '+categorias[i].fields.categoria+"</p>"+
+                              "<p>"+'Patrón: '+patrones[i].fields.nombre +"</p>"+
+                              "<p>"+'Categoría: '+categorias[i].fields.categoria+"</p>"+
 
                         "</div>"+
                         "<div class='card-reveal'>"+
