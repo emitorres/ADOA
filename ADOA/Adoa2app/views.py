@@ -70,6 +70,7 @@ def EditarOA(request, objId):
 def Objetos(request, operacion):
     id = request.session['usuario'].id
     return render(request, 'Objetos.html', {'id' : id, 'operacion': operacion})
+
 @my_access_required
 def Objetos2(request, operacion):
     id = request.session['usuario'].id
@@ -1115,7 +1116,7 @@ def paginaMaestra(seccion,contenido,scriptExtra):
     <body onload="loadPage()" onunload="unloadPage()">\n\
         <script type="text/javascript">pipwerks.SCORM.data.set("cmi.completion_status","completed")</script>\n\
             <div id="pagina">\n\
-                <blockquote><h4 class="titulo">'+seccion+'</h4></blockquote>\n\
+                <blockquote><h4 class="titulo">'+seccion.encode('utf-8')+'</h4></blockquote>\n\
                 <div class="divider"></div>\n\
                 <div class="cont">'+contenido+'\n\
                 </div>\n\
@@ -1132,7 +1133,21 @@ def manifestXml(oa):
     videos = Video.objects.filter(ObjetoAprendizaje=oa)
     ordenamientos = Ordenamiento.objects.filter(ObjetoAprendizaje=oa)
     
-    cadena ='<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" \
+    cadena ='<!DOCTYPE definition [ \
+            <!ENTITY Aacute "&#193;"> \
+            <!ENTITY Eacute "&#201;"> \
+            <!ENTITY Iacute "&#205;"> \
+            <!ENTITY Oacute "&#211;"> \
+            <!ENTITY Uacute "&#218;"> \
+            <!ENTITY aacute "&#225;"> \
+            <!ENTITY eacute "&#233;"> \
+            <!ENTITY iacute "&#237;"> \
+            <!ENTITY oacute "&#243;"> \
+            <!ENTITY uacute "&#250;"> \
+            <!ENTITY Ntilde "&#209;"> \
+            <!ENTITY ntilde "&#241;"> \
+            ]> \
+            <manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" \
             xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" \
             xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" \
             xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" \
@@ -1147,7 +1162,7 @@ def manifestXml(oa):
     <organizations default="B0">\
         <organization identifier="B0" adlseq:objectivesGlobalToSystem="false">\
             <!-- Titulo que se visuliza arriba de todo en el moodle-->\
-            <title>'+oa.titulo+'</title>\
+            <title>'+convertirXMLEntity(oa.titulo)+'</title>\
                 <!--<item identifier="'+oa.titulo+'">-->\
                     <!--seccion de introduccion que se ve en moodle-->\
                     <item identifier="introduccion" identifierref="introduccion_resource">\
@@ -1161,27 +1176,27 @@ def manifestXml(oa):
     for actividad in verdaderosFalsos:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
             <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
-                <title>'+actividad.nombre+'</title>\
+                <title>'+convertirXMLEntity(actividad.nombre)+'</title>\
             </item>'
     for actividad in identificaciones:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
             <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
-                <title>'+actividad.nombre+'</title>\
+                <title>'+convertirXMLEntity(actividad.nombre)+'</title>\
             </item>'
     for actividad in asociaciones:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
             <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
-                <title>'+actividad.nombre+'</title>\
+                <title>'+convertirXMLEntity(actividad.nombre)+'</title>\
             </item>'
     for actividad in videos:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
             <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
-                <title>'+actividad.nombre+'</title>\
+                <title>'+convertirXMLEntity(actividad.nombre)+'</title>\
             </item>'
     for actividad in ordenamientos:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
             <item identifier="actividad'+str(actividad.id)+'" identifierref="actividad'+str(actividad.id)+'_resource">\
-                <title>'+actividad.nombre+'</title>\
+                <title>'+convertirXMLEntity(actividad.nombre)+'</title>\
             </item>'
                 
     cadena +='<!--seccion de evalucion que se ve en moodle-->\
@@ -1704,3 +1719,12 @@ def traerFrameVideo(url, regExp, indice, frame):
         frameVideo = frame.replace("{match}", match)
     
     return frameVideo
+        
+def convertirXMLEntity(cadena):
+    entities = [ (193, '&#193;'), (201, '&#201;'), (205, '&#205;'), (211, '&#211;'), (218, '&#218;'), (209, '&#209;')]
+    entities.extend([(225, '&#225;'),(233, '&#233;'),(237, '&#237;'),(243, '&#243;'),(250, '&#250;'),(241, '&#241;')]);
+    
+    for k, v in entities:
+        cadena = cadena.replace(unichr(k), v)
+    
+    return cadena
