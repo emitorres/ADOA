@@ -53,9 +53,9 @@ def registro(request):
 			usuario = formulario.cleaned_data['email']
 			usuario1 = Usuario.objects.get(email = usuario)
 
-			tokenCadena = uuid.uuid4()
-			token1 = Token(1,tokenCadena, usuario1.id)
-
+			token1 = Token()
+			token1.token = uuid.uuid4()
+			token1.usuario = usuario1
 		
 			token1.save()
 			usuarioMail = formulario.cleaned_data['email']
