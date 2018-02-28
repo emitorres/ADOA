@@ -76,7 +76,7 @@ function verEvaluacion(){
                 );
             }
             
-            $('#modalVerEvaluacion').openModal();
+            $('#modalVerEvaluacion').openModal({dismissible:false});
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar las secciones', 3000)
