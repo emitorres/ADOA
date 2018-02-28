@@ -461,10 +461,10 @@ function cargarObjetosSinTerminar(){
                 var i = 0;
                 var j = 0;
                 objetos.forEach(function(objeto) {    
-
+                    var idOaTarjeta = "oaTarjeta_" + objeto.pk;
                     $("#contenidoTarjeta").append(
                    
-                    "<div class='col s12 m6 l3'>"+
+                    "<div id='" + idOaTarjeta + "' class='col s12 m6 l3'>"+
                         "<div class='card'>"+
                             "<div class='card-image waves-effect waves-block waves-light'>"+
                                 "<img id='oafoto' name='oafoto' class='activator' src=" + "'"+ categorias[i].fields.fotoUrl+"'"+     ">"+
@@ -482,7 +482,7 @@ function cargarObjetosSinTerminar(){
                             "<div class='row'>"+ 
                                 "<a href='#' onclick='comprobarOA(" + objeto.pk +");' class=' col s12 m12 l12 btn btn-color waves-effect waves-light'style='margin-bottom:10px' >Ver Estado</a>"+
                                "<a href='/EditarOA/"+objeto.pk+"' class=' col s12 m12 l12 btn btn-color waves-effect waves-light' style='margin-bottom:10px'>Seguir Editando</a>"+
-                                "<a href='#' onclick='borrarOA(" +objeto.pk+ ");'  class=' col s12 m12 l12 btn btn-color waves-effect waves-light'style='margin-bottom:10px'>Eliminar</a>"+
+                                "<a href='#' onclick='borrarOA(" +objeto.pk+ ");borrarTarjeta(\"" + idOaTarjeta + "\");'  class='col s12 m12 l12 btn btn-color waves-effect waves-light'style='margin-bottom:10px'>Eliminar</a>"+
                             "</div>"+
                         "</div>"+
                     "</div>"
@@ -736,4 +736,8 @@ function borrarOA(id){
                 Materialize.toast(data.result, 3000);
             }
         });
+}
+
+function borrarTarjeta(idTarjeta){
+    $('#' + idTarjeta).remove();
 }
