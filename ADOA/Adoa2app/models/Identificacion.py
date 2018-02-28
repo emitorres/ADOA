@@ -29,7 +29,7 @@ class Identificacion(Actividad):
         identificacion.ObjetoAprendizaje = oa
         identificacion.save()
         
-        aItems = IdentificacionItem.objects.filter(identificacion = self)
+        aItems = IdentificacionItem.objects.filter(Identificacion = self)
         for item in aItems:
             itemClon = IdentificacionItem()
             itemClon.concepto = item.concepto
