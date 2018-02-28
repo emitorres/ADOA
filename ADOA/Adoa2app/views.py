@@ -1174,15 +1174,14 @@ def manifestXml(oa):
         <organization identifier="B0" adlseq:objectivesGlobalToSystem="false">\
             <!-- Titulo que se visuliza arriba de todo en el moodle-->\
             <title>'+convertirXMLEntity(oa.titulo)+'</title>\
-                <!--<item identifier="'+oa.titulo+'">-->\
-                    <!--seccion de introduccion que se ve en moodle-->\
-                    <item identifier="introduccion" identifierref="introduccion_resource">\
-                        <title>Introduccion</title>\
-                    </item>\
-                    <!--seccion de contenido que se ve en moodle-->\
-                    <item identifier="contenido" identifierref="contenido_resource">\
-                        <title>Contenido</title>\
-                    </item>'
+                <!--seccion de introduccion que se ve en moodle-->\
+                <item identifier="introduccion" identifierref="introduccion_resource">\
+                    <title>Introduccion</title>\
+                </item>\
+                <!--seccion de contenido que se ve en moodle-->\
+                <item identifier="contenido" identifierref="contenido_resource">\
+                    <title>Contenido</title>\
+                </item>'
     
     for actividad in verdaderosFalsos:
         cadena+='<!--seccion de actividades que se ve en moodle-->\
