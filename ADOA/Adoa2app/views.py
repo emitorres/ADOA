@@ -115,7 +115,7 @@ def Paso1(request):
             categoria = request.POST['categoria']
             
             #Si cambia el patron, borramos las secciones guardadas y creamos nuevas vacias
-            if oa.PatronPedagogico.id != patron:
+            if str(oa.PatronPedagogico.id) != patron:
                 seccionContenido = SeccionContenido.objects.filter(ObjetoAprendizaje = oa)
                 listaSecciones = list(seccionContenido)
                 k = len(listaSecciones)
@@ -125,7 +125,7 @@ def Paso1(request):
                 oa.PatronPedagogico = PatronPedagogico.objects.get(pk=patron)
                 oa.Categoria = Categoria.objects.get(pk=categoria)
                 crearSecciones(oa)
-                
+                           
             oa.save()
             response_data['result'] = 'Objeto de Aprendizaje Editado!'
              
@@ -234,11 +234,20 @@ def TraerSeccionesPatron(request):
         secciones = patron.seccionnombre_set.all()
         
         seccionesJson = serializers.serialize('json', secciones)
+        response_data = {}
+        response_data['secciones'] = seccionesJson
 
+        oaid = int(request.POST['oaid'])
+        if oaid != 0:
+            oa = ObjetoAprendizaje.objects.get(pk=oaid)
+            seccionesContenidoJson = serializers.serialize('json', oa.seccioncontenido_set.all())
+            response_data['seccionesContenido'] = seccionesContenidoJson
+        
         return HttpResponse(
-            seccionesJson,
+            json.dumps(response_data),
             content_type="application/json"
         )
+        
     else:
         return HttpResponse(
             json.dumps({"nothing to see": "this isn't happening"}),
@@ -1139,11 +1148,13 @@ def manifestXml(oa):
             <!ENTITY Iacute "&#205;"> \
             <!ENTITY Oacute "&#211;"> \
             <!ENTITY Uacute "&#218;"> \
+            <!ENTITY Uuml   "&#220;"> \
             <!ENTITY aacute "&#225;"> \
             <!ENTITY eacute "&#233;"> \
             <!ENTITY iacute "&#237;"> \
             <!ENTITY oacute "&#243;"> \
             <!ENTITY uacute "&#250;"> \
+            <!ENTITY uuml   "&#252;"> \
             <!ENTITY Ntilde "&#209;"> \
             <!ENTITY ntilde "&#241;"> \
             ]> \
@@ -1721,8 +1732,8 @@ def traerFrameVideo(url, regExp, indice, frame):
     return frameVideo
         
 def convertirXMLEntity(cadena):
-    entities = [ (193, '&#193;'), (201, '&#201;'), (205, '&#205;'), (211, '&#211;'), (218, '&#218;'), (209, '&#209;')]
-    entities.extend([(225, '&#225;'),(233, '&#233;'),(237, '&#237;'),(243, '&#243;'),(250, '&#250;'),(241, '&#241;')]);
+    entities = [(193, '&#193;'), (201, '&#201;'), (205, '&#205;'), (211, '&#211;'), (218, '&#218;'),(220,'&#220;'),(209, '&#209;')]
+    entities.extend([(225, '&#225;'),(233, '&#233;'),(237, '&#237;'),(243, '&#243;'),(250, '&#250;'),(252,'&#252;'),(241, '&#241;')]);
     
     for k, v in entities:
         cadena = cadena.replace(unichr(k), v)

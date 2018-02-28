@@ -173,13 +173,21 @@ function cambiarTab(tabContentId,tabId){
 
 function cargarSeccionesPatron(patronId){
     var csrf = $( "#oa-paso1" ).children('input[name=csrfmiddlewaretoken]').val();
+    var postData = { patron : patronId, csrfmiddlewaretoken: csrf };
+    if ($("#oaid").val()){
+        postData.oaid = $("#oaid").val(); 
+    }else{
+        postData.oaid = 0;
+    }
+    
     $.ajax({
         url : "/CrearOA/TraerSeccionesPatron/", // the endpoint
         type : "POST", // http method
-        data : { patron : patronId, csrfmiddlewaretoken: csrf }, // data sent with the post request
+        data : postData, // data sent with the post request
         success : function(data) {
+            var secciones = JSON.parse(data.secciones);
             $("#oa-secciones").html('');
-            data.forEach(function(seccion) {
+            secciones.forEach(function(seccion) {
                 $("#oa-secciones").append("<h3>"+seccion.fields.nombre+"</h3>"+
                 "<div class='row'>"+
                     "<div class='input-field col s12'>"+
@@ -194,6 +202,12 @@ function cargarSeccionesPatron(patronId){
                 minHeight: 100,
                 defaultBackColor: '#fff'
             });
+            if (data.seccionesContenido){
+                var seccionesContenido = JSON.parse(data.seccionesContenido);
+                seccionesContenido.forEach(function(seccion) {
+                    $("#seccion"+seccion.fields.SeccionNombre).code(seccion.fields.contenido);
+                });
+            }
         },
         error : function(xhr,errmsg,err) {
             Materialize.toast('Error al cargar las secciones', 3000);
